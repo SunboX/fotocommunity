@@ -1,0 +1,19 @@
+fieldset { background: #E0E0E0; padding: 10px; padding-bottom: 0; width: 510px; margin-bottom: 10px; border: #B5B5B5 1px solid; }
+fieldset h2 { color: #000; background: none; border: none; padding: 0; width: auto; }
+
+input.text, select, textarea, #Form_EditProfileForm_Avatar { width: 500px; margin-bottom: 10px; }
+textarea { height: 200px; }
+
+
+/* SEARCH BOX 
+---------------------------------------- */
+#mainsearch { padding-top: 2px; width: 220px; float: right; text-align: right; margin-right: 6px; }
+#mainsearch #SearchForm_SearchForm { width: 210px; }
+#mainsearch div { float: left; }
+#mainsearch fieldset { padding: 0; margin: 0; width: auto; background: none; }
+#mainsearch fieldset legend { display: none; }
+#mainsearch .action { height: 25px; margin-top: -3px; }
+#mainsearch form input { padding: 2px; margin: -1px 0 0; vertical-align: middle; }
+#mainsearch form input.button { border: 0; }
+#mainsearch form input.text { width: 143px; }
+#mainsearch label { display: none; }
