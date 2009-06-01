@@ -5,9 +5,10 @@ $Content
 
 <h3>Mitglieder ($MembersCount)</h3>
 
-<table width="100%" border="0">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
   <% control Members %>
-  <tr>
+  
+  <tr class="$EvenOdd">
     <td>
     	<a href="profil/show/$ID">$FirstName $Surname</a>
     	<% if IsOnline %>
@@ -16,7 +17,7 @@ $Content
 		<span class="off">(offline)</span>
 		<% end_if %>
 	</td>
-    <td><a href="#">Bilder (0)</a></td>
+    <td><a href="#">Fotos (0)</a></td>
   </tr>
   <% end_control %>
 </table>

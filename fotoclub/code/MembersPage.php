@@ -11,7 +11,7 @@ class MembersPage extends Page
 			$page->write();
 			$page->doPublish();
 		}
-	}	
+	}
 }
 
 class MembersPage_Controller extends Page_Controller
@@ -20,10 +20,7 @@ class MembersPage_Controller extends Page_Controller
 	
 	public function init()
 	{
-		Requirements::themedCSS('Members');
-		
-		if(!Member::currentUserID()) Security::permissionFailure();
-		
+		Requirements::themedCSS('Members');		
 		parent::init();
 	}
 	

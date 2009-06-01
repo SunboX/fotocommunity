@@ -45,7 +45,7 @@ class MemberProfilePage_Controller extends Page_Controller
 	
 	function IsEditable()
 	{
-		return Permission::check('ADMIN') || (is_numeric($this->urlParams['ID']) && $this->urlParams['ID'] == Member::currentMember()->ID);
+		return Permission::check('ADMIN') || (is_numeric($this->urlParams['ID']) && Member::currentMember() != null && $this->urlParams['ID'] == Member::currentMember()->ID);
 	}
 	
 	function EditProfileForm()
@@ -59,7 +59,6 @@ class MemberProfilePage_Controller extends Page_Controller
 		$i = 0;
 		foreach($fields->dataFields() as $field)
 		{
-			FB::log($i);
 			if($i++ < 4) $col1->push($field);
 			else $col2->push($field);
 		}

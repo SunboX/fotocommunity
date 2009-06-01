@@ -5,6 +5,6 @@
 .profile .right .signature { clear: right; text-align: left; }
 .profile .nick { display: block; margin-bottom: 10px; font-size: 18px; font-weight: bold; color: #000; }
 .profile .nick .on { font-size: 10px; font-weight: normal; color: green; }
-.profile .nick .off { font-size: 10px; font-weight: normal; color: red; }
+.profile .nick .off { font-size: 10px; font-weight: normal; color: gray; }
 
 .lightbox { background: #DCDCDC; padding: 10px; }

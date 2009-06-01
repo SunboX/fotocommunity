@@ -1,3 +1,8 @@
 
+.typography .members table {}
+.typography .members tr {}
+.typography .members tr.odd { background: #DCDCDC; }
+.typography .members td { border: none; padding: 5px; }
+
 .members .on { font-size: 10px; font-weight: normal; color: green; }
-.members .off { font-size: 10px; font-weight: normal; color: red; }
+.members .off { font-size: 10px; font-weight: normal; color: gray; }
