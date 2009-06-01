@@ -58,4 +58,10 @@ class MembersPage_Controller extends Page_Controller
 			'LEFT JOIN Group_Members ON Member.ID = Group_Members.MemberID'
 		);
 	}
+	
+	public function Menu($level)
+	{
+		if($level == 2) return;
+		return parent::Menu($level);
+	}
 }

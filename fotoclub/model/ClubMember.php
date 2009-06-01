@@ -67,16 +67,14 @@ class ClubMember extends DataObjectDecorator
 	
 	function NumPictures()
 	{
-		/*
 		if(is_numeric($this->owner->ID))
 		{
-			return (int) DB::query("SELECT count(*) FROM Pictures WHERE MemberID = '" . $this->owner->ID . "'")->value();
+			return (int) DB::query('SELECT COUNT(*) FROM File WHERE OwnerID = ' . $this->owner->ID . ' AND ImageGalleryID > 0')->value();
 		}
 		else
 		{
 			return 0;
 		}
-		*/
 	}
 	
 	function Link()

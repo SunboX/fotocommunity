@@ -31,6 +31,7 @@ Director::set_dev_servers(array(
 	'127.0.0.1',
 ));
 
+
 i18n::enable();
 i18n::set_locale('de_DE');
 //i18n::set_default_lang('de_DE');
@@ -42,6 +43,7 @@ SSViewer::set_theme('fotoclub');
 
 DataObject::add_extension('Member', 'ClubMember');
 Object::add_extension('Member_Validator', 'ClubMember_Validator');
+DataObject::add_extension('File', 'ImageGalleryFile');
 
 Object::useCustomClass('HtmlEditorField_Toolbar', 'FotoclubHtmlEditorField_Toolbar');
 
@@ -50,5 +52,6 @@ MemberTableField::addMembershipFields(array(
 	'Occupation' => 'Occupation',
 	'Country' => 'Country'
 ));
+
 
 ?>

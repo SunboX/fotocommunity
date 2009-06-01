@@ -183,6 +183,8 @@ html body ol li.lt{
 	padding: 0 .75em;
 	color: #fff;
 	text-decoration: none; }
+	
+#sub ul li a.current { font-weight: bold; }
 
 .sub ul li a{
 	line-height: 25px;

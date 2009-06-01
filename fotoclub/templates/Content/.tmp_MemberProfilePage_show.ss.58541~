@@ -1,9 +1,0 @@
-<% if CurrentProfile %>
-<% control CurrentProfile %>
-
-$Avatar.SetHeight(50)
-
-<% end_control %>
-<% else %>
-<p>Dieses Profil wurde nicht gefunden.</p>
-<% end_if %>
