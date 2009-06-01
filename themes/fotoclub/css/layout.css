@@ -44,6 +44,8 @@ li{
 html body ul li.lt,
 html body ol li.lt{
 	border-bottom: 0; }
+
+.clear { clear: both; }
 	
 #wrap { position: relative; width: 960px; margin: 20px auto 0; padding: 0; text-align: left; }
 
@@ -134,10 +136,7 @@ html body ol li.lt{
 	z-index: 10;
   background: url(../images/nav-bg.png) top left no-repeat; }
 
-#menu li.act a{
-	color: #0f3f7a;
-	font-weight: bold;
-	text-decoration: underline; }
+#menu li a.section, #menu li a.current { color: #0f3f7a; font-weight: bold; text-decoration: underline; }
 
 #menu a:hover{
 	text-decoration: underline;
@@ -150,7 +149,7 @@ html body ol li.lt{
 	clear: both;
 	height: 25px;
 	margin: 0 auto;
-	padding: 5px 0 3px;
+	padding: 3px 0 3px;
 	background: url(../images/menu.png);
 	z-index: 60; }
 
@@ -204,7 +203,7 @@ html body ol li.lt{
 	height: 25px;
 	line-height: 25px; }
 	
-#content { background: #EBEBEB; padding: 20px; min-height: 625px; height: auto !important; /* für moderne Browser */ height: 625px; /*für den IE */ }
+#content { background: #EBEBEB; padding: 20px; min-height: 625px; height: auto !important; /* fï¿½r moderne Browser */ height: 625px; /*fï¿½r den IE */ }
 
 .pagination, .pagination-bottom{
 	position: absolute;

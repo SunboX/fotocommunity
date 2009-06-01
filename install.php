@@ -48,7 +48,7 @@ if(isset($_REQUEST['mysql'])) {
 		"server" => defined('SS_DATABASE_SERVER') ? SS_DATABASE_SERVER : "localhost",
 		"username" => defined('SS_DATABASE_USERNAME') ? SS_DATABASE_USERNAME : "root",
 		"password" => defined('SS_DATABASE_PASSWORD') ? SS_DATABASE_PASSWORD : "",
-		"database" => isset($_SERVER['argv'][2]) ? $_SERVER['argv'][2] : "SS_mysite",
+		"database" => isset($_SERVER['argv'][2]) ? $_SERVER['argv'][2] : "SS_fotoclub",
 	);
 }
 
@@ -64,14 +64,14 @@ if(isset($_REQUEST['admin'])) {
 }
 
 $alreadyInstalled = false;
-if(file_exists('mysite/_config.php')) {
+if(file_exists('fotoclub/_config.php')) {
 	// Find the $database variable in the relevant config file without having to execute the config file
-	if(preg_match("/\\\$database\s*=\s*[^\n\r]+[\n\r]/", file_get_contents("mysite/_config.php"), $parts)) {
+	if(preg_match("/\\\$database\s*=\s*[^\n\r]+[\n\r]/", file_get_contents("fotoclub/_config.php"), $parts)) {
 		eval($parts[0]);
 		if($database) $alreadyInstalled = true;
-	// Assume that if $databaseConfig is defined in mysite/_config.php, then a non-environment-based installation has
+	// Assume that if $databaseConfig is defined in fotoclub/_config.php, then a non-environment-based installation has
 	// already gone ahead
-	} else if(preg_match("/\\\$databaseConfig\s*=\s*[^\n\r]+[\n\r]/", file_get_contents("mysite/_config.php"), $parts)) {
+	} else if(preg_match("/\\\$databaseConfig\s*=\s*[^\n\r]+[\n\r]/", file_get_contents("fotoclub/_config.php"), $parts)) {
 		$alreadyInstalled = true;
 	}
 	
@@ -176,12 +176,12 @@ class InstallRequirements {
 			"The webserver isn't letting me identify where files are stored.",
 			$this->getBaseDir()
 			));		
-		$this->requireFile('mysite', array("File permissions", "mysite/ folder exists", "There's no mysite folder."));
+		$this->requireFile('fotoclub', array("File permissions", "fotoclub/ folder exists", "There's no fotoclub folder."));
 		$this->requireFile('sapphire', array("File permissions", "sapphire/ folder exists", "There's no sapphire folder."));
 		$this->requireFile('cms', array("File permissions", "cms/ folder exists", "There's no cms folder."));
 		$this->requireFile('jsparty', array("File permissions", "jsparty/ folder exists", "There's no jsparty folder."));
 		$this->requireWriteable('.htaccess', array("File permissions", "Is the .htaccess file writeable?", null));
-		$this->requireWriteable('mysite/_config.php', array("File permissions", "Is the mysite/_config.php file writeable?", null));
+		$this->requireWriteable('fotoclub/_config.php', array("File permissions", "Is the fotoclub/_config.php file writeable?", null));
 		$this->requireWriteable('assets', array("File permissions", "Is the assets/ folder writeable?", null));
 		
 		$this->requireTempFolder(array('File permissions', 'Is the temporary folder writeable?', null));
@@ -701,19 +701,19 @@ class Installer extends InstallRequirements {
 			@$_SESSION['StatsID'] = file_get_contents($url);
 		}
 		
-		if(file_exists('mysite/_config.php')) {
-			unlink('mysite/_config.php');
+		if(file_exists('fotoclub/_config.php')) {
+			unlink('fotoclub/_config.php');
 		}
 		$theme = isset($_POST['template']) ? $_POST['template'] : 'blackcandy';
 		// Write the config file
 		global $usingEnv;
 		if($usingEnv) {
-			$this->statusMessage("Creating 'mysite/_config.php' for use with _ss_environment.php...");
-			$this->createFile("mysite/_config.php", <<<PHP
+			$this->statusMessage("Creating 'fotoclub/_config.php' for use with _ss_environment.php...");
+			$this->createFile("fotoclub/_config.php", <<<PHP
 <?php
 
 global \$project;
-\$project = 'mysite';
+\$project = 'fotoclub';
 
 global \$database;
 \$database = "{$config['mysql']['database']}";
@@ -730,16 +730,16 @@ PHP
 
 			
 		} else {
-			$this->statusMessage("Creating 'mysite/_config.php'...");
+			$this->statusMessage("Creating 'fotoclub/_config.php'...");
 		
 			$devServers = $this->var_export_array_nokeys(explode("\n", $_POST['devsites']));
 		
 			$escapedPassword = addslashes($config['mysql']['password']);
-			$this->createFile("mysite/_config.php", <<<PHP
+			$this->createFile("fotoclub/_config.php", <<<PHP
 <?php
 
 global \$project;
-\$project = 'mysite';
+\$project = 'fotoclub';
 
 global \$databaseConfig;
 \$databaseConfig = array(
