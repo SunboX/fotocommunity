@@ -1,0 +1,10 @@
+.edit_link { display: block; margin-bottom: 10px; }
+
+.profile .left { float: left; width: 20%; }
+.profile .right { float: right; width: 80%; text-align: left; }
+.profile .right .signature { clear: right; text-align: left; }
+.profile .nick { display: block; margin-bottom: 10px; font-size: 18px; font-weight: bold; color: #000; }
+.profile .nick .on { font-size: 10px; font-weight: normal; color: green; }
+.profile .nick .off { font-size: 10px; font-weight: normal; color: red; }
+
+.lightbox { background: #DCDCDC; padding: 10px; }

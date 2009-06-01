@@ -1,0 +1,20 @@
+<% if Members %>
+
+Mitglieder ($MembersCount)
+
+<br />
+<br />
+
+<table width="100%" border="0">
+  <% control Members %>
+  <tr>
+    <td><a href="profil/edit/$ID">$FirstName $Surname</a></td>
+    <td>$LastVisited $AvatarId</td>
+    <td><a href="#">Bilder (0)</a></td>
+  </tr>
+  <% end_control %>
+</table>
+
+<% else %>
+<p>Es wurden keine Mitglieder gefunden.</p>
+<% end_if %>
