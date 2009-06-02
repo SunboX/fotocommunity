@@ -2,13 +2,11 @@
 
 class ClubMember extends DataObjectDecorator
 {
-	protected $ThumbnailWidth = 175;
-	protected $ThumbnailHeight = 150;
-	
 	/**
 	 * Edit the given query object to support queries for this extension
 	 */
 	function augmentSQL(SQLQuery &$query) {}
+
 
 	/**
 	 * Update the database schema as required by this extension
@@ -67,7 +65,7 @@ class ClubMember extends DataObjectDecorator
 		return (isset($this->owner->Country) && !is_null($this->owner->Country)) ? Geoip::countryCode2name($this->owner->Country) : "";
 	}
 	
-	function NumImages()
+	function NumPictures()
 	{
 		if(is_numeric($this->owner->ID))
 		{
@@ -77,24 +75,6 @@ class ClubMember extends DataObjectDecorator
 		{
 			return 0;
 		}
-	}
-	
-	public function LatestImages()
-	{
-		$images = DataObject::get('File', 'ImageGalleryID > 0 AND OwnerID = ' . $this->owner->ID, 'Created DESC', '', 5);
-		foreach($images as $image)
-		{
-			//Klassenzuweisung für die Bildkonvertierung
-			$imgClass = $image->newClassInstance('ImageGallery_Image');
-			$smallImage = $imgClass->getFormattedImage('ResizeRatio', $this->ThumbnailWidth, $this->ThumbnailHeight); // und für verkleinertes Bild.
-			
-			//Bildstring zusammenbauen
-			$thumb = '<img src="' . Director::baseURL() . $smallImage->Filename . '" alt="' . $smallImage->Title . '" class="thumbnail" />';
-			
-			//TemplateControl setzen
-			$image->Thumbnail = $thumb;
-		}
-		return $images;
 	}
 	
 	function Link()

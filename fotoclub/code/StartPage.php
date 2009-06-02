@@ -22,5 +22,31 @@ class StartPage extends Page
 
 class StartPage_Controller extends Page_Controller
 {
+	protected $ThumbnailWidth = 175;
+	protected $ThumbnailHeight = 150;
 	
+	function init()
+	{
+		Requirements::themedCSS('Start');
+		
+		parent::init();
+ 	}
+	
+	public function LatestImages()
+	{
+		$images = DataObject::get('File', 'ImageGalleryID > 0', 'Created DESC', '', 5);
+		foreach($images as $image)
+		{
+			//Klassenzuweisung für die Bildkonvertierung
+			$imgClass = $image->newClassInstance('ImageGallery_Image');
+			$smallImage = $imgClass->getFormattedImage('ResizeRatio', $this->ThumbnailWidth, $this->ThumbnailHeight); // und für verkleinertes Bild.
+			
+			//Bildstring zusammenbauen
+			$thumb = '<img src="' . Director::baseURL() . $smallImage->Filename . '" alt="' . $smallImage->Title . '" class="thumbnail" />';
+			
+			//TemplateControl setzen
+			$image->Thumbnail = $thumb;
+		}
+		return $images;
+	}
 }

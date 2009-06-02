@@ -17,7 +17,7 @@ $Content
 		<span class="off">(offline)</span>
 		<% end_if %>
 	</td>
-    <td><a href="galleries/my/$ID">$NumImages Fotos</a></td>
+    <td><a href="galleries/my/$ID">$NumPictures Fotos</a></td>
   </tr>
   <% end_control %>
 </table>

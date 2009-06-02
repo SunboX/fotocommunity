@@ -188,10 +188,6 @@ class MemberGalleryPage_Controller extends Page_Controller
 	{
 		$this->urlParams['ID'] = $data['ID'];
 		
-		FB::log('DataID: ' . $data['ID']);
-		FB::log('MemberID: ' . $this->Member()->ID);
-		FB::log('GalleryID: ' . $this->Gallery()->ID);
-		
 		$files = $data['uploaded_files']; //get file id's
 		foreach($files as $file)
 		{
@@ -254,7 +250,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 				break;
 				
 			default:
-				if($this->Gallery() != null) $id = $this->Gallery()->MemberID;
+				$id = $this->Gallery()->MemberID;
 		}
  		
 		if($id)
@@ -278,7 +274,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 		}
 		else
 		{
-			//Director::redirect(Director::baseURL());
+			Director::redirect(Director::baseURL());
 		}
 		return $gallery;
 	}

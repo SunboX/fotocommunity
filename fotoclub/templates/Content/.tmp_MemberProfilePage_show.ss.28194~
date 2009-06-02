@@ -29,15 +29,9 @@
 <br class="clear" />
 
 <div class="lightbox">
-	<h3>$Nickname´s neueste Fotos</h3>
+	<h3>$Nickname´s neueste Bilder</h3>
 	
-	<div class="images">
-	<% control LatestImages %>
-		<div class="thumbnail"><a href="galleries/show/$ImageGalleryID">$Thumbnail</a></div>
-	<% end_control %>
-	</div>
-	
-	<br class="clear" />
+	<div class="pictures"></div>
 </div>
 
 <% end_control %>
