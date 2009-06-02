@@ -174,7 +174,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 					'debug' => 'false'
 				)
 			),
-			new HiddenField('ID', 'ID', $this->Member()->ID)
+			new HiddenField('ID', 'ID', $this->Gallery()->ID)
 		);
 		
 		$actions = new FieldSet(
@@ -203,7 +203,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 			)); 
 			$do->write();//write the changes
 		}
-		Director::redirect('galleries/my/' . $data['ID']);
+		Director::redirect('galleries/my/' . $this->Member()->ID);
 	}
 	
 	/* Function handleswfupload
