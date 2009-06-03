@@ -2,7 +2,6 @@
 	
 		$Content
 		$Form
-		$PageComments
 
 </div>
 

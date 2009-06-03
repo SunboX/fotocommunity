@@ -10,10 +10,12 @@
 
 <div class="gallery">
 	<div class="title"><a href="galleries/show/$ID">$Title</a></div>
-	<% control Thumbnails.First %>
-	<a href="galleries/show/{$Parent.ID}">$Thumbnail</a>
-	<% end_control %>
-	<div class="date">$Date</div>
+	<% if Thumbnails %>
+	<a href="galleries/show/$ID" class="thumbnail">$Thumbnails.First.Thumbnail</a>
+	<% else %>
+	<img src="$BaseHref/fotoclub/gfx/no-image.gif" class="thumbnail" />
+	<% end_if %>
+	<div class="date">$Date.Format(d.m.Y)</div>
 	<div class="pics">$ImagesCount Fotos</div>
 	<% if CanEdit %>
 	<a href="galleries/edit/$ID" class="edit_link">[Album bearbeiten]</a>

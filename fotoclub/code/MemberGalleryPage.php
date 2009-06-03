@@ -79,6 +79,16 @@ class MemberGalleryPage_Controller extends Page_Controller
 		return array('CurrentProfile' => $this->Member(), 'CurrentGallery' => $this->Gallery(), 'EditGalleryForm' => $this->EditGalleryForm());
 	}
 	
+	public function show()
+	{
+		return array('CurrentProfile' => $this->Member(), 'CurrentGallery' => $this->Gallery());
+	}
+	
+	public function show_image()
+	{
+		return array('CurrentProfile' => $this->Member(), 'CurrentGallery' => $this->Gallery(), 'CurrentImage' => $this->Image());
+	}
+	
 	public function EditGalleryForm()
 	{
 		$fields = new FieldSet(
@@ -138,10 +148,10 @@ class MemberGalleryPage_Controller extends Page_Controller
 	{
 		$gallery = new ImageGallery();
 		$form->saveInto($gallery);
-		$gallery->Date = time();
+		$gallery->Date = date('Y-m-d H:i:s');
 		$gallery->write();
 		
-		Director::redirect('galleries/upload/' . $gallery->ID);
+		Director::redirect('galleries/upload/' . $gallery->MemberID);
 	}
 	
 	public function ImageUploadForm($data = null, $form = null)
@@ -281,6 +291,17 @@ class MemberGalleryPage_Controller extends Page_Controller
 			//Director::redirect(Director::baseURL());
 		}
 		return $gallery;
+	}
+	
+	public function Image()
+	{
+		$image = null;
+		if(is_numeric($this->urlParams['OtherID']))
+		{
+			$image = DataObject::get_by_id('File', $this->urlParams['OtherID']);
+			$image = $image->newClassInstance('ImageGallery_Image');
+		}
+		return $image->ImageGalleryID == $this->urlParams['ID'] ? $image : null;
 	}
 	
 	public function MyGalleriesCount()

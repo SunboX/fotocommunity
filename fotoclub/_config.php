@@ -35,7 +35,8 @@ Director::set_dev_servers(array(
 i18n::enable();
 i18n::set_locale('de_DE');
 //i18n::set_default_lang('de_DE');
-setlocale(LC_ALL, 'de_DE@euro', 'de_DE', 'de', 'ge'); 
+setlocale(LC_ALL, 'de_DE@euro', 'de_DE', 'de', 'ge');
+setlocale(LC_TIME, i18n::get_locale() . '.utf8'); 
 
 // This line set's the current theme. More themes can be
 // downloaded from http://www.silverstripe.com/themes/

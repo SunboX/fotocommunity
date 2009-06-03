@@ -2,8 +2,8 @@
 
 class ClubMember extends DataObjectDecorator
 {
-	protected $ThumbnailWidth = 175;
-	protected $ThumbnailHeight = 150;
+	protected $ThumbnailWidth = 170;
+	protected $ThumbnailHeight = 140;
 	
 	/**
 	 * Edit the given query object to support queries for this extension

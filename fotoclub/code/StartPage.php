@@ -22,8 +22,8 @@ class StartPage extends Page
 
 class StartPage_Controller extends Page_Controller
 {
-	protected $ThumbnailWidth = 175;
-	protected $ThumbnailHeight = 150;
+	protected $ThumbnailWidth = 170;
+	protected $ThumbnailHeight = 140;
 	
 	function init()
 	{

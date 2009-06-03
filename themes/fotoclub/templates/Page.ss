@@ -32,7 +32,6 @@
             <ul class="usr">
             	<% if CurrentMember %> 
                     <li><a href="private-messages/">Nachrichten ($NumNewMessages)</a></li>
-                    <li><a href="upload/">Hochladen</a></li>
                     <% if CurrentMember %> 
                     
                     <% end_if %> 

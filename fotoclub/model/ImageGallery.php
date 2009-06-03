@@ -4,13 +4,13 @@ class ImageGallery extends DataObject
 {
 	private $images_cache = null;
 	
-	protected $ThumbnailWidth = 180;
+	protected $ThumbnailWidth = 175;
 	protected $ThumbnailHeight = 150;
 	protected $ImageWidth = 640;
 	protected $ImageHeight = 480;
 		
 	static $db = array(
-		'Date' => 'Date',
+		'Date' => 'Datetime',
 		'Title' => 'Varchar(80)',
 		'Description' => 'HTMLText',
 		'Location' => 'Varchar(80)'	
@@ -44,13 +44,13 @@ class ImageGallery extends DataObject
 			
 			//Bildstring zusammenbauen
 			$thumb = '';
-			if($link) $thumb .= '<a href="' . Director::baseURL() . $bigImage->Filename . '">';
+			if($link) $thumb .= '<a href="galleries/show-image/' . $this->ID . '/' . $image->ID . '" class="thumbnail">';
 			$thumb .= '<img src="' . Director::baseURL() . $smallImage->Filename . '" alt="' . $smallImage->Title . '" class="thumbnail" />';
 			if($link) $thumb .= '</a>';
 			
 			//TemplateControl setzen
 			$image->Thumbnail = $thumb;
-		}
+		}		
 		return $images;
 	}
 	
@@ -74,9 +74,15 @@ class ImageGallery extends DataObject
 //Erweiterteklasse zur Erzeugung von Bildern
 class ImageGallery_Image extends Image
 {
-	function generateResizeRatio($gd, $width, $height)
+	public function generateResizeRatio($gd, $width, $height)
 	{
 		return $gd->resizeRatio($width, $height);
+	}
+	
+	public function SetMaxWidth($width)
+	{
+		if($this->getWidth() <= $width) return $this;
+		return $this->SetWidth($width);
 	}
 }
 
