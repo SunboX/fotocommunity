@@ -18,7 +18,12 @@ class MemberProfilePage extends Page
 	public function Link($action = null)
 	{
 		$id = Director::urlParam('ID');
-		if($action == null) $action = 'show';
+		if($action == null)
+		{
+			$action = 'show';
+			$p = new MemberGalleryPage();
+			$id = $p->Member()->ID;
+		}
 		if(!is_numeric($id) || $id == 0)
 		{
 			return Director::baseURL();
