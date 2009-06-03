@@ -17,7 +17,11 @@ class MemberGalleryPage extends Page
 	public function Link($action = null)
 	{
 		$id = Director::urlParam('ID');
-		if($action == null) $action = 'my';
+		if($action == null)
+		{
+			$action = 'my';
+			$id = $this->Member()->ID;
+		}
 		if(!is_numeric($id) || $id == 0)
 		{
 			return Director::baseURL();
@@ -29,7 +33,7 @@ class MemberGalleryPage extends Page
 	{
 		if($this->URLSegment)
 		{
-			$id = $this->urlParams['ID'];
+			$id = Director::urlParam('ID');
 			if($action == null) $action = 'my';
 			if(!is_numeric($id) || $id == 0)
 			{
@@ -41,6 +45,58 @@ class MemberGalleryPage extends Page
 		{
 			user_error("ContentController::RelativeLink() No URLSegment given on a '$this->class' object.  Perhaps you should overload it?", E_USER_WARNING);
 		}
+	}
+	
+	public function Member()
+	{
+ 		$member = null;
+		$id = 0;
+		switch(Director::urlParam('Action'))
+		{
+			case 'my':
+			case 'new-gallery':
+				$id = Director::urlParam('ID');
+				break;
+				
+			default:
+				if($this->Gallery() != null) $id = $this->Gallery()->MemberID;
+		}
+ 		
+		if($id)
+		{
+			$member = DataObject::get_by_id('Member', $id);
+		}
+		else
+		{
+			$member = Member::currentUser();
+		}
+		return $member;
+	}
+	
+	public function Gallery()
+	{
+ 		$gallery = null;
+ 		
+		if(is_numeric(Director::urlParam('ID')))
+		{
+			$gallery = DataObject::get_by_id('ImageGallery', Director::urlParam('ID'));
+		}
+		else
+		{
+			//Director::redirect(Director::baseURL());
+		}
+		return $gallery;
+	}
+	
+	public function Image()
+	{
+		$image = null;
+		if(is_numeric(Director::urlParam('OtherID')))
+		{
+			$image = DataObject::get_by_id('File', Director::urlParam('OtherID'));
+			$image = $image->newClassInstance('ImageGallery_Image');
+		}
+		return $image->ImageGalleryID == Director::urlParam('ID') ? $image : null;
 	}
 }
 
@@ -198,10 +254,6 @@ class MemberGalleryPage_Controller extends Page_Controller
 	{
 		$this->urlParams['ID'] = $data['ID'];
 		
-		FB::log('DataID: ' . $data['ID']);
-		FB::log('MemberID: ' . $this->Member()->ID);
-		FB::log('GalleryID: ' . $this->Gallery()->ID);
-		
 		$files = $data['uploaded_files']; //get file id's
 		foreach($files as $file)
 		{
@@ -254,54 +306,17 @@ class MemberGalleryPage_Controller extends Page_Controller
 	
  	public function Member()
 	{
- 		$member = null;
-		$id = 0;
-		switch($this->urlParams['Action'])
-		{
-			case 'my':
-			case 'new-gallery':
-				$id = $this->urlParams['ID'];
-				break;
-				
-			default:
-				if($this->Gallery() != null) $id = $this->Gallery()->MemberID;
-		}
- 		
-		if($id)
-		{
-			$member = DataObject::get_by_id('Member', $id);
-		}
-		else
-		{
-			$member = Member::currentUser();
-		}
-		return $member;
+		return $this->data()->Member();
 	}
 	
 	public function Gallery()
 	{
- 		$gallery = null;
- 		
-		if(is_numeric($this->urlParams['ID']))
-		{
-			$gallery = DataObject::get_by_id('ImageGallery', $this->urlParams['ID']);
-		}
-		else
-		{
-			//Director::redirect(Director::baseURL());
-		}
-		return $gallery;
+ 		return $this->data()->Gallery();
 	}
 	
 	public function Image()
 	{
-		$image = null;
-		if(is_numeric($this->urlParams['OtherID']))
-		{
-			$image = DataObject::get_by_id('File', $this->urlParams['OtherID']);
-			$image = $image->newClassInstance('ImageGallery_Image');
-		}
-		return $image->ImageGalleryID == $this->urlParams['ID'] ? $image : null;
+		return $this->data()->Image();
 	}
 	
 	public function MyGalleriesCount()
