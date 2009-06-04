@@ -17,9 +17,6 @@ $Content
 		<span class="off">(offline)</span>
 		<% end_if %>
 	</td>
-	<td>
-		Spitzname: $Nickname
-	</td>
     <td><a href="galleries/my/$ID">$NumImages Fotos</a></td>
   </tr>
   <% end_control %>
