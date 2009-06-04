@@ -9,43 +9,9 @@ class MemberProfilePage extends Page
 		{
 			$page = new MemberProfilePage();
 			$page->Title = 'Profil';
-			$page->URLSegment = 'profil';
+			$page->URLSegment = 'profile';
 			$page->write();
 			$page->doPublish();
-		}
-	}
-	
-	public function Link($action = null)
-	{
-		$id = Director::urlParam('ID');
-		if($action == null)
-		{
-			$action = 'show';
-			$p = new MemberGalleryPage();
-			$id = $p->Member()->ID;
-		}
-		if(!is_numeric($id) || $id == 0)
-		{
-			return Director::baseURL();
-		}
-		return Director::baseURL() . $this->URLSegment . "/$action/$id";
-	}
-	
-	public function RelativeLink($action = null)
-	{
-		if($this->URLSegment)
-		{
-			$id = Director::urlParam('ID');
-			if($action == null) $action = 'show';
-			if(!is_numeric($id) || $id == 0)
-			{
-				return Director::baseURL();
-			}
-			return $this->URLSegment . "/$action/$id";
-		}
-		else
-		{
-			user_error("ContentController::RelativeLink() No URLSegment given on a '$this->class' object.  Perhaps you should overload it?", E_USER_WARNING);
 		}
 	}
 }
@@ -196,6 +162,7 @@ class MemberProfilePage_Controller extends Page_Controller
 		return $member;
 	}
 	
+	/*
 	public function Menu($level)
 	{
 		$menu = parent::Menu($level);
@@ -208,6 +175,7 @@ class MemberProfilePage_Controller extends Page_Controller
 		}
 		return $menu;
 	}
+	*/
 	
 	function MetaTags($includeTitle = true)
 	{

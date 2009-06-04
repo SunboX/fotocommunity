@@ -10,7 +10,7 @@ $Content
   
   <tr class="$EvenOdd">
     <td>
-    	<a href="profil/show/$ID">$FirstName $Surname</a>
+    	<a href="profile/show/$ID">$FirstName $Surname</a>
     	<% if IsOnline %>
 		<span class="on">(online)</span>
 		<% else %>

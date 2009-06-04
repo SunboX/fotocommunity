@@ -2,11 +2,15 @@
 
 class Page extends SiteTree
 {	
-	public static $db = array(
-	);
+	public static $db = array();
 	
-	public static $has_one = array(
-	);	
+	public static $has_one = array();
+	
+	public function Link($action = null)
+	{
+		$link = FCDirector::MakeLink($this, $action);
+		return $link == null ? parent::Link($action) : $link;
+	}
 }
 
 class Page_Controller extends ContentController

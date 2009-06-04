@@ -14,39 +14,6 @@ class MemberGalleryPage extends Page
 		}
 	}
 	
-	public function Link($action = null)
-	{
-		$id = Director::urlParam('ID');
-		if($action == null)
-		{
-			$action = 'my';
-			$id = $this->Member()->ID;
-		}
-		if(!is_numeric($id) || $id == 0)
-		{
-			return Director::baseURL();
-		}
-		return Director::baseURL() . $this->URLSegment . "/$action/$id";
-	}
-	
-	public function RelativeLink($action = null)
-	{
-		if($this->URLSegment)
-		{
-			$id = Director::urlParam('ID');
-			if($action == null) $action = 'my';
-			if(!is_numeric($id) || $id == 0)
-			{
-				return Director::baseURL();
-			}
-			return $this->URLSegment . "/$action/$id";
-		}
-		else
-		{
-			user_error("ContentController::RelativeLink() No URLSegment given on a '$this->class' object.  Perhaps you should overload it?", E_USER_WARNING);
-		}
-	}
-	
 	public function Member()
 	{
  		$member = null;
@@ -80,10 +47,6 @@ class MemberGalleryPage extends Page
 		if(is_numeric(Director::urlParam('ID')))
 		{
 			$gallery = DataObject::get_by_id('ImageGallery', Director::urlParam('ID'));
-		}
-		else
-		{
-			//Director::redirect(Director::baseURL());
 		}
 		return $gallery;
 	}
@@ -237,7 +200,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 					'upload_url' => $this->Link('handleSwfImageUpload'),
 					'required' => true,
 					'post_params' => 'ID:' . $this->Gallery()->ID,
-					'debug' => 'false'
+					'debug' => isset($_REQUEST['debug']) ? 'true' : 'false'
 				)
 			),
 			new HiddenField('ID', 'ID', $this->Gallery()->ID)
