@@ -82,6 +82,7 @@ class ClubMember extends DataObjectDecorator
 	public function LatestImages()
 	{
 		$images = DataObject::get('File', 'ImageGalleryID > 0 AND OwnerID = ' . $this->owner->ID, 'Created DESC', '', 5);
+		if($images){
 		foreach($images as $image)
 		{
 			//Klassenzuweisung für die Bildkonvertierung
@@ -93,6 +94,9 @@ class ClubMember extends DataObjectDecorator
 			
 			//TemplateControl setzen
 			$image->Thumbnail = $thumb;
+		}
+		}else{
+			$images = null;
 		}
 		return $images;
 	}

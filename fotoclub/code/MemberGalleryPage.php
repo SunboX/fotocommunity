@@ -20,7 +20,7 @@ class MemberGalleryPage extends Page
 		if($action == null)
 		{
 			$action = 'my';
-			$id = $this->Member()->ID;
+			$id = ($this->Member()) ? $this->Member()->ID : null;  // to check if logged in
 		}
 		if(!is_numeric($id) || $id == 0)
 		{
@@ -62,14 +62,16 @@ class MemberGalleryPage extends Page
 				if($this->Gallery() != null) $id = $this->Gallery()->MemberID;
 		}
  		
-		if($id)
+		/*if($id)
 		{
 			$member = DataObject::get_by_id('Member', $id);
 		}
 		else
 		{
 			$member = Member::currentUser();
-		}
+		}*/
+		
+		$member = ($id) ? DataObject::get_by_id('Member', $id) : Member::currentUser(); 
 		return $member;
 	}
 	
@@ -236,7 +238,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 					'button_text_top_padding' => '2',
 					'upload_url' => $this->Link('handleSwfImageUpload'),
 					'required' => true,
-					'post_params' => 'ID:' . $this->Gallery()->ID,
+					//'post_params' => 'ID:' . $this->Gallery()->ID,
 					'debug' => 'false'
 				)
 			),
@@ -260,10 +262,16 @@ class MemberGalleryPage_Controller extends Page_Controller
 			$do = DataObject::get_by_id('File', $file); //get the file object
 			$do->update(array(
 				'OwnerID' => $this->Member()->ID,
-				'ImageGalleryID' => $this->Gallery()->ID,	//set the directory
-				'ClassName' => 'Image' //set class to 'Image'
+				//'ImageGalleryID' => $this->Gallery()->ID,	//set the directory
+				'ImageGalleryID' => $data['ID'],	//set the directory
+				// Depracted
+				//'ClassName' => 'Image' //set class to 'Image'
 			)); 
 			$do->write();//write the changes
+			
+			$query = "UPDATE File SET ClassName = 'Image' where ID in ({$file})";
+			DB::query($query);			
+			
 		}
 		Director::redirect('galleries/my/' . $this->Member()->ID);
 	}

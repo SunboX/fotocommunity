@@ -17,8 +17,8 @@ global $databaseConfig;
 $databaseConfig = array(
 	"type" => "MySQLDatabase",
 	"server" => "localhost", 
-	"username" => "root", 
-	"password" => "", 
+	"username" => "fotoclub", 
+	"password" => "fotoclub", 
 	"database" => "fotoclub",
 );
 
@@ -46,7 +46,7 @@ DataObject::add_extension('Member', 'ClubMember');
 Object::add_extension('Member_Validator', 'ClubMember_Validator');
 DataObject::add_extension('File', 'ImageGalleryFile');
 
-Object::useCustomClass('HtmlEditorField_Toolbar', 'FotoclubHtmlEditorField_Toolbar');
+//Object::useCustomClass('HtmlEditorField_Toolbar', 'FotoclubHtmlEditorField_Toolbar');
 
 MemberTableField::addMembershipFields(array(
 	'Nickname' => 'Nickname',
