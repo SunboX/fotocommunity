@@ -13,9 +13,11 @@ class ClubMember extends DataObjectDecorator
 	/**
 	 * Update the database schema as required by this extension
 	 */
-	function augmentDatabase() {
+	function augmentDatabase()
+	{
 		$exist =  DB::query( "SHOW TABLES LIKE 'ClubMember'" )->numRecords();
-		if( $exist > 0 ) {
+		if($exist > 0)
+		{
 			DB::query( "UPDATE `Member`, `ClubMember` " .
 				"SET `Member`.`ClassName` = 'Member'," .
 				"`Member`.`Country` = `ClubMember`.`Country`," .
@@ -34,7 +36,8 @@ class ClubMember extends DataObjectDecorator
 	 * Return an map where the keys are db, has_one, etc, and the values are
 	 * additional fields/relations to be defined
 	 */
-	function extraDBFields() {
+	function extraDBFields()
+	{
 		$fields = array(
 			'db' => array(
 				'City' => 'Varchar',
@@ -82,20 +85,23 @@ class ClubMember extends DataObjectDecorator
 	public function LatestImages()
 	{
 		$images = DataObject::get('File', 'ImageGalleryID > 0 AND OwnerID = ' . $this->owner->ID, 'Created DESC', '', 5);
-		if($images){
-		foreach($images as $image)
+		if($images)
 		{
-			//Klassenzuweisung für die Bildkonvertierung
-			$imgClass = $image->newClassInstance('ImageGallery_Image');
-			$smallImage = $imgClass->getFormattedImage('ResizeRatio', $this->ThumbnailWidth, $this->ThumbnailHeight); // und für verkleinertes Bild.
-			
-			//Bildstring zusammenbauen
-			$thumb = '<img src="' . Director::baseURL() . $smallImage->Filename . '" alt="' . $smallImage->Title . '" class="thumbnail" />';
-			
-			//TemplateControl setzen
-			$image->Thumbnail = $thumb;
+			foreach($images as $image)
+			{
+				//Klassenzuweisung für die Bildkonvertierung
+				$imgClass = $image->newClassInstance('ImageGallery_Image');
+				$smallImage = $imgClass->getFormattedImage('ResizeRatio', $this->ThumbnailWidth, $this->ThumbnailHeight); // und für verkleinertes Bild.
+				
+				//Bildstring zusammenbauen
+				$thumb = '<img src="' . Director::baseURL() . $smallImage->Filename . '" alt="' . $smallImage->Title . '" class="thumbnail" />';
+				
+				//TemplateControl setzen
+				$image->Thumbnail = $thumb;
+			}
 		}
-		}else{
+		else
+		{
 			$images = null;
 		}
 		return $images;
@@ -120,15 +126,15 @@ class ClubMember extends DataObjectDecorator
 		$gravatarText = '<small>' . 'If you use Gravatars then leave this blank' . '</small>';
 
 		$personalDetailsFields = new CompositeField(	
-			new TextField("Nickname", 'Spitzname'),
-			new TextField("FirstName", 'Vorname'),
-			new TextField("Surname", 'Nachname'),
+			//new TextField('Nickname', 'Spitzname'),
+			new TextField('FirstName', 'Vorname'),
+			new TextField('Surname', 'Nachname'),
 			new TextField('City', 'Stadt'),
 			new CountryDropdownField("Country", 'Land'),
-			new EmailField("Email", 'E-Mail'),
-			new PasswordField("Password", 'Passwort'),
-			new PasswordField("ConfirmPassword", 'Passwort wiederholen'),
-			new SimpleImageField("Avatar", 'Profilfoto hochladen ' . $gravatarText)
+			new EmailField('E-Mail', 'E-Mail'),
+			new PasswordField('Password', 'Passwort'),
+			new PasswordField('ConfirmPassword', 'Passwort wiederholen'),
+			new SimpleImageField('Avatar', 'Profilfoto hochladen ' . $gravatarText)
 		);
 		$personalDetailsFields->setID('PersonalDetailsFields');
 		
@@ -139,12 +145,12 @@ class ClubMember extends DataObjectDecorator
 
 	function updateCMSFields(FieldSet &$fields)
 	{
-		if(Permission::checkMember($this->owner->ID, "ACCESS_FOTOCLUB"))
+		if(Permission::checkMember($this->owner->ID, 'ACCESS_FOTOCLUB'))
 		{
-			$fields->addFieldToTab('Root.Fotoclub',new TextField("Nickname", "Nickname"), "FirstName");
-			$fields->addFieldToTab('Root.Fotoclub',new TextField("Occupation", "Occupation"), "Surname");
-			$fields->addFieldToTab('Root.Fotoclub',new CountryDropdownField("Country", "Country"), "Occupation");
-			$fields->addFieldToTab('Root.Fotoclub',new ImageField("Avatar", "Upload avatar."));
+			$fields->addFieldToTab('Root.Fotoclub',new TextField('Nickname', 'Nickname'), 'FirstName');
+			$fields->addFieldToTab('Root.Fotoclub',new TextField('Occupation', 'Occupation'), 'Surname');
+			$fields->addFieldToTab('Root.Fotoclub',new CountryDropdownField('Country', 'Country'), 'Occupation');
+			$fields->addFieldToTab('Root.Fotoclub',new ImageField('Avatar', 'Upload avatar.'));
 		}
 	}
 
@@ -154,7 +160,8 @@ class ClubMember extends DataObjectDecorator
 	 *
 	 * @return true if this member can be edited, false otherwise
 	 */
-	function canEdit() {
+	function canEdit()
+	{
 		if($this->owner->ID == Member::currentUserID()) return true;
 
 		if($member = Member::currentUser()) return $member->can('AdminCMS');
@@ -174,9 +181,11 @@ class ClubMember extends DataObjectDecorator
 	 * Provides a default for the nickname field (first name, or "Anonymous
 	 * User" if that's not set)
 	 */
-	function Nickname() {
-		if($this->owner->Nickname) return $this->owner->Nickname;
-		elseif($this->owner->FirstName) return $this->owner->FirstName;
+	function Nickname()
+	{
+		//if($this->owner->Nickname) return $this->owner->Nickname;
+		//elseif($this->owner->FirstName) return $this->owner->FirstName;
+		if($this->owner->FirstName) return $this->owner->FirstName;
 		else return 'Anonymous user';
 	}
 	
@@ -187,8 +196,8 @@ class ClubMember extends DataObjectDecorator
 	 * 
 	 * @return String
 	 */
-	function GetAvatar() {
-
+	function GetAvatar()
+	{
 		$default = 'images/ClubMember_holder.gif';
 		if(file_exists('themes/' . SSViewer::current_theme() . '/images/ClubMember_holder.gif'))
 		{
@@ -222,8 +231,8 @@ class ClubMember extends DataObjectDecorator
  * This class is used to validate the new fields added by the
  * {@link ClubMember} decorator in the CMS backend.
  */
-class ClubMember_Validator extends Extension {
-
+class ClubMember_Validator extends Extension
+{
 	/**
 	 * Client-side validation code
 	 *
@@ -231,8 +240,8 @@ class ClubMember_Validator extends Extension {
 	 * @return string Returns the needed javascript code for client-side
 	 *                validation.
 	 */
-	function updateJavascript(&$js, &$form) {
-
+	function updateJavascript(&$js, &$form)
+	{
 		$formID = $form->FormName();
 		$passwordFieldName = $form->dataFieldByName('Password')->id();
 
@@ -243,20 +252,26 @@ class ClubMember_Validator extends Extension {
 
 		$passwordcheck = <<<JS
 Behaviour.register({
-	"#$formID": {
-		validatePasswordConfirmation: function() {
+	"#$formID":
+	{
+		validatePasswordConfirmation: function()
+		{
 			var passEl = _CURRENT_FORM.elements['Password'];
 			var confEl = _CURRENT_FORM.elements['ConfirmPassword'];
 
-			if(passEl.value == confEl.value) {
+			if(passEl.value == confEl.value)
+			{
 			  clearErrorMessage(confEl.parentNode);
 				return true;
-			} else {
+			}
+			else
+			{
 				validationError(confEl, "Passwords don't match.", "error");
 				return false;
 			}
 		},
-		initialize: function() {
+		initialize: function()
+		{
 			var passEl = $('$passwordFieldName');
 			var confEl = $('$passwordConfirmFieldName');
 
@@ -265,8 +280,7 @@ Behaviour.register({
 	}
 });
 JS;
-		Requirements::customScript($passwordcheck,
-															 'func_validatePasswordConfirmation');
+		Requirements::customScript($passwordcheck, 'func_validatePasswordConfirmation');
 
 		$js .= "\$('$formID').validatePasswordConfirmation();";
 		return $js;

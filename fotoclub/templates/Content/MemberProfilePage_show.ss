@@ -1,7 +1,7 @@
 <% if CurrentProfile %>
 
 <% if IsEditable %>
-<a href="profil/edit/<% control CurrentProfile %>$ID<% end_control %>"class="edit_link">Profil bearbeiten</a>
+<a href="profile/edit/<% control CurrentProfile %>$ID<% end_control %>"class="edit_link">Profil bearbeiten</a>
 <% end_if %>
 
 <% control CurrentProfile %>
