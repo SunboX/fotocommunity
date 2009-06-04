@@ -17,8 +17,8 @@ global $databaseConfig;
 $databaseConfig = array(
 	"type" => "MySQLDatabase",
 	"server" => "localhost", 
-	"username" => "fotoclub", 
-	"password" => "fotoclub", 
+	"username" => "root", 
+	"password" => "", 
 	"database" => "fotoclub",
 );
 

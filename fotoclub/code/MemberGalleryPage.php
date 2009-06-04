@@ -201,13 +201,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 					'button_text_top_padding' => '2',
 					'upload_url' => $this->Link('handleSwfImageUpload'),
 					'required' => true,
-<<<<<<< HEAD:fotoclub/code/MemberGalleryPage.php
-					'post_params' => 'ID:' . $this->Gallery()->ID,
 					'debug' => isset($_REQUEST['debug']) ? 'true' : 'false'
-=======
-					//'post_params' => 'ID:' . $this->Gallery()->ID,
-					'debug' => 'false'
->>>>>>> 59dd463954419ac938bac33941c2b9004e609dd0:fotoclub/code/MemberGalleryPage.php
 				)
 			),
 			new HiddenField('ID', 'ID', $this->Gallery()->ID)
