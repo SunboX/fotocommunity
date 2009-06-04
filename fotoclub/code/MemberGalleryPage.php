@@ -112,7 +112,8 @@ class MemberGalleryPage_Controller extends Page_Controller
 	
 	public function delete_image() {
 		$imageID = Director::urlParam('OtherID');
-		if(DataObject::get_by_id('Image', $imageID)->OwnerID = Member::currentUserID()){
+		if(DataObject::get_by_id('Image', $imageID)->OwnerID = Member::currentUserID())
+		{
 			DataObject::delete_by_id('Image', $imageID);
 		}
 		Director::redirect(Director::baseURL() . 'galleries/show/' . Director::urlParam('ID'));
