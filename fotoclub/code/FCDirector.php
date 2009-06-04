@@ -17,7 +17,7 @@ class FCDirector extends Director
 				{
 					$action = 'show';
 					$p = new MemberGalleryPage();
-					$id = $p->Member()->ID;
+					$id = ($p->Member()) ? $p->Member()->ID : null;  // to check if logged in
 				}
 				if(!is_numeric($id) || $id == 0) return;
 				return FCDirector::baseURL() . $page->URLSegment . "/$action/$id";
@@ -27,7 +27,7 @@ class FCDirector extends Director
 				if($action == null)
 				{
 					$action = 'my';
-					$id = $page->Member()->ID;
+					$id = ($page->Member()) ? $page->Member()->ID : null;  // to check if logged in
 				}
 				if(!is_numeric($id) || $id == 0) return;
 				return Director::baseURL() . $page->URLSegment . "/$action/$id";
