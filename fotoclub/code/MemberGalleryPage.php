@@ -240,6 +240,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 			)); 
 			$do->write();//write the changes
 			
+                        //Set the uploaded file to classname 'Image'!
 			$query = "UPDATE File SET ClassName = 'Image' where ID in ({$file})";
 			DB::query($query);			
 			
