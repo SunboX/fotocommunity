@@ -645,9 +645,9 @@ class Installer extends InstallRequirements {
 <html>
 	<head>
 		<title>PHP 5 is required</title>
-		<link rel="stylesheet" type="text/css" href="themes/blackcandy/css/layout.css" />
-		<link rel="stylesheet" type="text/css" href="themes/blackcandy/css/typography.css" />
-		<link rel="stylesheet" type="text/css" href="themes/blackcandy/css/form.css" />
+		<link rel="stylesheet" type="text/css" href="themes/fotoclub/css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="themes/fotoclub/css/typography.css" />
+		<link rel="stylesheet" type="text/css" href="themes/fotoclub/css/form.css" />
 		<link rel="stylesheet" type="text/css" href="sapphire/dev/install/install.css" />
 		<script src="jsparty/jquery/jquery.js"></script>
 	</head>
@@ -704,7 +704,7 @@ class Installer extends InstallRequirements {
 		if(file_exists('fotoclub/_config.php')) {
 			unlink('fotoclub/_config.php');
 		}
-		$theme = isset($_POST['template']) ? $_POST['template'] : 'blackcandy';
+		$theme = isset($_POST['template']) ? $_POST['template'] : 'fotoclub';
 		// Write the config file
 		global $usingEnv;
 		if($usingEnv) {
@@ -737,7 +737,6 @@ PHP
 			$escapedPassword = addslashes($config['mysql']['password']);
 			$this->createFile("fotoclub/_config.php", <<<PHP
 <?php
-
 global \$project;
 \$project = 'fotoclub';
 
@@ -759,6 +758,34 @@ Director::set_dev_servers($devServers);
 // This line set's the current theme. More themes can be
 // downloaded from http://www.silverstripe.com/themes/
 SSViewer::set_theme('$theme');
+
+//Add custom install commands
+require_once('lib/FirePHP/FirePHP.class.php');
+require_once('lib/FirePHP/fb.php');
+\$firephp = FirePHP::getInstance(true);
+\$firephp->setEnabled(true);
+
+global \$fotoclub_config;
+\$fotoclub_config = array(
+	'group' => array('Administrators', 'Clubmitglieder')
+);
+
+i18n::enable();
+i18n::set_locale('de_DE');
+//i18n::set_default_lang('de_DE');
+setlocale(LC_ALL, 'de_DE@euro', 'de_DE', 'de', 'ge');
+setlocale(LC_TIME, i18n::get_locale() . '.utf8');
+
+DataObject::add_extension('Member', 'ClubMember');
+Object::add_extension('Member_Validator', 'ClubMember_Validator');
+DataObject::add_extension('File', 'ImageGalleryFile');
+
+MemberTableField::addMembershipFields(array(
+	'Nickname' => 'Nickname',
+	'Occupation' => 'Occupation',
+	'Country' => 'Country'
+));
+
 
 ?>
 PHP
