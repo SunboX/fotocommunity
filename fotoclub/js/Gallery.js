@@ -5,7 +5,7 @@
 {
 	$(document).ready(function()
 	{
-		$('#delete_image_link').click(function(e)
+		$('.delete_image_link').click(function(e)
 		{
 			if(!confirm('Möchtest du dieses Foto wirklich löschen?'))
 			{

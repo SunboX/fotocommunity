@@ -6,7 +6,7 @@
 	<span class="separator">|</span>
 	<a href="galleries/upload/<% control CurrentGallery %>$ID<% end_control %>">Fotos hinzufügen</a>
 	<span class="separator">|</span>
-	<a href="galleries/order-images/<% control CurrentGallery %>$ID<% end_control %>">Reihenfolge der Fotos ändern</a>
+	<a href="galleries/modify-images/<% control CurrentGallery %>$ID<% end_control %>">Reihenfolge und Titel der Fotos ändern</a>
 	<% end_if %>
 </span>
 
@@ -21,7 +21,13 @@
 	<% end_if %>
 
 	<% control EnlargableThumbnails %>
-	$Thumbnail
+	<div class="thumbnail_container">
+		$Thumbnail
+		<a href="galleries/show-image/$ImageGalleryID/$ID" class="title">Hello Image World!</a>
+		<span class="comments">20 Anmerkungen</span>
+		<span class="clicks">100 Klicks</span>
+		<a href="galleries/delete-image/$ImageGalleryID/$ID" class="delete_image_link">[Dieses Foto löschen]</a>
+	</div>
 	<% end_control %>
 	
 	<br class="clear" />
