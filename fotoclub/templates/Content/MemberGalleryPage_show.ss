@@ -26,6 +26,7 @@
 		<a href="galleries/show-image/$ImageGalleryID/$ID" class="title">Hello Image World!</a>
 		<span class="comments">20 Anmerkungen</span>
 		<span class="clicks">100 Klicks</span>
+		<a href="galleries/modify-images/$ImageGalleryID" class="edit_image_link">[Titel ändern]</a>
 		<a href="galleries/delete-image/$ImageGalleryID/$ID" class="delete_image_link">[Dieses Foto löschen]</a>
 	</div>
 	<% end_control %>

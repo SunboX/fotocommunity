@@ -17,10 +17,11 @@
 .lightbox .thumbnail_container { float: left; margin-right: 15px; margin-top: 15px; width: 298px; background: #ddd; }
 .lightbox .thumbnail_container a.thumbnail { float: left; display: block; margin-right: 9px; text-align: center; background: #ddd; width: 175px; border: #999 1px solid; }
 .lightbox .thumbnail_container a:hover.thumbnail { border-color: #0F3F7A; }
-.lightbox .thumbnail_container .title { display: block; margin-bottom: 5px; font-size: 11px; font-weight: bold; color: #000; }
+.lightbox .thumbnail_container .title { display: block; margin-bottom: 5px; font-size: 11px; font-weight: bold; }
 .lightbox .thumbnail_container .comments { display: block; font-size: 10px; }
 .lightbox .thumbnail_container .clicks { display: block; font-size: 10px; }
-.lightbox .thumbnail_container .delete_image_link { display: block; font-size: 10px; margin-top: 5px; }
+.lightbox .thumbnail_container .edit_image_link { display: block; font-size: 10px; margin-top: 5px; text-decoration: none; }
+.lightbox .thumbnail_container .delete_image_link { display: block; font-size: 10px; margin-top: 0px; text-decoration: none; }
 
 #the_image { float: left; width: 100%;  text-align: center; background: #ddd; }
 
