@@ -1,9 +1,11 @@
 <div id="PageComments_holder" class="typography">
-	
+
+	<% if Comments %>
+
 	<h4>Anmerkungen</h4>
 	
 	<div id="CommentHolder">
-		<% if Comments %>
+		
 			<ul id="PageComments">
 				<% control Comments %>
 					<li class="$EvenOdd<% if FirstLast %> $FirstLast <% end_if %> $SpamClass">
@@ -35,10 +37,9 @@
 					</p>
 				</div>
 			<% end_if %>
-		<% else %>
-			<p id="NoComments">Zu diesem Foto gibt es noch keine Anmerkung.</p>
-		<% end_if %>
+		
 	</div>
+	<% end_if %>
 	
 	<% if CanPostComment %>
 		<h4>Eine Anmerkungen schreiben</h4>
