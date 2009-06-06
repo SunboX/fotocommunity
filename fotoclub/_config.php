@@ -55,5 +55,14 @@ MemberTableField::addMembershipFields(array(
 	'Country' => 'Country'
 ));
 
+/**
+ * Extended URL rules for the CMS module
+ * 
+ * @package cms
+ */
+Director::addRules(60, array(
+	'PageComment//$Action/$ID' => 'FCPageComment_Controller'
+));
+
 
 ?>
