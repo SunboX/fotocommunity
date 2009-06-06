@@ -22,7 +22,7 @@
 			
 			var overlay1 = $('<div class="lights_off_overlay"></div>').css(
 			{
-				height: $(document.body).height()
+				height: ($(document).height() - 4)
 			});
 			var overlay2 = $('<div class="lights_off_overlay_content"></div>').css(
 			{
