@@ -1,5 +1,5 @@
 <span class="edit_link_50l">
-	<a href="galleries/show/<% control CurrentGallery %>$ID<% end_control %>">« Zurück</a>
+	<a href="galleries/show/<% control CurrentGallery %>$ID<% end_control %>">« Zurück zum Album</a>
 	<% if CanEditGallery %>
 	<span class="separator">|</span>
 	<a href="galleries/delete-image/<% control CurrentGallery %>$ID<% end_control %>/<% control CurrentImage %>$ID<% end_control %>" class="delete_image_link">Dieses Foto löschen</a>

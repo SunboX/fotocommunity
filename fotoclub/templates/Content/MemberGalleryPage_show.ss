@@ -1,5 +1,5 @@
 <span class="edit_link">
-	<a href="galleries/my/<% control CurrentProfile %>$ID<% end_control %>">« Zurück</a>
+	<a href="galleries/my/<% control CurrentProfile %>$ID<% end_control %>">« Zurück zu $CurrentProfile.Nickname´s Alben</a>
 	<% if CanEditGallery %>
 	<span class="separator">|</span>
 	<a href="galleries/edit/<% control CurrentGallery %>$ID<% end_control %>">Albuminformationen bearbeiten</a>
