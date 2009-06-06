@@ -41,8 +41,9 @@
 	</div>
 	<% end_if %>
 	
-	<% if CanPostComment %>
 		<h4>Eine Anmerkungen schreiben</h4>
+	
+	<% if CanPostComment %>
 		
 		$PostCommentForm
 		
