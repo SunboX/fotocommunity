@@ -7,7 +7,7 @@
 	{
 		$('#delete_image_link').click(function(e)
 		{
-			if(!confirm('Möchtest du dieses Bild wirklich löschen?'))
+			if(!confirm('Möchtest du dieses Foto wirklich löschen?'))
 			{
 				e.preventDefault();
 			}
@@ -38,7 +38,7 @@
 				overlay2.remove();
 				overlay1 = overlay2 = null;
             });
-			overlay2.append($('<a href="#" id="switch_lights_on">Licht an</a>').click(function(e)
+			overlay2.append($('<a href="#" id="switch_lights_on">Licht wieder an</a>').click(function(e)
 			{
 				e.preventDefault();
 				
@@ -46,9 +46,9 @@
 				overlay2.remove();
 				overlay1 = overlay2 = null;
             }));
-			overlay2.append($('<img src="' + img[0].src + '" />'));
+			overlay2.append($(img[0]).clone());
 			
-			overlay1.css('opacity', 0.9); 
+			overlay1.css('opacity', 0.9).fadeIn('fast'); 
 			overlay1.appendTo('body');
 			overlay2.appendTo('body');
 		});
