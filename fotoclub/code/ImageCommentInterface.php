@@ -16,6 +16,7 @@ class ImageCommentInterface extends PageCommentInterface
 	function PostCommentForm()
 	{
 		$form = parent::PostCommentForm();
+		$form->Fields()->removeByName('NameView');
 		$form->Fields()->removeByName('CommenterURL');
 		return $form;
 	}
