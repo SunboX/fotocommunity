@@ -105,9 +105,10 @@ class MemberGalleryPage_Controller extends Page_Controller
 		return array('CurrentProfile' => $this->Member(), 'CurrentGallery' => $this->Gallery(), 'CurrentImage' => $this->Image());
 	}
 	
-	public function delete_image() {
+	public function delete_image()
+	{
 		$imageID = Director::urlParam('OtherID');
-		if(DataObject::get_by_id('Image', $imageID)->OwnerID = Member::currentUserID())
+		if(DataObject::get_by_id('Image', $imageID)->newClassInstance('ImageGallery_Image')->CanEditImage())
 		{
 			DataObject::delete_by_id('Image', $imageID);
 		}

@@ -85,6 +85,11 @@ class ImageGallery_Image extends Image
 		return $this->SetWidth($width);
 	}
 	
+	public function CanEditImage()
+	{
+		return $this->OwnerID = Member::currentUserID();
+	}
+	
 	public function IsFirst() {}
 	public function IsLast() {}
 	public function PrevImage() {}
