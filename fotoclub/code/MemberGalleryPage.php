@@ -315,4 +315,23 @@ class MemberGalleryPage_Controller extends Page_Controller
 			'MemberID = ' . $this->Member()->ID
 		);
 	}
+	
+	/**
+	 * Returns a image comment system
+	 */
+	function ImageComments()
+	{
+		if($this->data() && $this->data()->ProvideComments)
+		{
+			return new ImageCommentInterface($this, 'ImageComments', $this->data());
+		}
+		else
+		{
+			if(isset($_REQUEST['executeForm']) && $_REQUEST['executeForm'] == 'PageComments.PostCommentForm')
+			{
+				echo 'Comments have been disabled for this page';
+				die();
+			}
+		}
+	}
 }

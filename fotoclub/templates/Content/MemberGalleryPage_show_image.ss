@@ -21,4 +21,6 @@
 <p>Das Foto wurde nicht gefunden.</p>
 <% end_if %>
 
-$PageComments
+<br class="clear" />
+
+$ImageComments

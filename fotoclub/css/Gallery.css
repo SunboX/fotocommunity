@@ -16,6 +16,8 @@
 .lightbox a.thumbnail { float: left; display: block; margin-right: 9px; margin-top: 9px; text-align: center; background: #ddd; width: 175px; border: #999 1px solid; }
 .lightbox a:hover.thumbnail { border-color: #0F3F7A; }
 
+#the_image { float: left; width: 100%;  text-align: center; background: #ddd; }
+
 #flashUI { margin-top: 5px; }
 .lights_off_overlay { position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background: #000; z-index: 9998; }
 .lights_off_overlay_content { z-index: 9999; margin-top: -22px; }

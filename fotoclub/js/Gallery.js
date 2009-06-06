@@ -48,9 +48,12 @@
             }));
 			overlay2.append($(img[0]).clone());
 			
-			overlay1.css('opacity', 0.9).fadeIn('fast'); 
+			overlay1.css('opacity', 0); 
+			overlay2.css('opacity', 0); 
 			overlay1.appendTo('body');
 			overlay2.appendTo('body');
+			overlay1.css('opacity', 0.9).fadeIn('fast'); 
+			overlay2.css('opacity', 1).fadeIn('slow'); 
 		});
 	});
 	
