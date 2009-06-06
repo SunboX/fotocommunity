@@ -45,6 +45,7 @@ SSViewer::set_theme('fotoclub');
 DataObject::add_extension('Member', 'ClubMember');
 Object::add_extension('Member_Validator', 'ClubMember_Validator');
 DataObject::add_extension('File', 'ImageGalleryFile');
+DataObject::add_extension('PageComment', 'FCPageComment');
 
 //Object::useCustomClass('HtmlEditorField_Toolbar', 'FotoclubHtmlEditorField_Toolbar');
 

@@ -11,9 +11,11 @@ class ImageGalleryFile extends DataObjectDecorator
 	/**
 	 * Update the database schema as required by this extension
 	 */
-	function augmentDatabase() {
+	function augmentDatabase()
+	{
 		$exist =  DB::query( "SHOW TABLES LIKE 'ImageGalleryFile'" )->numRecords();
-		if( $exist > 0 ) {
+		if($exist > 0)
+		{
 			DB::query( "UPDATE `File`, `ImageGalleryFile` " .
 				"SET `File`.`ClassName` = 'File'," .
 				"`File`.`Created` = `ImageGalleryFile`.`Created`," .
@@ -38,7 +40,8 @@ class ImageGalleryFile extends DataObjectDecorator
 	 * Return an map where the keys are db, has_one, etc, and the values are
 	 * additional fields/relations to be defined
 	 */
-	function extraDBFields() {
+	function extraDBFields()
+	{
 		$fields = array(
 			'db' => array(
 				'ImageGalleryID' => 'Int'
