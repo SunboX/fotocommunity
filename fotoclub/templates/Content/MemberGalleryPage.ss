@@ -2,7 +2,7 @@
 <a href="galleries/new-gallery/<% control CurrentProfile %>$ID<% end_control %>"class="edit_link">Eine neues Album anlegen</a>
 <% end_if %>
 
-<h1>$CurrentMember.Nickname´s Fotoalben</h1>
+<h1>$CurrentProfile.Nickname´s Fotoalben</h1>
 
 <div class="galleries">
 <% if Galleries %>

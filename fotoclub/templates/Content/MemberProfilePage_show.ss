@@ -28,6 +28,7 @@
 
 <br class="clear" />
 
+<% if LatestImages %>
 <div class="lightbox">
 	<h3>$Nickname´s neueste Fotos</h3>
 	
@@ -39,6 +40,7 @@
 	
 	<br class="clear" />
 </div>
+<% end_if %>
 
 <% end_control %>
 <% else %>
