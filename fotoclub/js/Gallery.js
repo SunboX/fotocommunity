@@ -52,8 +52,8 @@
 			overlay2.css('opacity', 0); 
 			overlay1.appendTo('body');
 			overlay2.appendTo('body');
-			overlay1.css('opacity', 0.9).fadeIn('fast'); 
-			overlay2.css('opacity', 1).fadeIn('slow'); 
+			overlay2.css('opacity', 1).fadeIn('slow');
+			overlay1.css('opacity', 0.9).fadeIn('fast');
 		});
 	});
 	
