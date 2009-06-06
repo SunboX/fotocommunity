@@ -100,3 +100,4 @@ html body ol li.lt { border-bottom: 0; }
 
 #PageComments_holder h4 { margin-top: 20px; }
 #PageCommentInterface_Form_PostCommentForm_NameView { display: block; margin-bottom: 10px; color: #666; }
+#CommentsRSSFeed { display: block; width: 100%; text-align: right; }
