@@ -61,7 +61,7 @@ class ImageGallery extends DataObject
 	
 	private function fetchImages()
 	{
-		if($this->images_cache == null) $this->images_cache = DataObject::get('File', 'ImageGalleryID = ' . $this->ID . ' AND OwnerID = ' . $this->MemberID);
+		if($this->images_cache == null) $this->images_cache = DataObject::get('File', 'ImageGalleryID = ' . $this->ID . ' AND OwnerID = ' . $this->MemberID, 'Sort DESC');
 		return $this->images_cache ? $this->images_cache : new DataObjectSet();
 	}
 	
@@ -84,6 +84,11 @@ class ImageGallery_Image extends Image
 		if($this->getWidth() <= $width) return $this;
 		return $this->SetWidth($width);
 	}
+	
+	public function IsFirst() {}
+	public function IsLast() {}
+	public function PrevImage() {}
+	public function NextImage() {}
 }
 
 ?>
