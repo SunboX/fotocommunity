@@ -1,5 +1,7 @@
-.edit_link { display: block; margin-bottom: 10px; }
-.edit_link .separator { margin-left: 5px; margin-right: 5px; }
+.edit_link, .edit_link_50l, .edit_link_50r { display: block; margin-bottom: 10px; }
+.edit_link .separator, .edit_link_50l .separator, .edit_link_50r .separator { margin-left: 5px; margin-right: 5px; }
+.edit_link_50l { float: left; width: 50%; }
+.edit_link_50r { float: right; width: 50%; text-align: right; }
 
 .galleries {}
 .galleries .gallery { float: left; background: #DCDCDC; padding: 10px; width: 175px; margin-right: 10px; margin-bottom: 10px; }
@@ -15,3 +17,7 @@
 .lightbox a:hover.thumbnail { border-color: #0F3F7A; }
 
 #flashUI { margin-top: 5px; }
+.lights_off_overlay { position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background: #000; z-index: 9998; }
+.lights_off_overlay_content { z-index: 9999; margin-top: -22px; }
+.lights_off_overlay_content #switch_lights_on { display: block; width: 100%; text-align: right; color: #fff; height: 22px; font-weight: bold; }
+.lights_off_overlay_content img { }

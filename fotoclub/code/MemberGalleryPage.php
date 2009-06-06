@@ -28,15 +28,6 @@ class MemberGalleryPage extends Page
 			default:
 				if($this->Gallery() != null) $id = $this->Gallery()->MemberID;
 		}
- 		
-		/*if($id)
-		{
-			$member = DataObject::get_by_id('Member', $id);
-		}
-		else
-		{
-			$member = Member::currentUser();
-		}*/
 		
 		$member = ($id) ? DataObject::get_by_id('Member', $id) : Member::currentUser(); 
 		return $member;
@@ -72,6 +63,10 @@ class MemberGalleryPage_Controller extends Page_Controller
 	function init()
 	{
 		Requirements::themedCSS('Gallery');
+		
+		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
+		Requirements::javascript('fotoclub/js/Gallery.js');
+		
 		$member = $this->Member() ? $this->Member() : null;
 		$nicknameText = ($member) ? ($member->Nickname . '\'s ') : '';
 		
