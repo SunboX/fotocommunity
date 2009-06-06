@@ -33,7 +33,7 @@
 	
 	<div class="images">
 	<% control LatestImages %>
-		<div class="thumbnail"><a href="galleries/show/$ImageGalleryID" class="thumbnail">$Thumbnail</a></div>
+		<div class="thumbnail"><a href="galleries/show-image/$ImageGalleryID/$ID" class="thumbnail">$Thumbnail</a></div>
 	<% end_control %>
 	</div>
 	

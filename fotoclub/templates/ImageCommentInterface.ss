@@ -36,7 +36,7 @@
 				</div>
 			<% end_if %>
 		<% else %>
-			<p id="NoComments">Zu diesem Foto gibt es noch keine Anmerkungen.</p>
+			<p id="NoComments">Zu diesem Foto gibt es noch keine Anmerkung.</p>
 		<% end_if %>
 	</div>
 	
