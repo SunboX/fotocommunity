@@ -15,7 +15,7 @@ class ClubMember extends DataObjectDecorator
 	 */
 	function augmentDatabase()
 	{
-		$exist =  DB::query( "SHOW TABLES LIKE 'ClubMember'" )->numRecords();
+		$exist =  DB::query("SHOW TABLES LIKE 'ClubMember'")->numRecords();
 		if($exist > 0)
 		{
 			DB::query( "UPDATE `Member`, `ClubMember` " .

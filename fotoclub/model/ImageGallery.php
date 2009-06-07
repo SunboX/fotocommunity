@@ -35,6 +35,7 @@ class ImageGallery extends DataObject
 	public function Images($link = true)
 	{
 		$images = $this->fetchImages();
+		$newSet = new DataObjectSet();
 		foreach($images as $image)
 		{
 			//Klassenzuweisung für die Bildkonvertierung
@@ -49,9 +50,10 @@ class ImageGallery extends DataObject
 			if($link) $thumb .= '</a>';
 			
 			//TemplateControl setzen
-			$image->Thumbnail = $thumb;
+			$imgClass->Thumbnail = $thumb;
+			$newSet->push($imgClass);
 		}		
-		return $images;
+		return $newSet;
 	}
 	
 	public function ImagesCount()
@@ -88,6 +90,11 @@ class ImageGallery_Image extends Image
 	public function CanEditImage()
 	{
 		return $this->OwnerID = Member::currentUserID();
+	}
+	
+	function NumComments()
+	{
+		return (int) DB::query('SELECT COUNT(*) FROM PageComment WHERE PageOtherID = ' . $this->ID)->value();
 	}
 	
 	public function IsFirst() {}
