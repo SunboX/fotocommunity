@@ -107,3 +107,4 @@ html body ol li.lt { border-bottom: 0; }
 #PageComments p.comment { margin: 0px; }
 #PageComments .links { margin-top: 10px; }
 #PageComments .edit_link { font-size: 11px; display: inline; text-decoration: none; }
+#PageComments ul.actionLinks { display: none; }
