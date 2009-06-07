@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ToDo: Create a folder "Galleries" if not exist
+ * ToDo: Create a folder for every new Gallery inside the "Galleries" folder
+ * ToDo: move ervery Gallery image inside the Gallery-folder
+ */
+
 class ImageGallery extends DataObject
 {
 	private $images_cache = null;
