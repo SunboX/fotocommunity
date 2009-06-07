@@ -97,6 +97,7 @@ html body ol li.lt { border-bottom: 0; }
 #footer p {	margin: 0; }
 #footer a, #footer span { color: #000000; margin: 0 .5em; display: inline-block; height: 1.6em; overflow: hidden; text-decoration: none; }
 #footer a:hover { color: #b22222; }
+#footer p.copyright { font-size: 10px; margin-bottom: 10px; }
 
 #PageComments_holder h4 { margin-top: 20px; }
 #PageCommentInterface_Form_PostCommentForm_NameView { display: block; margin-bottom: 10px; color: #666; }

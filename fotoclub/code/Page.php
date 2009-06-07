@@ -26,6 +26,16 @@ class Page_Controller extends ContentController
 		Requirements::themedCSS("layout"); 
 		Requirements::themedCSS("typography"); 
 		Requirements::themedCSS("form"); 
+		
+		// Override HtmlEditorField's config with our own	
+		HtmlEditorConfig::get('fotoclub')->setOptions(array(
+			'content_css' => SSViewer::current_theme() ? THEMES_DIR . '/' . SSViewer::current_theme() : project() . '/css/editor.css',
+			'use_native_selects' => true, // fancy selects are bug as of SS 2.3.0
+		));
+		HtmlEditorConfig::get('fotoclub')->setButtonsForLine(1, array('bold', 'italic', 'underline', 'strikethrough', 'separator', 'undo', 'redo', 'separator', 'cut', 'copy', 'paste', 'separator', 'link', 'unlink', 'charmap'));
+		HtmlEditorConfig::get('fotoclub')->setButtonsForLine(2, array());
+		
+		HtmlEditorconfig::set_active('fotoclub');
 	}
 	
 	function NumNewMessages()

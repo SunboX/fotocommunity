@@ -11,17 +11,6 @@
 		<% require themedCSS(typography) %> 
 		<% require themedCSS(form) %> 
 		
-		<!--[if IE 6]>
-			<style type="text/css">
-			 @import url(themes/blackcandy/css/ie6.css);
-			</style> 
-		<![endif]-->
-		
-		<!--[if IE 7]>
-			<style type="text/css">
-			 @import url(themes/blackcandy/css/ie7.css);
-			</style> 
-		<![endif]-->
 	</head>
 <body>
 
