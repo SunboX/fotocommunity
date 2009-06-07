@@ -160,7 +160,7 @@ class ClubMember extends DataObjectDecorator
 	 *
 	 * @return true if this member can be edited, false otherwise
 	 */
-	function canEdit()
+	public function canEdit()
 	{
 		if($this->owner->ID == Member::currentUserID()) return true;
 
@@ -169,7 +169,7 @@ class ClubMember extends DataObjectDecorator
 		return false;
 	}
 	
-	function IsOnline()
+	public function IsOnline()
 	{
 		return strtotime($this->owner->LastVisited) > strtotime('-15 minutes');
 	}
@@ -181,7 +181,7 @@ class ClubMember extends DataObjectDecorator
 	 * Provides a default for the nickname field (first name, or "Anonymous
 	 * User" if that's not set)
 	 */
-	function Nickname()
+	public function Nickname()
 	{
 		//if($this->owner->Nickname) return $this->owner->Nickname;
 		//elseif($this->owner->FirstName) return $this->owner->FirstName;
@@ -196,7 +196,7 @@ class ClubMember extends DataObjectDecorator
 	 * 
 	 * @return String
 	 */
-	function GetAvatar()
+	public function GetAvatar()
 	{
 		$default = 'images/ClubMember_holder.gif';
 		if(file_exists('themes/' . SSViewer::current_theme() . '/images/ClubMember_holder.gif'))
@@ -220,6 +220,11 @@ class ClubMember extends DataObjectDecorator
 		return $grav_url;
 
 		return $default;
+	}
+	
+	public function GetPMLink()
+	{
+		// ToDo: generate a link to send a private message to this member
 	}
 }
 
