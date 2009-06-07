@@ -2,14 +2,14 @@
 <a href="galleries/new-gallery/<% control CurrentProfile %>$ID<% end_control %>"class="edit_link">Eine neues Album anlegen</a>
 <% end_if %>
 
-<h1>$CurrentProfile.Nickname´s Fotoalben</h1>
+<h1>$CurrentProfile.Nickname.XML´s Fotoalben</h1>
 
 <div class="galleries">
 <% if Galleries %>
 <% control Galleries %>
 
 <div class="gallery">
-	<div class="title"><a href="galleries/show/$ID">$Title</a></div>
+	<div class="title"><a href="galleries/show/$ID">$Title.XML</a></div>
 	<% if Thumbnails %>
 	<a href="galleries/show/$ID" class="thumbnail">$Thumbnails.First.Thumbnail</a>
 	<% else %>

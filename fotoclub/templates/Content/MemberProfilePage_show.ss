@@ -10,7 +10,7 @@
 	<div class="left">
 		
 		<span class="nick">
-			$Nickname
+			$Nickname.XML
 			<% if IsOnline %>
 			<span class="on">(online)</span>
 			<% else %>
@@ -30,7 +30,7 @@
 
 <% if LatestImages %>
 <div class="lightbox">
-	<h3>$Nickname´s neueste Fotos</h3>
+	<h3>$Nickname.XML´s neueste Fotos</h3>
 	
 	<div class="images">
 	<% control LatestImages %>

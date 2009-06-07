@@ -14,7 +14,7 @@
 <% if CurrentGallery %>
 <% control CurrentGallery %>
 	
-	<h1>$Title</h1>
+	<h1>$Title.XML</h1>
 	
 	<% if Description %>
 	<div class="description">$Description</div>
@@ -23,7 +23,7 @@
 	<% control EnlargableThumbnails %>
 		<div class="thumbnail_container">
 			$Thumbnail
-			<a href="galleries/show-image/$ImageGalleryID/$ID" class="title">$Title</a>
+			<a href="galleries/show-image/$ImageGalleryID/$ID" class="title">$Title.XML</a>
 			<span class="comments">$NumComments Anmerkung<% if NumComments != 1 %>en<% end_if %></span>
 			<span class="clicks">$Clicks Klick<% if Clicks != 1 %>s<% end_if %></span>
 			<% if CanEditImage %>

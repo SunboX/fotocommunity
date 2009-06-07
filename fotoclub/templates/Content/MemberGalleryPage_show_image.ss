@@ -15,7 +15,11 @@
 
 <% if CurrentImage %>
 	
-	<div id="the_image">$CurrentImage.SetMaxWidth(920)</div>
+	<div id="the_image">
+		$CurrentImage.SetMaxWidth(920)
+		<br />
+		$CurrentImage.Title.XML
+	</div>
 
 <% else %>
 <p>Das Foto wurde nicht gefunden.</p>
