@@ -82,6 +82,18 @@ class ClubMember extends DataObjectDecorator
 		}
 	}
 	
+	function NumImageGalleries()
+	{
+		if(is_numeric($this->owner->ID))
+		{
+			return (int) DB::query('SELECT COUNT(*) FROM ImageGallery WHERE MemberID = ' . $this->owner->ID)->value();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
 	public function LatestImages()
 	{
 		$images = DataObject::get('File', 'ImageGalleryID > 0 AND OwnerID = ' . $this->owner->ID, 'Created DESC', '', 5);
@@ -226,6 +238,11 @@ class ClubMember extends DataObjectDecorator
 	{
 		// ToDo: generate a link to send a private message to this member
 		return '#';
+	}
+	
+	public function GetImageGalleriesLink()
+	{
+		return 'galleries/my/' . $this->owner->ID;
 	}
 }
 

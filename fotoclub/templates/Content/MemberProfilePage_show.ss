@@ -22,7 +22,9 @@
 		
 		<br />
 		
-		<a href="$GetPMLink">$Nickname.XML eine Nachricht schicken</a>
+		<a href="$GetPMLink">$Nickname.XML eine Nachricht schicken</a><br />
+		<a href="$GetImageGalleriesLink">Zu $Nickname.XML´s Fotoalben ($NumImageGalleries)</a><br />
+		
 		
 	</div>
 	<div class="right">
