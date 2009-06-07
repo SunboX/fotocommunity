@@ -60,7 +60,6 @@ DataObject::add_extension('PageComment', 'FCPageComment');
 
 MemberTableField::addMembershipFields(array(
 	'Nickname' => 'Nickname',
-	'Occupation' => 'Occupation',
 	'Country' => 'Country'
 ));
 
