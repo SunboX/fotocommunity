@@ -15,7 +15,8 @@
 	<% end_if %>
 </p>
 
-<!--% if ApproveLink || SpamLink || HamLink || DeleteLink  FIX THIS! %-->
+<!--% if ApproveLink || SpamLink || HamLink || DeleteLink  TdDo: FIX THIS! %-->
+<!-- See: http://silverstripe.org/general-questions/show/261934?showPost=261934 -->
 <% if SpamLink || DeleteLink %>
 
 	<div class="links">

@@ -9,6 +9,7 @@ class FCDirector extends Director
 		if(!isset($params['URLSegment'])) return;
 		
 		$id = $params['ID'];
+		$otherid = $params['OtherID'];
 		
 		switch($page->URLSegment)
 		{
@@ -24,13 +25,21 @@ class FCDirector extends Director
 				break;
 				
 			case 'galleries':
+
+				if($params['Action'] == 'ImageComments' && $params['ID'] == 'PostCommentForm')
+				{
+					$action = 'show-image';
+					$id = (int)$_REQUEST['PageID'];
+					$otherid = (int)$_REQUEST['PageOtherID'];
+				}
+
 				if($action == null)
 				{
 					$action = 'my';
 					$id = ($page->Member()) ? $page->Member()->ID : $id;  // to check if logged in
 				}
 				if(!is_numeric($id) || $id == 0) return;
-				return Director::baseURL() . $page->URLSegment . "/$action/$id";
+				return Director::baseURL() . $page->URLSegment . "/$action/$id/$otherid";
 		}
 	}
 }
