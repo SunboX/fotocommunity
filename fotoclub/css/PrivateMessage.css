@@ -1,0 +1,5 @@
+.edit_link { display: block; margin-bottom: 20px; }
+
+.private_messages .message { margin-bottom: 10px; }
+.info { background: #ddd; padding: 10px; border-bottom: #ccc 2px solid; font-weight: bold; }
+.message { background: #ddd; padding: 10px; margin-bottom: 10px; }

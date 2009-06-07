@@ -1,14 +1,16 @@
-<h2>Your messages</h2>
+<a href="{$Link}post" class="edit_link">Eine Nachricht senden</a>
 
-<% if MyMessages %>
-<dl>
-	<% control MyMessages %>
-	<dt><b><a href="{$Top.Link}message/$ID">$Subject</a></b> from $From.FirstName $From.Surname</dt>
-	<dd><i>Sent on $Created.Date $Created.Time</i></dd>
-	<% end_control %>
-</dl>
-<% else %>
-<p>You have no messages.</p>
-<% end_if %>
+<h1>Deine Nachrichten</h1>
 
-<p><a href="{$Link}post">Send a message</a></p>
+<div class="private_messages">
+	<% if MyMessages %>
+	<dl class="message">
+		<% control MyMessages %>
+		<dt><b><a href="{$Top.Link}message/$ID">$Subject.XML</a></b> von $From.FirstName.XML $From.Surname.XML</dt>
+		<dd><i>Versand am $Created.Format(d.m.Y) um $Created.Format(H:i) Uhr</i></dd>
+		<% end_control %>
+	</dl>
+	<% else %>
+	<p>Du hast noch keine Nachrichten.</p>
+	<% end_if %>
+</div>

@@ -7,7 +7,7 @@ class PrivateMessagePage extends Page
 		if(!DataObject::get('PrivateMessagePage'))
 		{
 			$page = new PrivateMessagePage();
-			$page->Title = 'Private Messages';
+			$page->Title = 'Nachrichten';
 			$page->write();
 			$page->doPublish();
 		}
@@ -18,6 +18,7 @@ class PrivateMessagePage_Controller extends Page_Controller
 {
 	function init()
 	{
+		Requirements::themedCSS('PrivateMessage');
 		if(!Member::currentUserID()) Security::permissionFailure();
 		parent::init();
 	}
@@ -29,20 +30,34 @@ class PrivateMessagePage_Controller extends Page_Controller
 	
 	function PostMessageForm()
 	{
-		$members = DataObject::get('Member', '', 'Firstname, Surname');
-		$allMembers = array();
-		foreach($members as $member)
-		{
-			$allMembers[$member->ID] = "$member->FirstName $member->Surname"; 
-		}
 		$me = Member::currentUser();
-		return new Form($this, 'PostMessageForm', new FieldSet(
-			new ReadonlyField('From', 'From', "$me->FirstName $me->Surname"),
-			new DropdownField('ToID', 'Send message to', $allMembers),
-			new TextField('Subject'),
-			new HtmlEditorField('Body')
-		), new FieldSet(
-			new FormAction('doPostMessage', 'Send')
+		
+		$fields = new FieldSet(
+			new HiddenField('From', '', "$me->FirstName $me->Surname")
+		);
+		
+		if($this->urlParams['ID'] > 0)
+		{
+			$member = DataObject::get_by_id('Member', $this->urlParams['ID']);
+			$fields->push(new ReadonlyField('ToName', 'An Empfänger', "$member->FirstName $member->Surname"));
+			$fields->push(new HiddenField('ToID', '', $member->ID));
+		}
+		else
+		{
+			$members = DataObject::get('Member', '', 'Firstname, Surname');
+			$allMembers = array();
+			foreach($members as $member)
+			{
+				$allMembers[$member->ID] = "$member->FirstName $member->Surname"; 
+			}
+			$fields->push(new DropdownField('ToID', 'An Empfänger', $allMembers));
+		}
+		
+		$fields->push(new TextField('Subject', 'Betreff'));
+		$fields->push(new HtmlEditorField('Body', 'Nachricht'));
+		
+		return new Form($this, 'PostMessageForm', $fields, new FieldSet(
+			new FormAction('doPostMessage', 'Abschicken')
 		));
 	}
 	

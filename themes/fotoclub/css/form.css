@@ -4,6 +4,7 @@ fieldset h2 { color: #000; background: none; border: none; padding: 0; width: au
 fieldset .htmleditor { margin-bottom: 10px; }
 input.text, select, textarea, #Form_EditProfileForm_Avatar { width: 100%; margin-bottom: 10px; }
 textarea { height: 200px; }
+span.readonly { display: block; margin-bottom: 10px; color: #666; }
 
 
 /* SEARCH BOX 

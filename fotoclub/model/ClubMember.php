@@ -236,8 +236,8 @@ class ClubMember extends DataObjectDecorator
 	
 	public function GetPMLink()
 	{
-		// ToDo: generate a link to send a private message to this member
-		return '#';
+		// a link to send a private message to this member
+		return 'private-messages/post/' . $this->owner->ID;
 	}
 	
 	public function GetImageGalleriesLink()

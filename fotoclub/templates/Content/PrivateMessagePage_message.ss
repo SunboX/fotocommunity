@@ -1,15 +1,20 @@
-<p><a href="$Link">Back to my messages</a></p>
+<a href="$Link" class="edit_link">« Zurück zu meinem Nachrichten</a>
 
 <% if CurrentMessage %>
 <% control CurrentMessage %>
 
-<h2>$Subject</h2>
-<p>From: $From.FirstName $From.Surname</p>
-<p>Sent on: $Created.Date $Created.Time</p>
+<h1>$Subject.XML</h1>
 
-<p>$Body</p>
+<div class="info">Von: <a href="profile/show/$From.ID">$From.FirstName.XML $From.Surname.XML</a>, $Created.Format(d.m.Y) um $Created.Format(H:i) Uhr</div>
+<div class="message">
+	
+	$Body
+
+</div>
+
+<a href="#">Nachricht beantworten</a>
 
 <% end_control %>
 <% else %>
-<p>Sorry, I can't find that message</p>
+<p>Diese Nachricht konnte leider nicht gefunden werden.</p>
 <% end_if %>
