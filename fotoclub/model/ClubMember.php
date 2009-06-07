@@ -225,6 +225,7 @@ class ClubMember extends DataObjectDecorator
 	public function GetPMLink()
 	{
 		// ToDo: generate a link to send a private message to this member
+		return '#';
 	}
 }
 

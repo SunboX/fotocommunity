@@ -6,6 +6,7 @@
 .profile .nick { display: block; margin-bottom: 10px; font-size: 18px; font-weight: bold; color: #000; }
 .profile .nick .on { font-size: 10px; font-weight: normal; color: green; }
 .profile .nick .off { font-size: 10px; font-weight: normal; color: gray; }
+.profile .avatar { margin-bottom: 10px; }
 
 .lightbox { background: #DCDCDC; padding: 10px; }
 .lightbox .images div.thumbnail { float: left; margin-right: 10px; width: 170px; }

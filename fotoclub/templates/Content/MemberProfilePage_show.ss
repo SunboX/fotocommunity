@@ -10,7 +10,7 @@
 	<div class="left">
 		
 		<span class="nick">
-			$Nickname.XML
+			$FirstName.XML $Surname.XML
 			<% if IsOnline %>
 			<span class="on">(online)</span>
 			<% else %>
@@ -19,6 +19,11 @@
 		</span>
 		
 		<img src="$GetAvatar" class="avatar" width="80" />
+		
+		<br />
+		
+		<a href="$GetPMLink">$Nickname.XML eine Nachricht schicken</a>
+		
 	</div>
 	<div class="right">
 		<div class="signature">$Signature</div>
