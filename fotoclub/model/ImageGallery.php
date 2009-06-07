@@ -70,7 +70,7 @@ class ImageGallery extends DataObject
 	
 	private function fetchImages()
 	{
-		if($this->images_cache == null) $this->images_cache = DataObject::get('File', 'ImageGalleryID = ' . $this->ID . ' AND OwnerID = ' . $this->MemberID, 'Sort DESC');
+		if($this->images_cache == null) $this->images_cache = DataObject::get('File', 'ImageGalleryID = ' . $this->ID . ' AND OwnerID = ' . $this->MemberID, 'Sort ASC, ID ASC');
 		return $this->images_cache ? $this->images_cache : new DataObjectSet();
 	}
 	
@@ -132,10 +132,29 @@ class ImageGallery_Image extends Image
 		$this->write();//write the changes
 	}
 	
-	public function IsFirst() {}
-	public function IsLast() {}
-	public function PrevImage() {}
-	public function NextImage() {}
+	public function IsFirst()
+	{
+		return DB::query('SELECT COUNT(*) FROM File WHERE ImageGalleryID = ' . $this->ImageGalleryID . ' AND OwnerID = ' . $this->OwnerID . ' AND ( Sort < ' . $this->Sort . ' OR ( Sort = 0 AND ID < ' . $this->ID . '))')->value() == 0;
+	}
+	
+	public function IsLast()
+	{
+		return DB::query('SELECT COUNT(*) FROM File WHERE ImageGalleryID = ' . $this->ImageGalleryID . ' AND OwnerID = ' . $this->OwnerID . ' AND ( Sort > ' . $this->Sort . ' OR ( Sort = 0 AND ID > ' . $this->ID . '))')->value() == 0;
+	}
+	
+	public function PrevImage()
+	{
+		$images = DataObject::get('File', 'ImageGalleryID = ' . $this->ImageGalleryID . ' AND OwnerID = ' . $this->OwnerID . ' AND ( Sort < ' . $this->Sort . ' OR ( Sort = 0 AND ID < ' . $this->ID . '))', 'Sort ASC, ID DESC', '', '0,1');
+		if($images->Count() == 0) return $this;
+		return $images->First()->newClassInstance('ImageGallery_Image');
+	}
+	
+	public function NextImage()
+	{
+		$images = DataObject::get('File', 'ImageGalleryID = ' . $this->ImageGalleryID . ' AND OwnerID = ' . $this->OwnerID . ' AND ( Sort > ' . $this->Sort . ' OR ( Sort = 0 AND ID > ' . $this->ID . '))', 'Sort ASC, ID ASC', '', '0,1');
+		if($images->Count() == 0) return $this;
+		return $images->First()->newClassInstance('ImageGallery_Image');
+	}
 }
 
 ?>
