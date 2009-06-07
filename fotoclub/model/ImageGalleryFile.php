@@ -28,6 +28,7 @@ class ImageGalleryFile extends DataObjectDecorator
 				"`File`.`ParentID` = `ImageGalleryFile`.`ParentID`" .
 				"`File`.`OwnerID` = `ImageGalleryFile`.`OwnerID`" .
 				"`File`.`ImageGalleryID` = `ImageGalleryFile`.`ImageGalleryID`" .
+				"`File`.`Clicks` = `ImageGalleryFile`.`Clicks`" .
 				"WHERE `File`.`ID` = `ImageGalleryFile`.`ID`"
 			);
 			echo("<div style=\"padding:5px; color:white; background-color:blue;\">" . 'The data transfer has succeeded. However, to complete it, you must delete the ImageGalleryFile table. To do this, execute the query \"DROP TABLE \'ImageGalleryFile\'\".' . "</div>" );
@@ -44,7 +45,8 @@ class ImageGalleryFile extends DataObjectDecorator
 	{
 		$fields = array(
 			'db' => array(
-				'ImageGalleryID' => 'Int'
+				'ImageGalleryID' => 'Int',
+				'Clicks' => 'Int'
 			),
 			'has_one' => array(
 				'ImageGallery' => 'ImageGallery'

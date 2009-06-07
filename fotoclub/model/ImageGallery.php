@@ -76,6 +76,8 @@ class ImageGallery extends DataObject
 //Erweiterteklasse zur Erzeugung von Bildern
 class ImageGallery_Image extends Image
 {
+	protected $num_comments;
+	
 	public function generateResizeRatio($gd, $width, $height)
 	{
 		return $gd->resizeRatio($width, $height);
@@ -92,9 +94,35 @@ class ImageGallery_Image extends Image
 		return $this->OwnerID = Member::currentUserID();
 	}
 	
-	function NumComments()
+	public function NumComments()
 	{
-		return (int) DB::query('SELECT COUNT(*) FROM PageComment WHERE PageOtherID = ' . $this->ID)->value();
+		if($this->num_comments == null) $this->num_comments = (int) DB::query('SELECT COUNT(*) FROM PageComment WHERE PageOtherID = ' . $this->ID)->value();
+		return $this->num_comments;
+	}
+	
+	public function recognizeClick()
+	{
+		if(Member::currentUser() && Member::currentUser()->ID == $this->OwnerID)
+		{
+			// don't count own image clicks!
+			return;
+		}
+		
+		// don't count bots
+		global $fotoclub_config;
+		$remoteHostName = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+		foreach($fotoclub_config['bots'] as $key => $botHostName)
+		{
+			if(strpos($remoteHostName, $botHostName))
+			{
+				return;
+			}
+		}
+		
+		$this->update(array(
+			'Clicks' => $this->Clicks + 1 // increment counter
+		)); 
+		$this->write();//write the changes
 	}
 	
 	public function IsFirst() {}

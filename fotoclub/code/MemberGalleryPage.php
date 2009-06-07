@@ -102,6 +102,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 	
 	public function show_image()
 	{
+		$this->Image()->recognizeClick();
 		return array('CurrentProfile' => $this->Member(), 'CurrentGallery' => $this->Gallery(), 'CurrentImage' => $this->Image());
 	}
 	
