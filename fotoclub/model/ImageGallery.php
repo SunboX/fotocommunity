@@ -36,7 +36,7 @@ class ImageGallery extends DataObject
 	{
 		$images = $this->fetchImages();
 		$newSet = new DataObjectSet();
-		foreach($images as $image)
+		foreach($images as $i => $image)
 		{
 			//Klassenzuweisung für die Bildkonvertierung
 			$imgClass = $image->newClassInstance('ImageGallery_Image');
@@ -51,6 +51,7 @@ class ImageGallery extends DataObject
 			
 			//TemplateControl setzen
 			$imgClass->Thumbnail = $thumb;
+			$imgClass->IsModuloThree = $i > 0 && ($i+1)%3 == 0;
 			$newSet->push($imgClass);
 		}		
 		return $newSet;

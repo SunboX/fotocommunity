@@ -21,16 +21,19 @@
 	<% end_if %>
 
 	<% control EnlargableThumbnails %>
-	<div class="thumbnail_container">
-		$Thumbnail
-		<a href="galleries/show-image/$ImageGalleryID/$ID" class="title">$Title</a>
-		<span class="comments">$NumComments Anmerkung<% if NumComments != 1 %>en<% end_if %></span>
-		<span class="clicks">$Clicks Klick<% if Clicks != 1 %>s<% end_if %></span>
-		<% if CanEditImage %>
-		<a href="galleries/modify-images/$ImageGalleryID" class="edit_image_link">[Titel ändern]</a>
-		<a href="galleries/delete-image/$ImageGalleryID/$ID" class="delete_image_link">[Dieses Foto löschen]</a>
+		<div class="thumbnail_container">
+			$Thumbnail
+			<a href="galleries/show-image/$ImageGalleryID/$ID" class="title">$Title</a>
+			<span class="comments">$NumComments Anmerkung<% if NumComments != 1 %>en<% end_if %></span>
+			<span class="clicks">$Clicks Klick<% if Clicks != 1 %>s<% end_if %></span>
+			<% if CanEditImage %>
+			<a href="galleries/modify-images/$ImageGalleryID" class="edit_image_link">[Titel ändern]</a>
+			<a href="galleries/delete-image/$ImageGalleryID/$ID" class="delete_image_link">[Dieses Foto löschen]</a>
+			<% end_if %>
+		</div>
+		<% if IsModuloThree %>
+		<br class="clear" />
 		<% end_if %>
-	</div>
 	<% end_control %>
 	
 	<br class="clear" />
