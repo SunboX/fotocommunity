@@ -27,6 +27,7 @@ class MemberGalleryPage extends Page
 				
 			default:
 				if($this->Gallery() != null) $id = $this->Gallery()->MemberID;
+				else $id = Director::urlParam('ID');
 		}
 		
 		$member = ($id) ? DataObject::get_by_id('Member', $id) : Member::currentUser(); 
