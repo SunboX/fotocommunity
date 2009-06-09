@@ -38,6 +38,10 @@ class ImageGallery extends DataObject
 		return $this->Images();
 	}
 	
+	public function SortableThumbnails() {
+		return $this->SortingImages();
+	}
+	
 	public function Images($link = true)
 	{
 		$images = $this->fetchImages();
@@ -54,6 +58,30 @@ class ImageGallery extends DataObject
 			if($link) $thumb .= '<a href="galleries/show-image/' . $this->ID . '/' . $image->ID . '" class="thumbnail">';
 			$thumb .= '<img src="' . Director::baseURL() . $smallImage->Filename . '" alt="' . $smallImage->Title . '" class="thumbnail" />';
 			if($link) $thumb .= '</a>';
+			
+			//TemplateControl setzen
+			$imgClass->Thumbnail = $thumb;
+			$imgClass->IsModuloThree = $i > 0 && ($i+1)%3 == 0;
+			$newSet->push($imgClass);
+		}		
+		return $newSet;
+	}
+	
+	public function SortingImages() {
+		$images = $this->fetchImages();
+		$newSet = new DataObjectSet();
+		foreach($images as $i => $image)
+		{
+			//Klassenzuweisung für die Bildkonvertierung
+			$imgClass = $image->newClassInstance('ImageGallery_Image');
+			$bigImage = $imgClass->getFormattedImage('ResizeRatio', $this->ImageWidth, $this->ImageHeight); //Bildkonvertierung für vergrößertes Bild ....
+			$smallImage = $imgClass->getFormattedImage('ResizeRatio', $this->ThumbnailWidth, $this->ThumbnailHeight); // und für verkleinertes Bild.
+			
+			//Bildstring zusammenbauen
+			$thumb = '';
+			$thumb .= '<li>';
+			$thumb .= '<img src="' . Director::baseURL() . $smallImage->Filename . '" alt="' . $smallImage->Title . '" class="thumbnail" />';
+			$thumb .= '</li';
 			
 			//TemplateControl setzen
 			$imgClass->Thumbnail = $thumb;
