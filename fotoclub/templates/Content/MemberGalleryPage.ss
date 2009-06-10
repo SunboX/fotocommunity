@@ -27,3 +27,8 @@
 <p>Es wurden noch kein Fotoalbum gefunden.</p>
 <% end_if %>
 </div>
+
+<br class="clear" />
+<br />
+
+<h3>$CurrentProfile.Nickname.XML´s Themenfotos</h3>
