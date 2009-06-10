@@ -6,7 +6,6 @@
 	<table class="data">
 		<thead>
 			<tr>
-				<% if Markable %><th width="18">&nbsp;</th><% end_if %>
 				<% control Headings %>
 				<th class="$Name">
 					$Title
@@ -17,15 +16,10 @@
 			</tr>
 		</thead>
 		<tfoot>
-			<% if HasSummary %>
-			<tr class="summary">
-				<% if Markable %><th width="18">&nbsp;</th><% end_if %>
-				<td><i>$SummaryTitle</i></td>
-				<% control SummaryFields %>
-					<td<% if Function %> class="$Function"<% end_if %>>&nbsp;</td>
-				<% end_control %>
-				<% if Can(edit) %><th width="18">&nbsp;</th><% end_if %>
-				<% if Can(delete) %><th width="18">&nbsp;</th><% end_if %>
+			<% if can(add) %>
+			 <tr class="addtogrouprow">
+				$AddRecordForm.CellFields
+				<td class="actions" colspan="3">$AddRecordForm.CellActions</td>
 			</tr>
 			<% end_if %>
 		</tfoot>
@@ -33,7 +27,6 @@
 			<% if Items %>
 			<% control Items %>
 				<tr id="record-$Parent.id-$ID"<% if HighlightClasses %> class="$HighlightClasses"<% end_if %>>
-					<% if Markable %><td width="18" class="markingcheckbox">$MarkingCheckbox</td><% end_if %>
 					<% control Fields %>
 					<td>$Value</td>
 					<% end_control %>
@@ -45,16 +38,7 @@
 					<% end_if %>
 				</tr>
 			<% end_control %>
-			<% else %>
-				<tr class="notfound">
-					<% if Markable %><th width="18">&nbsp;</th><% end_if %>
-					<td colspan="$Headings.Count"><i><% _t('NOITEMSFOUND', 'No items found') %></i></td>
-					<% if Can(edit) %><th width="18">&nbsp;</th><% end_if %>
-					<% if Can(delete) %><th width="18">&nbsp;</th><% end_if %>
-				</tr>
 			<% end_if %>
-			
-			$AddRecordForm.AsTableRow
 		</tbody>
 	</table>
 </div>

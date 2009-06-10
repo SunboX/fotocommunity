@@ -4,11 +4,10 @@ class ClubTopicTableField extends ComplexTableField
 {
 	protected $template = 'ClubTopicTableField';
 	
-	function __construct($controller, $name, $sourceClass, $fieldList, $detailFormFields = null, $sourceFilter = '', $sourceSort = 'ReleaseDate', $sourceJoin = '')
+	function __construct($controller, $name, $sourceClass, $fieldList, $detailFormFields = null, $sourceFilter = '', $sourceSort = 'ReleaseDate DESC', $sourceJoin = '')
 	{
 		parent::__construct($controller, $name, $sourceClass, $fieldList, $detailFormFields, $sourceFilter, $sourceSort, $sourceJoin);
 		
-		$this->Markable = true;
 		$this->setPageSize(15);
 		
 		// search
@@ -67,14 +66,17 @@ class ClubTopicTableField extends ComplexTableField
 		$fields = new FieldSet();
 		foreach($this->FieldList() as $fieldName => $fieldTitle)
 		{
-			FB::log($fieldName);
-			if($fieldName == 'ReleaseDate')
+			switch($fieldName)
 			{
-				$fields->push(new DateField($fieldName));	
-			}
-			else
-			{
-				$fields->push(new TextField($fieldName));	
+				case 'ReleaseDate':
+					$fields->push(new CalendarDateField($fieldName));
+					break;
+					
+				case 'ImageGallery.Images':
+					break;
+					
+				default:
+					$fields->push(new TextField($fieldName));
 			}
 		}
 		
@@ -92,40 +94,6 @@ class ClubTopicTableField extends ComplexTableField
 				)
 			)
 		);
-	}
-	
-	/**
-	 * Creating a new topic
-	 */
-	function addtopic()
-	{
-		$data = $_REQUEST;
-		unset($data['ID']);
-
-		$className = Object::getCustomClass($this->stat('data_class'));
-		$record = new $className();
-
-		$record->update($data);
-		
-		$valid = $record->validate();
-
-		if($valid->valid())
-		{
-			$record->write();
-
-			$this->sourceItems();
-
-			// TODO add javascript to highlight added row (problem: might not show up due to sorting/filtering)
-			FormResponse::update_dom_id($this->id(), $this->renderWith($this->template), true);
-			FormResponse::status_message('Thema wurde hinzugefügt.', 'good');
-		
-		}
-		else
-		{
-			FormResponse::status_message(Convert::raw2xml('Thema konnte nicht angelegt werden: ' . $valid->starredlist()), 'bad');
-		}
-
-		return FormResponse::respond();
 	}
 }
 

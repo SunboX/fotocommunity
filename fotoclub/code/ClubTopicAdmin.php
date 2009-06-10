@@ -10,7 +10,6 @@ class ClubTopicAdmin extends LeftAndMain
 	
 	static $allowed_actions = array(
 		'deleteall',
-		'deletemarked',
 		'showtable',
 		'EditForm'
 	);
@@ -25,7 +24,7 @@ class ClubTopicAdmin extends LeftAndMain
 		$tableFields = array(
 			'Title' => 'Thema',
 			'ReleaseDate' => 'Abgabetermin',
-			'Gallery.Images' => 'Anzahl eingestellter Fotos'
+			'ImageGallery.Images' => 'Anzahl eingestellter Fotos'
 		);
 
 		$popupFields = new FieldSet(
@@ -44,59 +43,47 @@ class ClubTopicAdmin extends LeftAndMain
 			)
 		);
 
-		$actions = new FieldSet();
-		
-		$actions->push(new FormAction('deletemarked', 'Löschen'));
-
-		$form = new Form($this, 'EditForm', $fields, $actions);
+		$form = new Form($this, 'EditForm', $fields, new FieldSet());
 
 		return $form;
 	}
 
-	function deletemarked()
+	public function AddRecordForm()
 	{
-			$numComments = 0;
-			$folderID = 0;
-			$deleteList = '';
-
-			if($_REQUEST['Comments']) {
-				foreach($_REQUEST['Comments'] as $commentid) {
-					$comment = DataObject::get_by_id('PageComment', $commentid);
-					if($comment) {
-						$comment->delete();
-						$numComments++;
-					}
-				}
-			} else {
-				user_error("No comments in $commentList could be found!", E_USER_ERROR);
-			}
-
-			echo <<<JS
-				$deleteList
-				$('Form_EditForm').getPageFromServer($('Form_EditForm_ID').value);
-				statusMessage("Deleted $numComments comments.");
-JS;
+		$m = Object::create('ClubTopicTableField',
+			$this,
+			'Topics',
+			$this->currentPageID()
+		);
+		return $m->AddRecordForm();
 	}
-
-	function deleteall()
+	
+	/**
+	 * Creating a new topic
+	 */
+	function addtopic()
 	{
-		$numComments = 0;
-		$spam = DataObject::get('PageComment', 'PageComment.IsSpam=1');
+		$data = $_REQUEST;
+		unset($data['ID']);
+		
+		$record = new ClubTopic();
+		$record->update($data);
+		
+		$valid = $record->validate();
 
-		if($spam) {
-			$numComments = $spam->Count();
-
-			foreach($spam as $comment) {
-				$comment->delete();
-			}
+		if($valid->valid())
+		{
+			$record->write();
+			
+			FormResponse::status_message('Thema wurde hinzugefügt.', 'good');
+		
+		}
+		else
+		{
+			FormResponse::status_message(Convert::raw2xml('Thema konnte nicht angelegt werden: ' . $valid->starredlist()), 'bad');
 		}
 
-		$msg = sprintf(_t('CommentAdmin.DELETED', 'Deleted %s comments.'), $numComments);
-		echo <<<JS
-				$('Form_EditForm').getPageFromServer($('Form_EditForm_ID').value);
-				statusMessage("$msg");
-JS;
-
+		return FormResponse::respond();
 	}
 }
 
