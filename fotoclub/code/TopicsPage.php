@@ -1,6 +1,6 @@
 <?php
 
-class MembersPage extends Page
+class TopicsPage extends Page
 {
 	function requireDefaultRecords()
 	{
@@ -14,7 +14,7 @@ class MembersPage extends Page
 	}
 }
 
-class MembersPage_Controller extends Page_Controller
+class TopicsPage_Controller extends Page_Controller
 {
 	protected $topics_cache;
 	
@@ -41,15 +41,11 @@ class MembersPage_Controller extends Page_Controller
 	private function fetchClubTopics()
 	{
 		$this->topics_cache = DataObject::get(
-			'ClubTopics',
+			'ClubTopic',
 			'',
-			'Title'
+			'ReleaseDate DESC'
 		);
 	}
-	
-	public function Menu($level)
-	{
-		if($level == 2) return;
-		return parent::Menu($level);
-	}
 }
+
+?>

@@ -11,6 +11,17 @@ class ClubTopic extends DataObject
 		'ImageGallery' => 'ImageGallery'
 	);
 	
+	public function State()
+	{
+		if(strtotime($this->ReleaseDate) < time()) return 'past';
+		
+		$older_new = (int) DB::query("SELECT COUNT(*) FROM ClubTopic WHERE ReleaseDate < '" . $this->ReleaseDate . "' AND ReleaseDate > NOW()")->value();
+		
+		if($older_new == 0) return 'active';
+		
+		return 'planned';
+	}
+	
 	public function validate()
 	{
 		return parent::validate();
