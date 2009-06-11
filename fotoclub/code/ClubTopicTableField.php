@@ -72,7 +72,7 @@ class ClubTopicTableField extends ComplexTableField
 					$fields->push(new CalendarDateField($fieldName));
 					break;
 					
-				case 'ImageGallery.Images':
+				case 'Images':
 					break;
 					
 				default:

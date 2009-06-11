@@ -143,7 +143,7 @@ class MemberProfilePage_Controller extends Page_Controller
 		$form->saveInto($member);
 		$member->write();
 		
-		Director::redirect('profil/show/' . $data['ID']);
+		Director::redirect('profile/show/' . $data['ID']);
 	}
 	
  	function Member()

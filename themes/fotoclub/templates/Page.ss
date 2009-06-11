@@ -21,14 +21,14 @@
             <ul class="usr">
             	<% if CurrentMember %> 
                     <li><a href="private-messages/">Nachrichten ($NumNewMessages)</a></li>
-                    <% if CurrentMember %> 
-                    
-                    <% end_if %> 
+					<% if CurrentMember.IsAdmin %>
+					<li><a href="admin/">Administration</a></li>
+					<% end_if %>
                     <li><a href="Security/logout/">Logout</a></li>
                 <% else %>
                     <li><a href="registrierung/">Registrieren</a></li>
                     <li><a href="Security/login/">Login</a></li>
-                <% end_if %> 
+                <% end_if %>
             </ul>
                                                   
         </div>

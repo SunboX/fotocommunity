@@ -8,8 +8,11 @@ $Content
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <% control Topics %>
   <tr class="topic_$State">
-    <td><a href="#$ID">$Title.XML</a></td>
+    <td>$Title.XML</td>
     <td><a href="#$ID">0 Fotos</a></td>
+	<% if CurrentMember %> 
+	<td><a href="clubtopics/upload/#$ID">[Fotos zu diesem Thema hochladen]</a></td>
+	<% end_if %>
   </tr>
   <% end_control %>
 </table>

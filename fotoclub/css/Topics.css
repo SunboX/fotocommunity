@@ -2,7 +2,7 @@
 .club_topics tr.topic_planned { background: #DCDCDC; }
 .club_topics tr.topic_active { background: #0F3F7A; color: #fff; }
 .club_topics tr.topic_active a { color: #fff; }
-.club_topics tr.topic_past { background: #565759; }
+.club_topics tr.topic_past { background: #565759; color: #333; }
 .club_topics tr td { border: none; padding: 5px; }
 
 .legend_active { float: left; background: #0F3F7A; padding-left: 20px; margin-right: 30px; }

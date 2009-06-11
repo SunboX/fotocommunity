@@ -7,8 +7,8 @@ class ClubTopic extends DataObject
 		'Title' => 'Varchar(200)',
 	);
 	
-	static $has_one = array(
-		'ImageGallery' => 'ImageGallery'
+	static $has_many = array(
+		'Images' => 'Image'
 	);
 	
 	public function State()

@@ -24,7 +24,7 @@ class ClubTopicAdmin extends LeftAndMain
 		$tableFields = array(
 			'Title' => 'Thema',
 			'ReleaseDate' => 'Abgabetermin',
-			'ImageGallery.Images' => 'Anzahl eingestellter Fotos'
+			'Images' => 'Anzahl eingestellter Fotos'
 		);
 
 		$popupFields = new FieldSet(
