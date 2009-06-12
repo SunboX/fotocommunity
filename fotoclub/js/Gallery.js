@@ -13,6 +13,7 @@
 			}
 		});
 		
+		/*
 		$('#switch_lights_off').click(function(e)
 		{
 			e.preventDefault();
@@ -54,6 +55,13 @@
 			overlay2.appendTo('body');
 			overlay2.css('opacity', 1).fadeIn('slow');
 			overlay1.css('opacity', 0.9).fadeIn('fast');
+		});
+		*/
+		
+		$('#switch_lights_off').click(function()
+		{
+			var img = $('#the_image img');
+			$(img[0]).expose({maskId: 'lights_off_overlay'}).load(); 
 		});
 	});
 	

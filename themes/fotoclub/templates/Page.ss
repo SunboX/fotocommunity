@@ -5,7 +5,7 @@
 		<% base_tag %>
 		<title>$MetaTitle</title>
 		$MetaTags(false)
-		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="shortcut icon" href="$BaseURL/themes/fotoclub/favicon.ico" />
 		
 		<% require themedCSS(layout) %> 
 		<% require themedCSS(typography) %> 

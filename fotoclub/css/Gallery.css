@@ -26,7 +26,7 @@
 #the_image { float: left; width: 100%;  text-align: center; background: #ddd; }
 
 #flashUI { margin-top: 5px; }
-.lights_off_overlay { position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background: #000; z-index: 9998; }
+#lights_off_overlay { background: #000; }
 .lights_off_overlay_content { z-index: 9999; margin-top: -22px; }
 .lights_off_overlay_content #switch_lights_on { display: block; width: 100%; text-align: right; color: #fff; height: 22px; font-weight: bold; }
 .lights_off_overlay_content img { }

@@ -66,11 +66,13 @@ class MemberGalleryPage_Controller extends Page_Controller
 		Requirements::themedCSS('Gallery');
 		
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
-		if(Director::urlParam('Action') == 'modify-images'){
+		if(Director::urlParam('Action') == 'modify-images')
+		{
 			Requirements::javascript(THIRDPARTY_DIR . '/jquery/ui/ui.core.js');
 			Requirements::javascript(THIRDPARTY_DIR . '/jquery/ui/ui.sortable.js');
 			Requirements::javascript('fotoclub/js/Sorting.js');
 		}
+		Requirements::javascript('fotoclub/js/jquery.tools.min.js');
 		Requirements::javascript('fotoclub/js/Gallery.js');
 		
 		$member = $this->Member() ? $this->Member() : null;

@@ -73,6 +73,10 @@ class Page_Controller extends ContentController
 	  	return $this->customise($data)->renderWith(array('Page_results', 'Page'));
 	}
 	
+	public function BaseURL()
+	{
+		return Director::baseURL();
+	}
 }
 
 ?>
