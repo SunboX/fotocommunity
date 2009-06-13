@@ -35,19 +35,13 @@
 
 <br class="clear" />
 
-<% if LatestImages %>
-<div class="lightbox">
-	<h3>$Nickname.XML´s neueste Fotos</h3>
+<hr />
+
+<h3>$Nickname.XML´s neueste Fotos</h3>
+
+<% include latest_images %>
 	
-	<div class="images">
-	<% control LatestImages %>
-		<div class="thumbnail"><a href="galleries/show-image/$ImageGalleryID/$ID" class="thumbnail">$Thumbnail</a></div>
-	<% end_control %>
-	</div>
-	
-	<br class="clear" />
-</div>
-<% end_if %>
+
 
 <% end_control %>
 <% else %>

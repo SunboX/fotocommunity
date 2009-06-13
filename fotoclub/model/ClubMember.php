@@ -3,7 +3,7 @@
 class ClubMember extends DataObjectDecorator
 {
 	protected $ThumbnailWidth = 170;
-	protected $ThumbnailHeight = 140;
+	protected $ThumbnailHeight = 120;
 	
 	/**
 	 * Edit the given query object to support queries for this extension
@@ -94,22 +94,23 @@ class ClubMember extends DataObjectDecorator
 		}
 	}
 	
-	public function LatestImages()
+	public function LatestImages($num = 50)
 	{
-		$images = DataObject::get('File', 'ImageGalleryID > 0 AND OwnerID = ' . $this->owner->ID, 'Created DESC', '', 5);
+		$images = DataObject::get('File', 'ImageGalleryID > 0 AND OwnerID = ' . $this->owner->ID, 'Created DESC', '', $num);
 		if($images)
 		{
-			foreach($images as $image)
+			foreach($images as $i => $image)
 			{
 				//Klassenzuweisung für die Bildkonvertierung
 				$imgClass = $image->newClassInstance('ImageGallery_Image');
 				$smallImage = $imgClass->getFormattedImage('ResizeRatio', $this->ThumbnailWidth, $this->ThumbnailHeight); // und für verkleinertes Bild.
 				
 				//Bildstring zusammenbauen
-				$thumb = '<img src="' . Director::baseURL() . $smallImage->Filename . '" alt="' . $smallImage->Title . '" class="thumbnail" />';
+				$thumb = Director::baseURL() . $smallImage->Filename;
 				
 				//TemplateControl setzen
 				$image->Thumbnail = $thumb;
+				$image->Number = $i + 1;
 			}
 		}
 		else

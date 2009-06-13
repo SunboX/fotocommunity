@@ -21,10 +21,16 @@ class MemberProfilePage_Controller extends Page_Controller
 	function init()
 	{
 		Requirements::themedCSS('Profile');
+		Requirements::themedCSS('vertical_image_scroller');
+		
 		$member = $this->Member() ? $this->Member() : null;
 		$nicknameText = ($member) ? ($member->Nickname . '\'s ') : '';
 		
 		$this->Title = $nicknameText . ' Profil';
+		
+		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
+		Requirements::javascript('fotoclub/js/jquery.tools.min.js');
+		Requirements::javascript('fotoclub/js/vertical_image_scroller.js');
 		
 		parent::init();
  	}
@@ -191,6 +197,11 @@ class MemberProfilePage_Controller extends Page_Controller
 		}
 
 		return $tags;
+	}
+	
+	public function LatestImages()
+	{
+		return $this->Member()->LatestImages();
 	}
 }
 

@@ -23,29 +23,34 @@ class StartPage extends Page
 class StartPage_Controller extends Page_Controller
 {
 	protected $ThumbnailWidth = 170;
-	protected $ThumbnailHeight = 140;
+	protected $ThumbnailHeight = 120;
 	
 	function init()
 	{
-		Requirements::themedCSS('Start');
+		Requirements::themedCSS('vertical_image_scroller');
+		
+		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
+		Requirements::javascript('fotoclub/js/jquery.tools.min.js');
+		Requirements::javascript('fotoclub/js/vertical_image_scroller.js');
 		
 		parent::init();
  	}
 	
 	public function LatestImages()
 	{
-		$images = DataObject::get('File', 'ImageGalleryID > 0', 'Created DESC', '', 5);
-		foreach($images as $image)
+		$images = DataObject::get('File', 'ImageGalleryID > 0', 'Created DESC', '', 50);
+		foreach($images as $i => $image)
 		{
 			//Klassenzuweisung für die Bildkonvertierung
 			$imgClass = $image->newClassInstance('ImageGallery_Image');
 			$smallImage = $imgClass->getFormattedImage('ResizeRatio', $this->ThumbnailWidth, $this->ThumbnailHeight); // und für verkleinertes Bild.
 			
 			//Bildstring zusammenbauen
-			$thumb = '<img src="' . Director::baseURL() . $smallImage->Filename . '" alt="' . $smallImage->Title . '" class="thumbnail" />';
+			$thumb = Director::baseURL() . $smallImage->Filename;
 			
 			//TemplateControl setzen
 			$image->Thumbnail = $thumb;
+			$image->Number = $i + 1;
 		}
 		return $images;
 	}

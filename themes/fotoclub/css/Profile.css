@@ -7,8 +7,3 @@
 .profile .nick .on { font-size: 10px; font-weight: normal; color: green; }
 .profile .nick .off { font-size: 10px; font-weight: normal; color: gray; }
 .profile .avatar { margin-bottom: 10px; }
-
-.lightbox { background: #DCDCDC; padding: 10px; }
-.lightbox .images div.thumbnail { float: left; margin-right: 10px; width: 170px; }
-.lightbox .images a.thumbnail { display: block; text-align: center; background: #ddd; width: 170px; border: #999 1px solid; }
-.lightbox .images a:hover.thumbnail { border-color: #0F3F7A; }

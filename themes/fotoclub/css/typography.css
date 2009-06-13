@@ -11,8 +11,9 @@
 -------------------------------------------- */
  
 .typography * {
-	font-family: Arial, Helvetica, Verdana, sans-serif;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "bitstream vera sans", "trebuchet ms", verdana, arial, sans;
 }
+hr { border: 1px solid #ccc; border-top: 2px solid #ccc; }
 
 /* PARAGRAPHS 
 -------------------------------------------- */

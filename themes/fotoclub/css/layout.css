@@ -1,6 +1,10 @@
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, font, img, ins, kbd, q, s, samp, small, strike, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0;outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
 
-:focus { outline: 0; }
+
+/* get rid of those system borders being generated for A tags */
+a:active { outline: none; }
+:focus { -moz-outline-style:none; outline: 0; }
+
 
 body { line-height: 1; color: #222222; background: #0a0c10 url(../images/background.jpg) no-repeat center 0px; text-align: center; }
 
