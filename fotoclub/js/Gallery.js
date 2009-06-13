@@ -13,55 +13,43 @@
 			}
 		});
 		
-		/*
-		$('#switch_lights_off').click(function(e)
-		{
-			e.preventDefault();
-			
-			var img = $('#the_image img');
-			var pos = $(img[0]).offset();
-			
-			var overlay1 = $('<div class="lights_off_overlay"></div>').css(
+		var lights_off = false;
+		var the_img = $('#the_image img');
+		the_img = $(the_img[0]);
+		the_img.expose({
+			maskId: 'lights_off_overlay', 
+			loadSpeed: 'fast', 
+			opacity: 0.9,
+			onLoad: function()
 			{
-				height: ($(document).height() - 4)
-			});
-			var overlay2 = $('<div class="lights_off_overlay_content"></div>').css(
-			{
-				position: 'absolute',
-				top: pos.top, 
-				left: pos.left
-			});
-			overlay1.click(function(e)
-			{
-				e.preventDefault();
+				var exp = this;
+				var el = $('#switch_lights_off');
 				
-                overlay1.remove();
-				overlay2.remove();
-				overlay1 = overlay2 = null;
-            });
-			overlay2.append($('<a href="#" id="switch_lights_on">Licht wieder an</a>').click(function(e)
-			{
-				e.preventDefault();
+				// make sure element is positioned absolutely or relatively
+				if(!/relative|absolute|fixed/i.test(el.css('position')))
+				{
+					el.css('position', 'relative');
+				}					
 				
-                overlay1.remove();
-				overlay2.remove();
-				overlay1 = overlay2 = null;
-            }));
-			overlay2.append($(img[0]).clone());
-			
-			overlay1.css('opacity', 0); 
-			overlay2.css('opacity', 0); 
-			overlay1.appendTo('body');
-			overlay2.appendTo('body');
-			overlay2.css('opacity', 1).fadeIn('slow');
-			overlay1.css('opacity', 0.9).fadeIn('fast');
+				// make elements sit on top of the mask
+				el.text('Licht wieder an').css({
+					zIndex: exp.getConf().zIndex + 1,
+					color: '#fff'
+				});
+			},
+			onClose: function()
+			{
+				var exp = this;
+				var el = $('#switch_lights_off');
+				
+				el.text('Licht aus').css('color', '#000');
+			}
 		});
-		*/
-		
 		$('#switch_lights_off').click(function()
 		{
-			var img = $('#the_image img');
-			$(img[0]).expose({maskId: 'lights_off_overlay'}).load(); 
+			var el = $('#switch_lights_off');
+			if(el.text() == 'Licht aus') the_img.expose().load();
+			else the_img.expose().close();	
 		});
 	});
 	
