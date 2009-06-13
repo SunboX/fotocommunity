@@ -19,7 +19,7 @@ div.thumbs div.hover { background-color: #0F3F7A; }
 div.thumbs div.active { background-color: #0F3F7A; cursor: default; }
 
 div.thumbs a.thumbnail { display: block; width: 170px; height: 120px; border: 1px solid #999; background-color: #000; background-repeat: no-repeat; background-position: center; }
-div.thumbs h3, #thumbs p, #thumbs span { margin-top: 5px; font-family: "bitstream vera sans"; font-size: 13px; color: #fff; }
+div.thumbs h3, #thumbs p, #thumbs span { margin-top: 3px; font-family: "bitstream vera sans"; font-size: 13px; color: #fff; }
 
 div.thumbs h3 em { font-style: normal; color: #2F78BF; }
 
