@@ -144,15 +144,20 @@ class MemberGalleryPage_Controller extends Page_Controller
 	{
   		if(is_array($_POST['item']))
 		{
-				foreach($_POST['item'] as $sort => $id)
+			foreach($_POST['item'] as $sort => $id)
+			{
+				if($img = DataObject::get_by_id('Image', $id))
 				{
-					if($img = DataObject::get_by_id('Image', $id))
+					$img->Sort = $sort;
+					if(isset($_POST['item_title_' . $id]))
 					{
-						$img->Sort = $sort;
-						$img->write();
+						$img->Title = $_POST['item_title_' . $id];
 					}
+					$img->write();
 				}
+			}
   		}
+		print_r($_POST);
   		die(''); // Send something back
 	}
 	

@@ -24,10 +24,9 @@
 .lightbox .thumbnail_container .edit_image_link { display: block; font-size: 10px; margin-top: 5px; text-decoration: none; }
 .lightbox .thumbnail_container .delete_image_link { display: block; font-size: 10px; margin-top: 0px; text-decoration: none; }
 
+.sortables .move { background: #ddd; padding: 5px; margin: 5px; }
+
 #the_image { float: left; width: 100%;  text-align: center; background: #ddd; }
 
 #flashUI { margin-top: 5px; }
 #lights_off_overlay { background: #000; }
-.lights_off_overlay_content { z-index: 9999; margin-top: -22px; }
-.lights_off_overlay_content #switch_lights_on { display: block; width: 100%; text-align: right; color: #fff; height: 22px; font-weight: bold; }
-.lights_off_overlay_content img { }

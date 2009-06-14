@@ -10,14 +10,18 @@
 	<% end_if %>
 </span>
 
-<div class="lightbox">
 <% if CurrentGallery %>
 <% control CurrentGallery %>
 	
 	<h1>$Title.XML</h1>
 	
 	<div class="sortables">
-	<% control SortableThumbnails %><div id="item_$ID" class="move">$Thumbnail</div><% end_control %>
+	<% control SortableThumbnails %>
+		<div id="item_$ID" class="move">
+			<input type="text" name="item_title_$ID" value="$Title" /><br />
+			$Thumbnail
+		</div>
+	<% end_control %>
 	</div>
 	
 	<br class="clear" />
@@ -28,4 +32,3 @@
 <% else %>
 <p>Das Fotoalbum wurde nicht gefunden.</p>
 <% end_if %>
-</div>

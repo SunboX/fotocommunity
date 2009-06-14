@@ -38,7 +38,8 @@ class ImageGallery extends DataObject
 		return $this->Images();
 	}
 	
-	public function SortableThumbnails() {
+	public function SortableThumbnails()
+	{
 		return $this->SortingImages();
 	}
 	
@@ -67,7 +68,8 @@ class ImageGallery extends DataObject
 		return $newSet;
 	}
 	
-	public function SortingImages() {
+	public function SortingImages()
+	{
 		$images = $this->fetchImages();
 		$newSet = new DataObjectSet();
 		foreach($images as $i => $image)
@@ -79,9 +81,7 @@ class ImageGallery extends DataObject
 			
 			//Bildstring zusammenbauen
 			$thumb = '';
-			$thumb .= '<li>';
 			$thumb .= '<img src="' . Director::baseURL() . $smallImage->Filename . '" alt="' . $smallImage->Title . '" class="thumbnail" />';
-			$thumb .= '</li';
 			
 			//TemplateControl setzen
 			$imgClass->Thumbnail = $thumb;

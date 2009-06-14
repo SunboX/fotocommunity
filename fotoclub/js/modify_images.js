@@ -16,7 +16,7 @@
 	
 	$('#do_modify_images').click(function()
 	{
-		$.post(url_segment + '/doModifyImages', $("div[class^='sortables']").sortable('serialize'));
+		$.post(url_segment + '/doModifyImages', $("div[class^='sortables']").sortable('serialize') + '&' + $("input[name^='item_title']").serialize());
 		alert('Änderungen wurden gespeichert!');
 	});
 })(jQuery);
