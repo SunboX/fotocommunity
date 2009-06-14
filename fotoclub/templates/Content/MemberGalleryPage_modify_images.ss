@@ -16,11 +16,13 @@
 	
 	<h1>$Title.XML</h1>
 	
-	<ul class="thumbnail_container ui-sortable">
-	<% control SortableThumbnails %>$Thumbnail<% end_control %>
-	</ul>
+	<div class="sortables">
+	<% control SortableThumbnails %><div id="item_$ID" class="move">$Thumbnail</div><% end_control %>
+	</div>
 	
 	<br class="clear" />
+	
+	<button id="do_modify_images">Änderungen Speichern</button>
 
 <% end_control %>
 <% else %>

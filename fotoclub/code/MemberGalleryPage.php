@@ -66,11 +66,17 @@ class MemberGalleryPage_Controller extends Page_Controller
 		Requirements::themedCSS('Gallery');
 		
 		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
-		if(Director::urlParam('Action') == 'modify-images')
+		switch(Director::urlParam('Action'))
 		{
-			Requirements::javascript(THIRDPARTY_DIR . '/jquery/ui/ui.core.js');
-			Requirements::javascript(THIRDPARTY_DIR . '/jquery/ui/ui.sortable.js');
-			Requirements::javascript('fotoclub/js/Sorting.js');
+			case 'modify-images':
+			case 'doModifyImages':
+				Requirements::customScript("
+					var url_segment = '" . Controller::curr()->URLSegment . "';
+				");
+				Requirements::javascript(THIRDPARTY_DIR . '/jquery/ui/ui.core.js');
+				Requirements::javascript(THIRDPARTY_DIR . '/jquery/ui/ui.sortable.js');
+				Requirements::javascript('fotoclub/js/modify_images.js');
+				break;
 		}
 		Requirements::javascript('fotoclub/js/jquery.tools.min.js');
 		Requirements::javascript('fotoclub/js/Gallery.js');
@@ -114,6 +120,16 @@ class MemberGalleryPage_Controller extends Page_Controller
 		return array('CurrentProfile' => $this->Member(), 'CurrentGallery' => $this->Gallery(), 'CurrentImage' => $this->Image());
 	}
 	
+	function modify_images()
+	{
+		$images = DataObject::get('Image', 'ImageGalleryID = ' . Director::urlParam('ID'));
+		foreach($images as $image)
+		{
+			
+		}
+		return array('CurrentProfile' => $this->Member(), 'CurrentGallery' => $this->Gallery());;
+	}
+	
 	public function delete_image()
 	{
 		$imageID = Director::urlParam('OtherID');
@@ -122,6 +138,22 @@ class MemberGalleryPage_Controller extends Page_Controller
 			DataObject::delete_by_id('Image', $imageID);
 		}
 		Director::redirect(Director::baseURL() . 'galleries/show/' . Director::urlParam('ID'));
+	}
+	
+	public function doModifyImages()
+	{
+  		if(is_array($_POST['item']))
+		{
+				foreach($_POST['item'] as $sort => $id)
+				{
+					if($img = DataObject::get_by_id('Image', $id))
+					{
+						$img->Sort = $sort;
+						$img->write();
+					}
+				}
+  		}
+  		die(''); // Send something back
 	}
 	
 	public function EditGalleryForm()
@@ -343,13 +375,5 @@ class MemberGalleryPage_Controller extends Page_Controller
 				die();
 			}
 		}
-	}
-	
-	function modify_images(){
-		$images = DataObject::get('Image', 'ImageGalleryID = ' . Director::urlParam('ID'));
-		foreach($images as $image){
-			
-		}
-		return array('CurrentProfile' => $this->Member(), 'CurrentGallery' => $this->Gallery());;
 	}
 }
