@@ -1,8 +1,9 @@
 
-.typography .members table {}
-.typography .members tr {}
-.typography .members tr.odd { background: #DCDCDC; }
-.typography .members td { border: none; padding: 5px; }
+.typography .members table { border-bottom: 1px solid #222; }
+.typography .members tr { background: #DCDCDC; }
+.typography .members tr.odd { background: #565759; color: #fff; }
+.typography .members tr.odd a { color: #fff; }
+.typography .members td { border: none; padding: 5px; padding-left: 15px; background-image: url(../images/h30.png); background-repeat: repeat-x; height: 30px; border-top: 1px solid #222; border-left: 1px solid #222; border-right: 1px solid #222; }
 
 .members .on { font-size: 10px; font-weight: normal; color: green; }
 .members .off { font-size: 10px; font-weight: normal; color: gray; }

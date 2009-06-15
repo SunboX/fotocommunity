@@ -57,7 +57,7 @@ class ImageGallery extends DataObject
 			//Bildstring zusammenbauen
 			$thumb = '';
 			if($link) $thumb .= '<a href="galleries/show-image/' . $this->ID . '/' . $image->ID . '" class="thumbnail">';
-			$thumb .= '<img src="' . Director::baseURL() . $smallImage->Filename . '" alt="' . $smallImage->Title . '" class="thumbnail" />';
+			$thumb .= '<div style="background-image:url(' . Director::baseURL() . $smallImage->Filename . ')" alt="' . $smallImage->Title . '" class="thumbnail"></div>';
 			if($link) $thumb .= '</a>';
 			
 			//TemplateControl setzen
@@ -77,7 +77,7 @@ class ImageGallery extends DataObject
 			//Klassenzuweisung für die Bildkonvertierung
 			$imgClass = $image->newClassInstance('ImageGallery_Image');
 			$bigImage = $imgClass->getFormattedImage('ResizeRatio', $this->ImageWidth, $this->ImageHeight); //Bildkonvertierung für vergrößertes Bild ....
-			$smallImage = $imgClass->getFormattedImage('ResizeRatio', $this->ThumbnailWidth, $this->ThumbnailHeight); // und für verkleinertes Bild.
+			$smallImage = $imgClass->getFormattedImage('ResizeRatio', 190, 125); // und für verkleinertes Bild.
 			
 			//Bildstring zusammenbauen
 			$thumb = '';

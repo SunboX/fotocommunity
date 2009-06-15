@@ -10,7 +10,7 @@
 	<% end_if %>
 </span>
 
-<div class="lightbox">
+
 <% if CurrentGallery %>
 <% control CurrentGallery %>
 	
@@ -19,7 +19,7 @@
 	<% if Description %>
 	<div class="description">$Description</div>
 	<% end_if %>
-
+	<div class="lightbox">
 	<% control EnlargableThumbnails %>
 		<div class="thumbnail_container">
 			$Thumbnail
@@ -37,9 +37,9 @@
 	<% end_control %>
 	
 	<br class="clear" />
-
+	
+</div>
 <% end_control %>
 <% else %>
 <p>Das Fotoalbum wurde nicht gefunden.</p>
 <% end_if %>
-</div>

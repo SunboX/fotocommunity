@@ -2,29 +2,39 @@
 .edit_link .separator, .edit_link_50l .separator, .edit_link_50r .separator { margin-left: 5px; margin-right: 5px; }
 .edit_link_50l { float: left; width: 50%; }
 .edit_link_50r { float: right; width: 50%; text-align: right; }
+.edit_link .current { font-weight: bold; }
 
 .galleries {}
-.galleries .gallery { float: left; background: #333 url(../images/h220.png) repeat-x 0 0; color: #fff; border: 1px solid #333; cursor: pointer; padding: 10px; width: 175px; height: 200px; margin-right: 10px; margin-bottom: 10px; }
+.galleries .gallery { float: left; background: #333 url(../images/h220.png) repeat-x 0 0; color: #fff; border: 1px solid #333; cursor: default; padding: 10px; width: 175px; height: 200px; margin-right: 20px; margin-bottom: 20px; }
 .galleries .gallery a.thumbnail { display: block; margin-top: 10px; text-align: center; background: #000; width: 175px; height: 130px; overflow: hidden; border: #999 1px solid; }
 .galleries .gallery a:hover.thumbnail { border-color: #0F3F7A; }
-.galleries .gallery img.thumbnail { }
+.galleries .gallery div.thumbnail { width: 175px; height: 130px; background-position: center; background-repeat: no-repeat; }
 .galleries .gallery .edit_link { clear: both; margin: 0; margin-top: 25px; }
 .galleries .gallery .date { float: left; width: 85px; margin-top: 2px; }
 .galleries .gallery .pics { float: right; width: 80px; text-align: right; margin-top: 2px; }
-.galleries .gallery a { color: #fff; }
+.galleries .gallery em { font-style: normal; color: #2F78BF; }
+.galleries .gallery a { color: #fff; text-decoration: none; }
+.galleries .gallery a:hover { color: #2F78BF; }
+.galleries .gallery div.title a:hover { color: #fff; }
 
-.lightbox { width: 940px; }
+.lightbox { width: 940px; border-left: 1px solid #333; }
 .lightbox .description { margin-bottom: -10px; }
-.lightbox .thumbnail_container { float: left; margin-right: 15px; margin-top: 15px; width: 298px; background: #ddd; }
-.lightbox .thumbnail_container a.thumbnail { float: left; display: block; margin-right: 9px; text-align: center; background: #ddd; width: 175px; border: #999 1px solid; }
+.lightbox .thumbnail_container { float: left; width: 305px; background: #333 url(../images/h155.png) repeat-x 0 0; border: 1px solid #333; border-left: none; border-collapse: collapse; }
+.lightbox .thumbnail_container a.thumbnail { float: left; display: block; margin: 9px; text-align: center; background: #000; width: 175px; border: #999 1px solid; }
 .lightbox .thumbnail_container a:hover.thumbnail { border-color: #0F3F7A; }
-.lightbox .thumbnail_container .title { display: block; margin-bottom: 5px; font-size: 11px; font-weight: bold; }
-.lightbox .thumbnail_container .comments { display: block; font-size: 10px; }
-.lightbox .thumbnail_container .clicks { display: block; font-size: 10px; }
-.lightbox .thumbnail_container .edit_image_link { display: block; font-size: 10px; margin-top: 5px; text-decoration: none; }
-.lightbox .thumbnail_container .delete_image_link { display: block; font-size: 10px; margin-top: 0px; text-decoration: none; }
+.lightbox .thumbnail_container div.thumbnail { width: 175px; height: 130px; background-position: center; background-repeat: no-repeat; }
+.lightbox .thumbnail_container .title { display: block; margin-bottom: 5px; margin-top: 5px; font-size: 11px; font-weight: bold; color: #000; text-decoration: none; }
+.lightbox .thumbnail_container .title:hover { color: #fff; }
+.lightbox .thumbnail_container .comments { display: block; font-size: 10px; color: #333; }
+.lightbox .thumbnail_container .clicks { display: block; font-size: 10px; color: #333; }
+.lightbox .thumbnail_container .edit_image_link { display: block; font-size: 10px; margin-top: 5px; text-decoration: none; color: #fff; }
+.lightbox .thumbnail_container .delete_image_link { display: block; font-size: 10px; margin-top: 0px; text-decoration: none; color: #fff; }
 
-.sortables .move { background: #ddd; padding: 5px; margin: 5px; }
+.sortables { float: left; width: 320px; margin-bottom: 15px; }
+.sortables .move { background: #333 url(../images/h155.png) repeat-x; height: 145px; width: 300px; padding: 5px; cursor: move; border: 1px solid #333; border-collapse: collapse; }
+.sortables .move:hover { background-color: #0F3F7A; }
+.sortables .move input { width: 290px; }
+#sortables_info { float: right; width: 500px; background: #ddd; padding: 10px; }
 
 #the_image { float: left; width: 100%;  text-align: center; background: #ddd; }
 

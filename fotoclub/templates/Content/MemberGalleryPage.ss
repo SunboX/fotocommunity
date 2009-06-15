@@ -15,7 +15,7 @@
 	<% else %>
 	<img src="$BaseHref/fotoclub/gfx/no-image.gif" class="thumbnail" />
 	<% end_if %>
-	<div class="date">$Date.Format(d.m.Y)</div>
+	<div class="date"><em>$Date.Format(d.m.Y)</em></div>
 	<div class="pics">$ImagesCount Fotos</div>
 	<% if CanEdit %>
 	<a href="galleries/edit/$ID" class="edit_link">[Album bearbeiten]</a>
