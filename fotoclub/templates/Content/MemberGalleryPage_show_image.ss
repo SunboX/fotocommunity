@@ -31,6 +31,17 @@
 		<br />
 		$CurrentImage.Title.XML
 	</div>
+	
+	<!-- tooltip element -->
+	<% if CurrentImage.Exif %>
+	<div class="tooltip">
+	<% control CurrentImage.Exif %>
+		
+		<div>$Key: $Value</div>
+		
+	<% end_control %>
+	</div>
+	<% end_if %>
 
 <% else %>
 <p>Das Foto wurde nicht gefunden.</p>

@@ -25,6 +25,7 @@
 	</div>
 	
 	<div id="sortables_info">
+		<h1>Information</h1>
 		Um die Fotos zu sortieren, mit der Linken Mausstate darauf klicken, Taste gedrückt halten und das Foto an die richtige Stelle ziehen. Wenn die Reihenfolge stimmt, mit dem Button am Ende der Seite bestätigen.
 	</div>
 	

@@ -36,7 +36,10 @@
 .sortables .move input { width: 290px; }
 #sortables_info { float: right; width: 500px; background: #ddd; padding: 10px; }
 
-#the_image { float: left; width: 100%;  text-align: center; background: #ddd; }
+#the_image { float: left; width: 100%; text-align: center; background: #111; color: #fff; }
 
 #flashUI { margin-top: 5px; }
 #lights_off_overlay { background: #000; }
+
+/* tooltip styling. uses a background image (a black box with an arrow) */
+div.tooltip { float: none; background: #111; color: #fff; border-top: #999 1px solid; font-size: 13px; margin-top: -100px; padding: 5px 20px; height: 100px; display: none; width: 880px; z-index: 9995; }

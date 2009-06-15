@@ -77,6 +77,10 @@ class MemberGalleryPage_Controller extends Page_Controller
 				Requirements::javascript(THIRDPARTY_DIR . '/jquery/ui/ui.sortable.js');
 				Requirements::javascript('fotoclub/js/modify_images.js');
 				break;
+				
+			case 'show-image':
+				Requirements::javascript('fotoclub/js/show_image.js');
+				break;
 		}
 		Requirements::javascript('fotoclub/js/jquery.tools.min.js');
 		Requirements::javascript('fotoclub/js/Gallery.js');

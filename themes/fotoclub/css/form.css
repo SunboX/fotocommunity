@@ -14,8 +14,8 @@ span.readonly { display: block; margin-bottom: 10px; color: #666; }
 #mainsearch div { float: left; }
 #mainsearch fieldset { padding: 0; margin: 0; width: auto; background: none; border: none; }
 #mainsearch fieldset legend { display: none; }
-#mainsearch .action { height: 25px; margin-top: -1px; padding-top: 0; font-size: 12px; }
+#mainsearch .action { height: 23px; margin-top: -1px; padding-top: 0; font-size: 12px; }
 #mainsearch form input { padding: 2px; margin: 0px 0 0; vertical-align: middle; }
 #mainsearch form input.button { border: 0; }
-#mainsearch form input.text { width: 143px; }
+#mainsearch form input.text { width: 143px; border: #999 1px solid; background: #565759 url(../images/h30.png) repeat-x; color: #fff; }
 #mainsearch label { display: none; }

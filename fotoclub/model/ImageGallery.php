@@ -183,6 +183,59 @@ class ImageGallery_Image extends Image
 		if($images->Count() == 0) return $this;
 		return $images->First()->newClassInstance('ImageGallery_Image');
 	}
+	
+	public function Exif()
+	{
+		$exif = exif_read_data($this->getFullPath(), 0, true);
+ 		$ret = new DataObjectSet();
+		foreach($exif as $key => $section)
+		{
+			foreach($section as $name => $val)
+			{
+				if(trim($val) != '')
+				{
+					switch("$key.$name")
+					{
+						case 'IFD0.Model':
+							$data = new ViewableData();
+							$data->Key = 'Kamera';
+							$data->Value = $val;
+							$ret->push($data);
+							break;
+							
+						case 'EXIF.FocalLength':
+							$data = new ViewableData();
+							$data->Key = 'Brennweite';
+							$data->Value = $val;
+							$ret->push($data);
+							break;
+							
+						case 'COMPUTED.ApertureFNumber':
+							$data = new ViewableData();
+							$data->Key = 'Blende';
+							$data->Value = $val;
+							$ret->push($data);
+							break;
+							
+						case 'EXIF.ExposureTime':
+							$data = new ViewableData();
+							$data->Key = 'Belichtung';
+							$data->Value = $val;
+							$ret->push($data);
+							break;
+							
+						case 'EXIF.ISOSpeedRatings':
+							$data = new ViewableData();
+							$data->Key = 'ISO';
+							$data->Value = $val;
+							$ret->push($data);
+							break;
+					}
+				}
+			}
+		}
+		return $ret;
+	}
 }
 
 ?>
