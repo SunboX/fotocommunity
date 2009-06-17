@@ -1,4 +1,0 @@
-﻿- Bildupload nach dem Anlegen eines neuen Fotoalbums speichert die Fotos nicht zum Album
-- Ist man als Admin eingeloggt, und läd Fotos bei einem anderen Benutzer hoch, werden die Fotos nicht dem Benutzer sondern dem hochladenden Admin zugeordnet
-- Link zum bearbeiten eines Fotoalbum wird in der Übersicht nur beim Admin angezeigt
-- Wird im backend ein neuer Benutzer angelegt, so wird dessen E-mail Adresse nicht korrekt gesetzt -> siehe Frontend, Profil bearbeiten
