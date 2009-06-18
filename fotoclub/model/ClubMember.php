@@ -74,7 +74,7 @@ class ClubMember extends DataObjectDecorator
 	{
 		if(is_numeric($this->owner->ID))
 		{
-			return (int) DB::query('SELECT COUNT(*) FROM File WHERE OwnerID = ' . $this->owner->ID . ' AND ImageGalleryID > 0')->value();
+			return (int) DB::query('SELECT COUNT(*) FROM File WHERE OwnerID = ' . $this->owner->ID . ' AND ClassName = \'ImageGallery_Image\'')->value();
 		}
 		else
 		{
@@ -96,14 +96,12 @@ class ClubMember extends DataObjectDecorator
 	
 	public function LatestImages($num = 50)
 	{
-		$images = DataObject::get('File', 'ImageGalleryID > 0 AND OwnerID = ' . $this->owner->ID, 'Created DESC', '', $num);
+		$images = DataObject::get('ImageGallery_Image', 'OwnerID = ' . $this->owner->ID, 'Created DESC', '', $num);
 		if($images)
 		{
 			foreach($images as $i => $image)
 			{
-				//Klassenzuweisung für die Bildkonvertierung
-				$imgClass = $image->newClassInstance('ImageGallery_Image');
-				$smallImage = $imgClass->getFormattedImage('ResizeRatio', $this->ThumbnailWidth, $this->ThumbnailHeight); // und für verkleinertes Bild.
+				$smallImage = $image->getFormattedImage('ResizeRatio', $this->ThumbnailWidth, $this->ThumbnailHeight); // und für verkleinertes Bild.
 				
 				//Bildstring zusammenbauen
 				$thumb = Director::baseURL() . $smallImage->Filename;

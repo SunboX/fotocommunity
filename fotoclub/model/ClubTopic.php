@@ -5,6 +5,7 @@ class ClubTopic extends DataObject
 	static $db = array(
 		'ReleaseDate' => 'Date',
 		'Title' => 'Varchar(200)',
+		'Description' => 'Text'
 	);
 	
 	static $has_many = array(

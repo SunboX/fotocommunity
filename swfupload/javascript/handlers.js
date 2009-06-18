@@ -87,7 +87,7 @@ function fileQueueError(file, errorCode, message)  {
 			return;
 		case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
 			size = file.size/1024/1024
-			alert("The file you selected is too big. The maximum size allowed is " + swfu.settings.file_size_limit + ". This file is " + (Math.round(size*10)/10)+'M');
+			alert("The file you selected is too big. The maximum size allowed is " + (Math.round(size*10)/10)+'M');
 			this.debug("Error Code: File too big, File name: " + file.name + ", File size: " + file.size + ", Message: " + message);
 			return;
 		case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
@@ -111,23 +111,9 @@ function fileQueued(file) {
 	try {
 		li = document.createElement("li");
 		li.setAttribute('id', 'file-' + file.id);
-		filename = new String(file.name);
-		if(filename.length > 30)
-			filename = filename.substr(0,29) + '...';
-			
-		li.innerHTML = "<div class='queue-file-name'>" + filename + "</div><div class='queue-remove-btn'><a href='javascript:void(0);' onclick='return removeFileFromQueue(\""+file.id+"\");'>remove</a></div>";
+		li.innerHTML = "<div class='queue-file-name'>" + file.name + "</div><div class='queue-remove-btn'><a href='javascript:void(0);' onclick='return removeFileFromQueue(\""+file.id+"\");'>remove<a></div>";
 		txtFileNames.appendChild(li);
 		btnSubmit.style.display = 'block';
-		var progress = new FileProgress(file, 'file-' + file.id);
-		progress.setProgress(0);
-		meg = file.size > 1024*1024;
-		size = meg ? file.size/1024/1024 : file.size/1024;
-		rounded = Math.round(size*10)/10;
-		formatted = meg ? rounded : addCommas(Math.ceil(rounded));
-		suffix = meg ? 'M' : 'k';
-		progress.setStatus('Queued ('+formatted+suffix+')');
-		progress.fileProgressElement.childNodes[2].className = 'progressBarStatus queued';
-				
 	} catch (e) {
 	}
 
@@ -156,12 +142,8 @@ function uploadProgress(file, bytesLoaded, bytesTotal) {
 
 		//file.id = "singlefile";	// This makes it so FileProgress only makes a single UI element, instead of one for each file
 		var progress = new FileProgress(file, 'file-' + file.id);
-		progress.fileProgressElement.childNodes[2].className = 'progressBarStatus progress';		
 		progress.setProgress(percent);
-		if(percent == 100)
-			progress.setStatus("Processing...");
-		else
-			progress.setStatus("Uploading...");
+		progress.setStatus("Uploading...");
 	} catch (e) {
 		alert(e);
 	}
@@ -175,7 +157,6 @@ function uploadSuccess(file, serverData) {
 		//file.id = "singlefile";	// This makes it so FileProgress only makes a single UI element, instead of one for each file
 		var progress = new FileProgress(file, 'file-' + file.id);
 		progress.setComplete();
-		progress.setProgress(100);
 		progress.setStatus("Complete.");
 		progress.toggleCancel(false);
 		
@@ -205,9 +186,8 @@ function uploadComplete(file) {
 					swfu.startUpload();
 				}
 				else {
-					if(!swfu.settings.debug) {
+					if(!swfu.settings.debug)
 						form.submit();
-					}
 				}
 			} catch (ex) {
 				alert("Error submitting form:" + ex);
@@ -226,7 +206,7 @@ function uploadError(file, errorCode, message) {
 		// Handle this error separately because we don't want to create a FileProgress element for it.
 		switch (errorCode) {
 		case SWFUpload.UPLOAD_ERROR.MISSING_UPLOAD_URL:
-			alert("There was a configuration error.");
+			alert("There was a configuration error.  You will not be able to upload a resume at this time.");
 			this.debug("Error Code: No backend file, File name: " + file.name + ", Message: " + message);
 			return;
 		case SWFUpload.UPLOAD_ERROR.UPLOAD_LIMIT_EXCEEDED:
@@ -272,18 +252,4 @@ function uploadError(file, errorCode, message) {
 	}
 	
 	
-}
-
-
-function addCommas(nStr)
-{
-	nStr += '';
-	x = nStr.split('.');
-	x1 = x[0];
-	x2 = x.length > 1 ? '.' + x[1] : '';
-	var rgx = /(\d+)(\d{3})/;
-	while (rgx.test(x1)) {
-		x1 = x1.replace(rgx, '$1' + ',' + '$2');
-	}
-	return x1 + x2;
 }

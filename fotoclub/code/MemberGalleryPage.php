@@ -42,6 +42,14 @@ class MemberGalleryPage extends Page
 		{
 			$gallery = DataObject::get_by_id('ImageGallery', Director::urlParam('ID'));
 		}
+		else if(isset($_POST['CurrentGalleryID']))
+		{
+			$gallery = DataObject::get_by_id('ImageGallery', $_POST['CurrentGalleryID']);
+		}
+		else if(isset($_POST['ID']))
+		{
+			$gallery = DataObject::get_by_id('ImageGallery', $_POST['ID']);
+		}
 		return $gallery;
 	}
 	
@@ -50,8 +58,7 @@ class MemberGalleryPage extends Page
 		$image = null;
 		if(is_numeric(Director::urlParam('OtherID')))
 		{
-			$image = DataObject::get_by_id('File', Director::urlParam('OtherID'));
-			$image = $image->newClassInstance('ImageGallery_Image');
+			$image = DataObject::get_by_id('ImageGallery_Image', Director::urlParam('OtherID'));
 		}
 		return $image->ImageGalleryID == Director::urlParam('ID') ? $image : null;
 	}
@@ -105,6 +112,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 	
 	public function upload()
 	{
+		Folder::findOrMake(FCDirector::fix_path_name('Bildergalerien/' . $this->Gallery()->Title));
 		return array('CurrentProfile' => $this->Member(), 'CurrentGallery' => $this->Gallery(), 'ImageUploadForm' => $this->ImageUploadForm());
 	}
 	
@@ -246,6 +254,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 				'Upload',
 				'Fotoupload (max. 10 Bilder)',
 				array(
+					'post_params' => '\'' . session_name() . '\': \'' . session_id() . '\', \'CurrentGalleryID\': \'' . $this->Gallery()->ID . '\'',
 					'file_types_list' => '*.jpg',
 					'file_queue_limit' => '10',
 					'browse_button_text' => 'Fotos auswählen ...',
@@ -272,25 +281,6 @@ class MemberGalleryPage_Controller extends Page_Controller
 	public function doImageUpload($data, $form)
 	{
 		$this->urlParams['ID'] = $data['ID'];
-		
-		$files = $data['uploaded_files']; //get file id's
-		foreach($files as $file)
-		{
-			$do = DataObject::get_by_id('File', $file); //get the file object
-			$do->update(array(
-				'OwnerID' => $this->Member()->ID,
-				//'ImageGalleryID' => $this->Gallery()->ID,	//set the directory
-				'ImageGalleryID' => $data['ID'],	//set the directory
-				// Depracted
-				//'ClassName' => 'Image' //set class to 'Image'
-			)); 
-			$do->write();//write the changes
-			
-                        //Set the uploaded file to classname 'Image'!
-			$query = "UPDATE File SET ClassName = 'Image' where ID in ({$file})";
-			DB::query($query);			
-			
-		}
 		Director::redirect('galleries/my/' . $this->Member()->ID);
 	}
 	
@@ -301,13 +291,18 @@ class MemberGalleryPage_Controller extends Page_Controller
 	 */	
 	public function handleSwfImageUpload()
 	{
-		if(isset($_FILES['swfupload_file']) && is_uploaded_file($_FILES['swfupload_file']['tmp_name']))
+		if(isset($_FILES['swfupload_file']))
 		{
-			$file = new File();
-			$file->loadUploaded($_FILES['swfupload_file']);
-		   	$file->write();
-			/* this gets sent back to the form to an array of hidden inputs called "uploaded_files[]". When the form posts, you can handle the array of Files that were uploaded by their IDs.*/
-			echo $file->ID;
+			$img = new ImageGallery_Image();
+		
+			$upload = new Upload();
+			$upload->loadIntoFile($_FILES['swfupload_file'], $img, FCDirector::fix_path_name('Bildergalerien/' . $this->Gallery()->Title));
+			
+			$img->OwnerID = $this->Member()->ID;
+			$img->ImageGalleryID = $this->Gallery()->ID;
+			$img->write();
+			
+		   	echo $img->ID;
 		}
 		else
 		{

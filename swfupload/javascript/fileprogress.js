@@ -142,9 +142,9 @@ FileProgress.prototype.disappear = function () {
 
 	if (this.height > 0 || this.opacity > 0) {
 		var oSelf = this;
-		/*setTimeout(function () {
+		setTimeout(function () {
 			oSelf.disappear();
-		}, rate);*/
+		}, rate);
 	} else {
 		this.fileProgressWrapper.style.display = "none";
 	}

@@ -1,16 +1,145 @@
-ul#file_list { padding: 0; margin: 0; margin-bottom: 10px; }
-ul#file_list li { display: block; list-style: none; margin: 5px 0 !important; position: relative; height: 62px; width: 100%; padding: 0 2px !important; }
-ul#file_list li div.progressWrapper { border: 2px solid #aaa !important; padding: 0; height: 18px !important; margin-top: 2px; margin-right: 5px; }
-div.progressWrapper { background: #fff; }
-div.progressContainer { height: 100%; position: relative; background: #fff; }
-div.progressBarInProgress { height: 100%; background: #ccc; }
-div.queue-file-name { font-size: 12px !important; font-weight: bold; margin: 0; color: #000; padding: 4px 0; }
-.progressBarStatus { height: 1em; color: #000; font-size: 11px; position: absolute; top: 0px; left: 5px; }
-.progressBarStatus.queued { color: #666; }
-.queue-remove-btn { position: absolute; z-index: 10; top: 3px; left: 100%; margin-left: -25px; width: 16px; height: 16px; }
-.queue-remove-btn a {display:block;text-indent:-9999em;background:url(../images/cancel.png) no-repeat top left;height:100%;width:16px;}
-.queue-remove-btn a:hover {background:url(../images/cancel.png) no-repeat top left !important;}
+#flashUI {clear:both;margin-top:1.5em;}
+ul#file_list {
+margin-left:0;
+padding-left:0;
+margin-top:10px;
+clear:both;
+display:block;
+font-family:arial;
+font-size:11px;
+}
+ul#file_list li {
+display:block;
+list-style:none;
+margin:5px 0;
+border-bottom:1px solid #aaa;
+overflow:hidden;
+position:relative;
+padding:0;
+}
+ul#file_list li div {margin:0;padding:0;}
+ul#file_list li div.queue-remove-btn {
+width:50px;
+float:right;
+padding:0 5px;
+font-size:12px;
 
+}
+ul#file_list li div.queue-file-name {
+width:200px;
+float:left;
+}
+
+
+/* Error */
+.red {
+	border: solid 1px #B50000;
+	background-color: #FFEBEB;
+}
+
+/* Current */
+.green {
+	border: solid 1px #DDF0DD;
+	background-color: #EBFFEB;
+}
+
+/* Complete */
+.blue {
+	border: solid 1px #CEE2F2;
+	background-color: #F0F5FF;
+}
+
+ul#file_list li div.progressWrapper {
+width: 357px;
+overflow: hidden;
+display:block;
+float:right;
+padding:0 4px;
+border:1px solid #aaa;
+border-width:0 1px;
+}
+
+.progressBarStatus {
+padding:0;margin:0;
+}
+.progressName {margin:0;padding:0;}
+.progressBarComplete {
+border:1px solid red;
+padding:0;margin:0;}
+.progressContainer {
+margin: 0;
+padding: 0;
+height:auto;
+background-color:none;
+overflow: hidden;
+}
+/* Message */
+.message {
+	margin: 0;
+	padding:0;
+	border: solid 1px #FFDD99;
+	background-color: #FFFFCC;
+	overflow: hidden;
+}
+
+
+.progressName {
+	font-size: 8pt;
+	font-weight: 700;
+	color: #555;
+	width: 323px;
+	height: auto;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	display:none;
+}
+
+.progressBarInProgress,
+.progressBarComplete,
+.progressBarError {
+	font-size: 0;
+	width: 0%;
+	height: 2px;
+	background-color: #1e69c2;
+	margin-top: 2px;
+}
+
+.progressBarComplete {
+	width: 100%;
+	background-color: #1c8615;
+	visibility: hidden;
+}
+
+.progressBarError {
+	width: 100%;
+	background-color: #c8190d;
+	visibility: hidden;
+}
+
+.progressBarStatus {
+	margin-top: 2px;
+	width: 337px;
+	font-size: 7pt;
+	font-family: Arial;
+	text-align: left;
+	white-space: nowrap;
+}
+
+a.progressCancel {
+	font-size: 0;
+	display: block;
+	height: 14px;
+	width: 14px;
+	background-image: url(../images/cancelbutton.gif);
+	background-repeat: no-repeat;
+	background-position: -14px 0px;
+	float: right;
+}
+
+a.progressCancel:hover {
+	background-position: 0px 0px;
+}
 
 /* SWFUploadFileField */
 div.mainblock {height:185px;}

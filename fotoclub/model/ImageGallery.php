@@ -25,7 +25,7 @@ class ImageGallery extends DataObject
 		'Member' => 'Member'
 	);
 	static $has_many = array(
-		'Images' => 'Image'
+		'Images' => 'ImageGallery_Image'
 	);
 	
 	public function Thumbnails()
@@ -43,6 +43,9 @@ class ImageGallery extends DataObject
 		return $this->SortingImages();
 	}
 	
+	/*
+	 * This overwrites parent::Images() !
+	 */
 	public function Images($link = true)
 	{
 		$images = $this->fetchImages();
@@ -57,7 +60,10 @@ class ImageGallery extends DataObject
 			//Bildstring zusammenbauen
 			$thumb = '';
 			if($link) $thumb .= '<a href="galleries/show-image/' . $this->ID . '/' . $image->ID . '" class="thumbnail">';
-			$thumb .= '<div style="background-image:url(' . Director::baseURL() . $smallImage->Filename . ')" alt="' . $smallImage->Title . '" class="thumbnail"></div>';
+			if($smallImage != null)
+			{
+				$thumb .= '<div style="background-image:url(' . Director::baseURL() . $smallImage->Filename . ')" alt="' . $smallImage->Title . '" class="thumbnail"></div>';
+			}
 			if($link) $thumb .= '</a>';
 			
 			//TemplateControl setzen
@@ -74,14 +80,15 @@ class ImageGallery extends DataObject
 		$newSet = new DataObjectSet();
 		foreach($images as $i => $image)
 		{
-			//Klassenzuweisung für die Bildkonvertierung
-			$imgClass = $image->newClassInstance('ImageGallery_Image');
 			$bigImage = $imgClass->getFormattedImage('ResizeRatio', $this->ImageWidth, $this->ImageHeight); //Bildkonvertierung für vergrößertes Bild ....
 			$smallImage = $imgClass->getFormattedImage('ResizeRatio', 190, 125); // und für verkleinertes Bild.
 			
 			//Bildstring zusammenbauen
 			$thumb = '';
-			$thumb .= '<img src="' . Director::baseURL() . $smallImage->Filename . '" alt="' . $smallImage->Title . '" class="thumbnail" />';
+			if($smallImage != null)
+			{
+				$thumb .= '<img src="' . Director::baseURL() . $smallImage->Filename . '" alt="' . $smallImage->Title . '" class="thumbnail" />';
+			}
 			
 			//TemplateControl setzen
 			$imgClass->Thumbnail = $thumb;
@@ -98,7 +105,7 @@ class ImageGallery extends DataObject
 	
 	private function fetchImages()
 	{
-		if($this->images_cache == null) $this->images_cache = DataObject::get('File', 'ImageGalleryID = ' . $this->ID . ' AND OwnerID = ' . $this->MemberID, 'Sort ASC, ID ASC');
+		if($this->images_cache == null) $this->images_cache = DataObject::get('ImageGallery_Image', 'ImageGalleryID = ' . $this->ID . ' AND OwnerID = ' . $this->MemberID, 'Sort ASC, ImageGallery_Image.ID ASC');
 		return $this->images_cache ? $this->images_cache : new DataObjectSet();
 	}
 	
@@ -111,6 +118,14 @@ class ImageGallery extends DataObject
 //Erweiterteklasse zur Erzeugung von Bildern
 class ImageGallery_Image extends Image
 {
+	static $db = array(
+		'Clicks' => 'Int'
+	);
+	
+	static $has_one = array(
+		'ImageGallery' => 'ImageGallery'
+	);
+	
 	protected $num_comments;
 	
 	public function generateResizeRatio($gd, $width, $height)
@@ -162,26 +177,26 @@ class ImageGallery_Image extends Image
 	
 	public function IsFirst()
 	{
-		return DB::query('SELECT COUNT(*) FROM File WHERE ImageGalleryID = ' . $this->ImageGalleryID . ' AND OwnerID = ' . $this->OwnerID . ' AND ( Sort < ' . $this->Sort . ' OR ( Sort = 0 AND ID < ' . $this->ID . '))')->value() == 0;
+		return DB::query('SELECT COUNT(*) FROM File LEFT JOIN ImageGallery_Image ON File.ID = ImageGallery_Image.ID WHERE ImageGalleryID = ' . $this->ImageGalleryID . ' AND OwnerID = ' . $this->OwnerID . ' AND ( Sort < ' . $this->Sort . ' OR ( Sort = 0 AND File.ID < ' . $this->ID . '))')->value() == 0;
 	}
 	
 	public function IsLast()
 	{
-		return DB::query('SELECT COUNT(*) FROM File WHERE ImageGalleryID = ' . $this->ImageGalleryID . ' AND OwnerID = ' . $this->OwnerID . ' AND ( Sort > ' . $this->Sort . ' OR ( Sort = 0 AND ID > ' . $this->ID . '))')->value() == 0;
+		return DB::query('SELECT COUNT(*) FROM File LEFT JOIN ImageGallery_Image ON File.ID = ImageGallery_Image.ID WHERE ImageGalleryID = ' . $this->ImageGalleryID . ' AND OwnerID = ' . $this->OwnerID . ' AND ( Sort > ' . $this->Sort . ' OR ( Sort = 0 AND File.ID > ' . $this->ID . '))')->value() == 0;
 	}
 	
 	public function PrevImage()
 	{
-		$images = DataObject::get('File', 'ImageGalleryID = ' . $this->ImageGalleryID . ' AND OwnerID = ' . $this->OwnerID . ' AND ( Sort < ' . $this->Sort . ' OR ( Sort = 0 AND ID < ' . $this->ID . '))', 'Sort ASC, ID DESC', '', '0,1');
+		$images = DataObject::get('ImageGallery_Image', 'ImageGalleryID = ' . $this->ImageGalleryID . ' AND OwnerID = ' . $this->OwnerID . ' AND ( Sort < ' . $this->Sort . ' OR ( Sort = 0 AND File.ID < ' . $this->ID . '))', 'Sort ASC, File.ID DESC', '', '0,1');
 		if($images->Count() == 0) return $this;
-		return $images->First()->newClassInstance('ImageGallery_Image');
+		return $images->First();
 	}
 	
 	public function NextImage()
 	{
-		$images = DataObject::get('File', 'ImageGalleryID = ' . $this->ImageGalleryID . ' AND OwnerID = ' . $this->OwnerID . ' AND ( Sort > ' . $this->Sort . ' OR ( Sort = 0 AND ID > ' . $this->ID . '))', 'Sort ASC, ID ASC', '', '0,1');
+		$images = DataObject::get('ImageGallery_Image', 'ImageGalleryID = ' . $this->ImageGalleryID . ' AND OwnerID = ' . $this->OwnerID . ' AND ( Sort > ' . $this->Sort . ' OR ( Sort = 0 AND File.ID > ' . $this->ID . '))', 'Sort ASC, File.ID ASC', '', '0,1');
 		if($images->Count() == 0) return $this;
-		return $images->First()->newClassInstance('ImageGallery_Image');
+		return $images->First();
 	}
 	
 	public function Exif()

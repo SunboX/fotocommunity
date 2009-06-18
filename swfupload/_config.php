@@ -7,7 +7,7 @@
 		'post_params' => '',
 		
 		// Flash file settings
-		'file_size_limit' => str_replace("M","MB",ini_get('upload_max_filesize')),	
+		'file_size_limit' => (str_replace("M",'',ini_get('upload_max_filesize')) * 1024),	
 		'file_types' => '*.*',
 		'file_types_description' => '',
 		'browse_button_text' => 'Browse...',

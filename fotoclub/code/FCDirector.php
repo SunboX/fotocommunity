@@ -42,6 +42,14 @@ class FCDirector extends Director
 				return Director::baseURL() . $page->URLSegment . "/$action/$id/$otherid";
 		}
 	}
+	
+	public static function fix_path_name($path = '')
+	{
+		$path = preg_replace('/\/\//', '/', $path);
+   		$path = preg_replace('/ /', '_', $path);
+    	$path = preg_replace('/[^0-9A-Za-z_\/\.-]/', '', $path);
+		return $path;
+	}
 }
 
 ?>

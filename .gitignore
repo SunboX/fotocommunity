@@ -1,6 +1,6 @@
 .settings
 .project
-/assets/Uploads
+/assets/**/*
 .tmp*
 .svn
 fotoclub/_config.php
