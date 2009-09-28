@@ -33,17 +33,6 @@ class TranslatableTest extends FunctionalTest {
 		global $_SINGLETONS;
 		$_SINGLETONS = array();
 
-		// @todo Hack to refresh statics on the newly decorated classes
-		$newSiteTree = new SiteTree();
-		foreach($newSiteTree->getExtensionInstances() as $extInstance) {
-			$extInstance->loadExtraStatics();
-		}
-		// @todo Hack to refresh statics on the newly decorated classes
-		$TranslatableTest_DataObject = new TranslatableTest_DataObject();
-		foreach($TranslatableTest_DataObject->getExtensionInstances() as $extInstance) {
-			$extInstance->loadExtraStatics();
-		}
-
 		// recreate database with new settings
 		$dbname = self::create_temp_db();
 		DB::set_alternative_database_name($dbname);
@@ -130,6 +119,25 @@ class TranslatableTest extends FunctionalTest {
 			$esPage->getTranslation('en_US')->ID,
 			$enPage->ID
 		);
+	}
+	
+	function testTranslationGroupNotRemovedWhenSiteTreeUnpublished() {
+		$enPage = new Page();
+		$enPage->Locale = 'en_US';
+		$enPage->write();
+		$enPage->publish('Stage', 'Live');
+		$enTranslationGroup = $enPage->getTranslationGroup();
+		
+		$frPage = $enPage->createTranslation('fr_FR');
+		$frPage->write();
+		$frPage->publish('Stage', 'Live');
+		$frTranslationGroup = $frPage->getTranslationGroup();
+		
+		$enPage->doUnpublish();
+		$this->assertEquals($enPage->getTranslationGroup(), $enTranslationGroup);
+		
+		$frPage->doUnpublish();
+		$this->assertEquals($frPage->getTranslationGroup(), $frTranslationGroup);
 	}
 
 	function testGetTranslationOnSiteTree() {
@@ -751,6 +759,40 @@ class TranslatableTest extends FunctionalTest {
 		
 		Translatable::set_allowed_locales($origAllowedLocales);
 	}
+		
+	function testSavePageInCMS() {
+		$adminUser = $this->objFromFixture('Member', 'admin');
+		$enPage = $this->objFromFixture('Page', 'testpage_en');
+		
+		$group = new Group();
+		$group->Title = 'Example Group';
+		$group->write();
+		
+		$frPage = $enPage->createTranslation('fr_FR');
+		$frPage->write();
+		
+		$adminUser->logIn();
+		
+		$cmsMain = new CMSMain();
+		
+		$origLocale = Translatable::get_current_locale();
+		Translatable::set_current_locale('fr_FR');
+		
+		$form = $cmsMain->getEditForm($frPage->ID);
+		$form->loadDataFrom(array(
+			'Title' => 'Translated', // $db field
+			'ViewerGroups' => $group->ID // $many_many field
+		));
+		$form->saveInto($frPage);
+		$frPage->write();
+
+		$this->assertEquals('Translated', $frPage->Title);
+		$this->assertEquals(array($group->ID), $frPage->ViewerGroups()->column('ID'));
+		
+		$adminUser->logOut();
+		Translatable::set_current_locale($origLocale);
+	}
+
 }
 
 class TranslatableTest_DataObject extends DataObject implements TestOnly {

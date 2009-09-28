@@ -157,9 +157,9 @@ class PageCommentInterface extends RequestHandler {
 		$form->setRedirectToFormOnValidationError(true);
 		
 		// Optional Spam Protection.
-		if(class_exists('SpamProtecterManager')) {
+		if(class_exists('SpamProtectorManager')) {
 			// Update the form to add the protecter field to it
-			$protecter = SpamProtecterManager::update_form($form);
+			$protecter = SpamProtectorManager::update_form($form);
 			if($protecter) {
 				$protecter->setFieldMapping('Name', 'Comment');
 				
@@ -297,8 +297,7 @@ class PageCommentInterface_Form extends Form {
 				$page = DataObject::get_by_id("Page", $comment->ParentID);
 				if($page) {
 					// Redirect to the actual post on the page.
-					return Director::redirect($page->Link().'#PageComment_'.$comment->ID);
-					//return Director::redirect(Director::baseURL(). $page->URLSegment.'#PageComment_'.$comment->ID);
+					return Director::redirect(Director::baseURL(). $page->URLSegment.'#PageComment_'.$comment->ID);
 				}
 			}
 

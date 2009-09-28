@@ -28,6 +28,11 @@ class ImageGallery extends DataObject
 		'Images' => 'ImageGallery_Image'
 	);
 	
+	public static function getBaseDirectoryName()
+	{
+		return 'Bildergalerien';
+	}
+	
 	public function Thumbnails()
 	{
 		return $this->Images(false);
@@ -53,7 +58,6 @@ class ImageGallery extends DataObject
 		foreach($images as $i => $image)
 		{
 			//Klassenzuweisung für die Bildkonvertierung
-			$imgClass = $image->newClassInstance('ImageGallery_Image');
 			$bigImage = $imgClass->getFormattedImage('ResizeRatio', $this->ImageWidth, $this->ImageHeight); //Bildkonvertierung für vergrößertes Bild ....
 			$smallImage = $imgClass->getFormattedImage('ResizeRatio', $this->ThumbnailWidth, $this->ThumbnailHeight); // und für verkleinertes Bild.
 			
@@ -115,9 +119,11 @@ class ImageGallery extends DataObject
 	}
 }
 
-//Erweiterteklasse zur Erzeugung von Bildern
+/*
+ * Erweiterteklasse zur Erzeugung und Bearbeitung von Bildern
+ */
 class ImageGallery_Image extends Image
-{
+{	
 	static $db = array(
 		'Clicks' => 'Int'
 	);

@@ -119,8 +119,7 @@ class RestfulService extends ViewableData {
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 			}
 		
-			$responseBody = curl_exec($ch);
-		
+			// Run request
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 			$responseBody = curl_exec($ch);
 			$curlError = curl_error($ch);
@@ -318,7 +317,14 @@ class RestfulService_Response extends HTTPResponse {
 	}
 	
 	function simpleXML() {
-		if(!$this->simpleXML) $this->simpleXML = new SimpleXMLElement($this->body);
+		if(!$this->simpleXML) {
+			try {
+				$this->simpleXML = new SimpleXMLElement($this->body);
+			}
+			catch(Exception $e) {
+				user_error("String could not be parsed as XML. " . $e, E_USER_WARNING);
+			}
+		}
 		return $this->simpleXML;
 	}
 	

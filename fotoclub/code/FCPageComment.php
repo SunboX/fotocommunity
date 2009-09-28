@@ -8,7 +8,7 @@ class FCPageComment extends DataObjectDecorator
 	 * Return an map where the keys are db, has_one, etc, and the values are
 	 * additional fields/relations to be defined
 	 */
-	function extraDBFields()
+	public function extraDBFields()
 	{
 		$fields = array(
 			'db' => array(
@@ -18,7 +18,7 @@ class FCPageComment extends DataObjectDecorator
 			)
 		);
 		
-		$this->extend('extraDBFields', $fields);
+		// $this->extend('extraDBFields', $fields); //TODO: throws Error in 2.3.3
 		
 		return $fields;
 	}

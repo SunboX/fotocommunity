@@ -8,12 +8,12 @@ class ClubMember extends DataObjectDecorator
 	/**
 	 * Edit the given query object to support queries for this extension
 	 */
-	function augmentSQL(SQLQuery &$query) {}
+	public function augmentSQL(SQLQuery &$query) {}
 
 	/**
 	 * Update the database schema as required by this extension
 	 */
-	function augmentDatabase()
+	public function augmentDatabase()
 	{
 		$exist =  DB::query("SHOW TABLES LIKE 'ClubMember'")->numRecords();
 		if($exist > 0)
@@ -36,7 +36,7 @@ class ClubMember extends DataObjectDecorator
 	 * Return an map where the keys are db, has_one, etc, and the values are
 	 * additional fields/relations to be defined
 	 */
-	function extraDBFields()
+	public function extraDBFields()
 	{
 		$fields = array(
 			'db' => array(
@@ -57,7 +57,7 @@ class ClubMember extends DataObjectDecorator
 			),
 		);
 		
-		$this->extend('extraDBFields', $fields);
+		//$this->extend('extraDBFields', $fields); //TODO: throws Error in 2.3.3
 		
 		return $fields;
 	}
@@ -65,12 +65,12 @@ class ClubMember extends DataObjectDecorator
 	/**
 	 * Run the Country code through a converter to get the proper Country Name
 	 */
-	function FullCountry()
+	public function FullCountry()
 	{
 		return (isset($this->owner->Country) && !is_null($this->owner->Country)) ? Geoip::countryCode2name($this->owner->Country) : "";
 	}
 	
-	function NumImages()
+	public function NumImages()
 	{
 		if(is_numeric($this->owner->ID))
 		{
@@ -82,7 +82,7 @@ class ClubMember extends DataObjectDecorator
 		}
 	}
 	
-	function NumImageGalleries()
+	public function NumImageGalleries()
 	{
 		if(is_numeric($this->owner->ID))
 		{
@@ -118,7 +118,7 @@ class ClubMember extends DataObjectDecorator
 		return $images;
 	}
 	
-	function Link()
+	public function Link()
 	{
 		return 'MemberProfile/show/' . $this->owner->ID;
 	}
@@ -132,7 +132,7 @@ class ClubMember extends DataObjectDecorator
 	 * @return FieldSet Returns a FieldSet containing all needed fields for
 	 *                  the registration of new users
 	 */
-	function getEditProfileFields($addmode = false)
+	public function getEditProfileFields($addmode = false)
 	{
 		$gravatarText = '<small>(Wenn du bei <a href="http://en.gravatar.com/" target="_blank">Gravatar</a> angemeldet bist, bitte leer lassen.)</small>';
 
@@ -154,7 +154,7 @@ class ClubMember extends DataObjectDecorator
 		return $fieldset;
 	}
 
-	function updateCMSFields(FieldSet &$fields)
+	public function updateCMSFields(FieldSet &$fields)
 	{
 		if(Permission::checkMember($this->owner->ID, 'ACCESS_FOTOCLUB'))
 		{
@@ -173,6 +173,19 @@ class ClubMember extends DataObjectDecorator
 	 */
 	public function canEdit()
 	{
+		if($this->owner->ID == Member::currentUserID()) return true;
+
+		if($member = Member::currentUser()) return $member->can('AdminCMS');
+
+		return false;
+	}
+	
+	public function IsClubMemeber()
+	{
+		global $fotoclub_config;
+		
+		if(!isset($fotoclub_config['group'])) return;
+		
 		if($this->owner->ID == Member::currentUserID()) return true;
 
 		if($member = Member::currentUser()) return $member->can('AdminCMS');
@@ -242,6 +255,11 @@ class ClubMember extends DataObjectDecorator
 	public function GetImageGalleriesLink()
 	{
 		return 'galleries/my/' . $this->owner->ID;
+	}
+	
+	public function Realname()
+	{
+		return $this->owner->FirstName . ' ' . $this->owner->Surname;
 	}
 }
 

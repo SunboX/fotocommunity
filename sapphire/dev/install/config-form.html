@@ -10,9 +10,9 @@
 				document.getElementById(id).style.display = 'none';
 			}
 		</script>
-		<link rel="stylesheet" type="text/css" href="themes/fotocluby/css/layout.css" />
-		<link rel="stylesheet" type="text/css" href="themes/fotoclub/css/typography.css" />
-		<link rel="stylesheet" type="text/css" href="themes/fotoclub/css/form.css" />
+		<link rel="stylesheet" type="text/css" href="themes/blackcandy/css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="themes/blackcandy/css/typography.css" />
+		<link rel="stylesheet" type="text/css" href="themes/blackcandy/css/form.css" />
 		<link rel="stylesheet" type="text/css" href="sapphire/dev/install/install.css" />
 		<link rel="shortcut icon" href="favicon.ico" />
 	</head>
@@ -59,7 +59,8 @@
 									<b>Template to install:</b>
 								</p>
 								<ul id="Themes">
-									<li><input type="radio" name="template" value="fotoclub" id="FotoClub" <?php if(!isset($_POST['template']) || $_POST['template'] == 'fotoclub') {?>checked="checked"<?php }?> /><label for="FotoClub">FotoClub Zwickau, default template ready to use.</label></li>
+									<li><input type="radio" name="template" value="blackcandy" id="BlackCandy" <?php if(!isset($_POST['template']) || $_POST['template'] == 'blackcandy') {?>checked="checked"<?php }?> /><label for="BlackCandy">BlackCandy, default template ready to use.</label></li>
+									<li><input type="radio" name="template" value="tutorial" id="EmptyTemplate" <?php if(isset($_POST['template']) && $_POST['template'] == 'tutorial') {?>checked="checked"<?php }?>/><label for="EmptyTemplate">Empty template, ready to begin the tutorial.</label></li>
 								</ul>
 								<p>You can change the template or download another from the SilverStripe website after installation.</p>
 			

@@ -297,9 +297,12 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 
 		parent::defineMethods();
 
-		// Define the extra db fields
+		// Define the extra db fields - this is only necessary for extensions added in the
+		// class definition.  Object::add_extension() will call this at definition time for
+		// those objects, which is a better mechanism.  Perhaps extensions defined inside the
+		// class def can somehow be applied at definiton time also?
 		if($this->extension_instances) foreach($this->extension_instances as $i => $instance) {
-			$instance->loadExtraStatics();
+			DataObjectDecorator::load_extra_statics($this->class, $instance->class);
 		}
 
 		// Set up accessors for joined items
@@ -1884,7 +1887,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 				// At the very least, the type has changed
 				$this->changed[$fieldName] = 1;
 				
-				if(!isset($this->record[$fieldName]) || $this->record[$fieldName] != $val) {
+				if((!isset($this->record[$fieldName]) && $val) || (isset($this->record[$fieldName]) && $this->record[$fieldName] != $val)) {
 					// Value has changed as well, not just the type
 					$this->changed[$fieldName] = 2;
 				}

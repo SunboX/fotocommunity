@@ -428,23 +428,23 @@ class Translatable extends DataObjectDecorator {
 		parent::setOwner($owner);
 
 		// setting translatable fields by inspecting owner - this should really be done in the constructor
-		$this->translatableFields = array_keys($this->owner->inheritedDatabaseFields());
+		$this->translatableFields = array_merge(
+			array_keys($this->owner->inheritedDatabaseFields()),
+			array_keys($this->owner->has_many()),
+			array_keys($this->owner->many_many())
+		);
 	}
 	
 	function extraStatics() {
-		if(get_class($this->owner) == ClassInfo::baseDataClass(get_class($this->owner))) {
-			return array(
-				"db" => array(
-						"Locale" => "DBLocale",
-						//"TranslationMasterID" => "Int" // optional relation to a "translation master"
-				),
-                "defaults" => array(
-                    "Locale" => Translatable::default_locale() // as an overloaded getter as well: getLang()
-                )
-			);
-		} else {
-			return array();
-		}
+		return array(
+			"db" => array(
+				"Locale" => "DBLocale",
+				//"TranslationMasterID" => "Int" // optional relation to a "translation master"
+			),
+			"defaults" => array(
+				"Locale" => Translatable::default_locale() // as an overloaded getter as well: getLang()
+			)
+		);
 	}
 
 	/**
@@ -524,7 +524,9 @@ class Translatable extends DataObjectDecorator {
 			'SELECT `ID` FROM `%s` WHERE `Locale` IS NULL OR `Locale` = \'\'',
 			ClassInfo::baseDataClass($this->owner->class)
 		))->column();
-		if($idsWithoutLocale) {
+		if(!$idsWithoutLocale) return;
+		
+			if($this->owner->class == 'SiteTree') {
 			foreach(array('Stage', 'Live') as $stage) {
 				foreach($idsWithoutLocale as $id) {
 					$obj = Versioned::get_one_by_stage(
@@ -533,20 +535,31 @@ class Translatable extends DataObjectDecorator {
 						sprintf('`SiteTree`.`ID` = %d', $id)
 					);
 					if(!$obj) continue;
-					
+
 					$obj->Locale = Translatable::default_locale();
 					$obj->writeToStage($stage);
 					$obj->addTranslationGroup($obj->ID);
 					$obj->destroy();
 					unset($obj);
 				}
-				Database::alteration_message(sprintf(
-					"Added default locale '%s' to table %s","changed",
-					Translatable::default_locale(),
-					$this->owner->class
-				));
+			}
+		} else {
+			foreach($idsWithoutLocale as $id) {
+				$obj = DataObject::get_by_id($this->owner->class, $id);
+				if(!$obj) continue;
+
+				$obj->Locale = Translatable::default_locale();
+				$obj->write();
+				$obj->addTranslationGroup($obj->ID);
+				$obj->destroy();
+				unset($obj);
 			}
 		}
+		Database::alteration_message(sprintf(
+			"Added default locale '%s' to table %s","changed",
+			Translatable::default_locale(),
+			$this->owner->class
+		));
 	}
 	
 	/**
@@ -657,8 +670,9 @@ class Translatable extends DataObjectDecorator {
 		// If language is not set explicitly, set it to current_locale.
 		// This might be a bit overzealous in assuming the language
 		// of the content, as a "single language" website might be expanded
-		// later on. 
-		if(!$this->owner->ID && !$this->owner->Locale) {
+		// later on. See {@link requireDefaultRecords()} for batch setting
+		// of empty Locale columns on each dev/build call.
+		if(!$this->owner->Locale) {
 			$this->owner->Locale = Translatable::get_current_locale();
 		}
 
@@ -719,8 +733,15 @@ class Translatable extends DataObjectDecorator {
 	 * Remove the record from the translation group mapping.
 	 */
 	function onBeforeDelete() {
-		$this->removeTranslationGroup();
-		
+		// @todo Coupling to Versioned, we need to avoid removing
+		// translation groups if records are just deleted from a stage
+		// (="unpublished"). Ideally the translation group tables would
+		// be specific to different Versioned changes, making this restriction unnecessary.
+		// This will produce orphaned translation group records for SiteTree subclasses.
+		if(!$this->owner->hasExtension('Versioned')) {
+			$this->removeTranslationGroup();
+		}
+
 		parent::onBeforeDelete();
 	}
 	
@@ -768,6 +789,13 @@ class Translatable extends DataObjectDecorator {
 		// Don't apply these modifications for normal DataObjects - they rely on CMSMain logic
 		if(!($this->owner instanceof SiteTree)) return;
 		
+		$excludeFields = array(
+			'ViewerGroups',
+			'EditorGroups',
+			'CanViewType',
+			'CanEditType'
+		);
+		
 		// used in CMSMain->init() to set language state when reading/writing record
 		$fields->push(new HiddenField("Locale", "Locale", $this->owner->Locale) );
 
@@ -810,6 +838,8 @@ class Translatable extends DataObjectDecorator {
 			// (fields are object references, so we can replace them with the translatable CompositeField)
 			foreach($allDataFields as $dataField) {
 				if($dataField instanceof HiddenField) continue;
+				if(in_array($dataField->Name(), $excludeFields)) continue;
+				
 				if(in_array($dataField->Name(), $translatableFieldNames)) {
 					// if the field is translatable, perform transformation
 					$fields->replaceField($dataField->Name(), $transformation->transformFormField($dataField));
@@ -1076,7 +1106,7 @@ class Translatable extends DataObjectDecorator {
 	 * @return string HTML
 	 */
 	function MetaTags(&$tags) {
-		$template = '<link rel="alternate" type="text/html" title="%s" hreflang="%s" href="%s">' . "\n";
+		$template = '<link rel="alternate" type="text/html" title="%s" hreflang="%s" href="%s" />' . "\n";
 		$translations = $this->owner->getTranslations();
 		if($translations) foreach($translations as $translation) {
 			$tags .= sprintf($template,

@@ -76,7 +76,6 @@ $.each( ['Left', 'Top'], function(i, name) {
 
 $.fn.extend({
 	position: function() {
-		
 		var left = 0, top = 0, elem = this[0], offset, parentOffset, offsetParent, results;
 		
 		if (elem) {

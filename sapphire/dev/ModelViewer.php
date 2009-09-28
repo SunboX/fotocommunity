@@ -1,7 +1,9 @@
 <?php
 /**
  * Gives you a nice way of viewing your data model.
- * Access at dev/viewmodel
+ * Access at dev/viewmodel.
+ *
+ * Requirements: http://graphviz.org/
  * 
  * @package sapphire
  * @subpackage tools
@@ -20,6 +22,17 @@ class ModelViewer extends Controller {
 	function init() {
 		parent::init();
 		if(!Permission::check("ADMIN")) Security::permissionFailure();
+
+		// check for graphviz dependencies
+		$returnCode = 0;
+		$output = array();
+		exec("which neato", $output, $returnCode);
+		if($returnCode != 0) {
+			user_error(
+				'You don\'t seem to have the GraphViz library (http://graphviz.org/) and the "neato" command-line utility available',
+				E_USER_ERROR
+			);
+		}
 	}
 
 	/**
@@ -78,13 +91,15 @@ class ModelViewer_Module extends ModelViewer {
 	 */
 	function __construct($module = null) {
 		$this->module = $module;
+		
+		parent::__construct();
 	}
 	
 	function graph() {
 		SSViewer::set_source_file_comments(false);
 		$dotContent = $this->renderWith("ModelViewer_dotsrc");
 		$CLI_dotContent = escapeshellarg($dotContent);
-		
+
 		$output= `echo $CLI_dotContent | neato -Tpng:gd &> /dev/stdout`;
 		if(substr($output,1,3) == 'PNG') header("Content-type: image/png");
 		else header("Content-type: text/plain");
@@ -158,6 +173,8 @@ class ModelViewer_Field extends ViewableData {
 		$this->Model = $model;
 		$this->Name = $name;
 		$this->Type = $type;
+		
+		parent::__construct();
 	}
 }
 
@@ -169,6 +186,8 @@ class ModelViewer_Relation extends ViewableData {
 		$this->Name = $name;
 		$this->RelatedClass = $relatedClass;
 		$this->RelationType = $relationType;
+		
+		parent::__construct();
 	}
 	
 }

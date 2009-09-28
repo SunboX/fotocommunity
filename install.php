@@ -720,8 +720,6 @@ global \$database;
 
 require_once("conf/ConfigureFromEnv.php");
 
-// This line set's the current theme. More themes can be
-// downloaded from http://www.silverstripe.com/themes/
 SSViewer::set_theme('$theme');
 
 ?>
@@ -778,11 +776,9 @@ setlocale(LC_TIME, i18n::get_locale() . '.utf8');
 
 DataObject::add_extension('Member', 'ClubMember');
 Object::add_extension('Member_Validator', 'ClubMember_Validator');
-DataObject::add_extension('File', 'ImageGalleryFile');
 
 MemberTableField::addMembershipFields(array(
 	'Nickname' => 'Nickname',
-	'Occupation' => 'Occupation',
 	'Country' => 'Country'
 ));
 

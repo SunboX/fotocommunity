@@ -112,7 +112,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 	
 	public function upload()
 	{
-		Folder::findOrMake(FCDirector::fix_path_name('Bildergalerien/' . $this->Gallery()->Title));
+		Folder::findOrMake(FCDirector::fix_path_name(ImageGallery::getBaseDirectoryName() . '/' . $this->Gallery()->Title));
 		return array('CurrentProfile' => $this->Member(), 'CurrentGallery' => $this->Gallery(), 'ImageUploadForm' => $this->ImageUploadForm());
 	}
 	
@@ -296,7 +296,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 			$img = new ImageGallery_Image();
 		
 			$upload = new Upload();
-			$upload->loadIntoFile($_FILES['swfupload_file'], $img, FCDirector::fix_path_name('Bildergalerien/' . $this->Gallery()->Title));
+			$upload->loadIntoFile($_FILES['swfupload_file'], $img, FCDirector::fix_path_name(ImageGallery::getBaseDirectoryName() . '/' . $this->Gallery()->Title));
 			
 			$img->OwnerID = $this->Member()->ID;
 			$img->ImageGalleryID = $this->Gallery()->ID;

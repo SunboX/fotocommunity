@@ -21,7 +21,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // ENVIRONMENT CONFIG
 
-error_reporting(E_ALL);
+if(defined('E_DEPRECATED')) error_reporting(E_ALL ^ E_DEPRECATED);
+else error_reporting(E_ALL);
 
 /**
  * Include _ss_environment.php files
@@ -46,9 +47,11 @@ if(!isset($_SERVER['HTTP_HOST'])) {
 	// HTTP_HOST, REQUEST_PORT, SCRIPT_NAME, and PHP_SELF
 	if(isset($_FILE_TO_URL_MAPPING)) {
 		$fullPath = $testPath = $_SERVER['SCRIPT_FILENAME'];
-		while($testPath && $testPath != "/") {
+		while($testPath && $testPath != "/"  && !preg_match('/^[A-Z]:\\\\$/', $testPath)) {
 			if(isset($_FILE_TO_URL_MAPPING[$testPath])) {
-				$url = $_FILE_TO_URL_MAPPING[$testPath] . substr($fullPath,strlen($testPath));
+				$url = $_FILE_TO_URL_MAPPING[$testPath] 
+					. str_replace(DIRECTORY_SEPARATOR,'/',substr($fullPath,strlen($testPath)));
+				
 				$_SERVER['HTTP_HOST'] = parse_url($url, PHP_URL_HOST);
 				$_SERVER['SCRIPT_NAME'] = $_SERVER['PHP_SELF'] = parse_url($url, PHP_URL_PATH);
 				$_SERVER['REQUEST_PORT'] = parse_url($url, PHP_URL_PORT);
@@ -57,7 +60,7 @@ if(!isset($_SERVER['HTTP_HOST'])) {
 			$testPath = dirname($testPath);
 		}
 	}
-	
+
 	// Everything else
 	$serverDefaults = array(
 		'SERVER_PROTOCOL' => 'HTTP/1.1',
@@ -125,26 +128,8 @@ define('PR_LOW',10);
 /**
  * Ensure we have enough memory
  */
-$memString = ini_get("memory_limit");
-switch(strtolower(substr($memString, -1))) {
-case "k":
-	$memory = round(substr($memString, 0, -1)*1024);
-	break;
-case "m":
-	$memory = round(substr($memString, 0, -1)*1024*1024);
-	break;
-case "g":
-	$memory = round(substr($memString, 0, -1)*1024*1024*1024);
-	break;
-default:
-	$memory = round($memString);
-}
 
-// Check we have at least 64M
-if ($memory < (64 * 1024 * 1024)) {
-	// Increase memory limit
-	ini_set('memory_limit', '64M');
-}
+increase_memory_limit_to('64M');
 
 ///////////////////////////////////////////////////////////////////////////////
 // INCLUDES
@@ -173,7 +158,8 @@ if(isset($_GET['debugmanifest'])) Debug::show(file_get_contents(MANIFEST_FILE));
 // This is necessary to force developers to acknowledge and fix
 // notice level errors (you can override this directive in your _config.php)
 if (Director::isLive()) {
-	error_reporting(E_ALL ^ E_NOTICE);
+	if(defined('E_DEPRECATED')) error_reporting((E_ALL ^ E_NOTICE) ^ E_DEPRECATED);
+	else error_reporting(E_ALL ^ E_NOTICE);
 }
 ///////////////////////////////////////////////////////////////////////////////
 // POST-MANIFEST COMMANDS
@@ -296,6 +282,30 @@ function stripslashes_recursively(&$array) {
  */
 function _t($entity, $string = "", $priority = 40, $context = "") {
 	return i18n::_t($entity, $string, $priority, $context);
+}
+
+/**
+ * Increase the memory limit to the given level if it's currently too low.
+ * @param A memory limit string, such as "64M"
+ */
+function increase_memory_limit_to($memoryLimit) {
+	// Increase the memory limit if it's too low
+	if(translate_memstring($memoryLimit) >  translate_memstring(ini_get('memory_limit'))) {
+		ini_set('memory_limit', $memoryLimit);
+	}
+}
+
+/**
+ * Turn a memory string, such as 512M into an actual number of bytes.
+ * @param A memory limit string, such as "64M"
+ */
+function translate_memstring($memString) {
+	switch(strtolower(substr($memString, -1))) {
+		case "k": return round(substr($memString, 0, -1)*1024);
+		case "m": return round(substr($memString, 0, -1)*1024*1024);
+		case "g": return round(substr($memString, 0, -1)*1024*1024*1024);
+		default: return round($memString);
+	}
 }
 
 ?>
