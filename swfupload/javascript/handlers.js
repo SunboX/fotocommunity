@@ -217,8 +217,8 @@ function uploadError(file, errorCode, message) {
 		case SWFUpload.UPLOAD_ERROR.UPLOAD_STOPPED:
 			break;
 		default:
-			alert("An error occurred in the upload. Try again later.");
-			this.debug("Error Code: " + errorCode + ", File name: " + file.name + ", File size: " + file.size + ", Message: " + message);
+			//alert("An error occurred in the upload. Try again later.");
+			alert("Error Code: " + errorCode + ", File name: " + file.name + ", File size: " + file.size + ", Message: " + message);
 			return;
 		}
 

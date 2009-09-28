@@ -58,8 +58,8 @@ class ImageGallery extends DataObject
 		foreach($images as $i => $image)
 		{
 			//Klassenzuweisung für die Bildkonvertierung
-			$bigImage = $imgClass->getFormattedImage('ResizeRatio', $this->ImageWidth, $this->ImageHeight); //Bildkonvertierung für vergrößertes Bild ....
-			$smallImage = $imgClass->getFormattedImage('ResizeRatio', $this->ThumbnailWidth, $this->ThumbnailHeight); // und für verkleinertes Bild.
+			$bigImage = $image->getFormattedImage('ResizeRatio', $this->ImageWidth, $this->ImageHeight); //Bildkonvertierung für vergrößertes Bild ....
+			$smallImage = $image->getFormattedImage('ResizeRatio', $this->ThumbnailWidth, $this->ThumbnailHeight); // und für verkleinertes Bild.
 			
 			//Bildstring zusammenbauen
 			$thumb = '';
@@ -71,9 +71,9 @@ class ImageGallery extends DataObject
 			if($link) $thumb .= '</a>';
 			
 			//TemplateControl setzen
-			$imgClass->Thumbnail = $thumb;
-			$imgClass->IsModuloThree = $i > 0 && ($i+1)%3 == 0;
-			$newSet->push($imgClass);
+			$image->Thumbnail = $thumb;
+			$image->IsModuloThree = $i > 0 && ($i+1)%3 == 0;
+			$newSet->push($image);
 		}		
 		return $newSet;
 	}

@@ -11,7 +11,7 @@ $Content
     <td>$Title.XML</td>
     <td><a href="#$ID">0 Fotos</a></td>
 	<% if CurrentMember %> 
-	<td><a href="clubtopics/upload/#$ID">[Fotos zu diesem Thema hochladen]</a></td>
+	<td><a href="clubtopics/upload/$ID">[Fotos zu diesem Thema hochladen]</a></td>
 	<% end_if %>
   </tr>
   <% end_control %>

@@ -60,7 +60,12 @@ class TopicsPage_Controller extends Page_Controller
 		{
 			return 'Du musst eingeloggt sein, um Fotos hochladen zu können.';
 		}
-		Folder::findOrMake(FCDirector::fix_path_name(ClubTopic::getBaseDirectoryName() . '/' . $this->ClubTopic()->Title));
+		Folder::findOrMake(
+			FCDirector::fix_path_name(
+				ClubTopic::getBaseDirectoryName() . '/' . 
+				$this->ClubTopic()->Title
+			)
+		);
 		return array('CurrentClubTopic' => $this->ClubTopic(), 'ImageUploadForm' => $this->ImageUploadForm());
 	}
 	
@@ -113,13 +118,13 @@ class TopicsPage_Controller extends Page_Controller
 		
 		if(Permission::check('ADMIN'))
 		{
-			$fields->push(new FieldSet(
+			$fields->push(
 				new DropdownField(
 					'OwnerID',
 					'Mitglied',
 					$this->Members()
 				)
-			));
+			);
 		}
 		
 		$fields->push(new SWFUploadField(
@@ -164,7 +169,7 @@ class TopicsPage_Controller extends Page_Controller
 	{
 		if(isset($_FILES['swfupload_file']))
 		{
-			$img = new ImageGallery_Image();
+			$img = new ClubTopic_Image();
 		
 			$upload = new Upload();
 			$upload->loadIntoFile($_FILES['swfupload_file'], $img, FCDirector::fix_path_name(ClubTopic::getBaseDirectoryName() . '/' . $this->ClubTopic()->Title));
