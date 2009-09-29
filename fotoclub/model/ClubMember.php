@@ -135,14 +135,14 @@ class ClubMember extends DataObjectDecorator
 	public function getEditProfileFields($addmode = false)
 	{
 		$gravatarText = '<small>(Wenn du bei <a href="http://en.gravatar.com/" target="_blank">Gravatar</a> angemeldet bist, bitte leer lassen.)</small>';
-
+		
 		$personalDetailsFields = new CompositeField(	
 			//new TextField('Nickname', 'Spitzname'),
 			new TextField('FirstName', 'Vorname'),
 			new TextField('Surname', 'Nachname'),
 			new TextField('City', 'Stadt'),
 			new CountryDropdownField("Country", 'Land'),
-			new EmailField('E-Mail', 'E-Mail'),
+			new EmailField('Email', 'E-Mail'),
 			new PasswordField('Password', 'Passwort'),
 			new PasswordField('ConfirmPassword', 'Passwort wiederholen'),
 			new SimpleImageField('Avatar', 'Profilfoto hochladen ' . $gravatarText)

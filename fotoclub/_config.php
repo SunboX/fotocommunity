@@ -40,7 +40,6 @@ Director::set_dev_servers(array(
 	'127.0.0.1',
 ));
 
-
 i18n::enable();
 i18n::set_locale('de_DE');
 //i18n::set_default_lang('de_DE');
