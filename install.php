@@ -116,7 +116,7 @@ if($installFromCli && ($req->hasErrors() || $dbReq->hasErrors())) {
 if((isset($_REQUEST['go']) || $installFromCli) && !$req->hasErrors() && !$dbReq->hasErrors() && $adminConfig['username'] && $adminConfig['password']) {
 	// Confirm before reinstalling
 	if(!isset($_REQUEST['force_reinstall']) && !$installFromCli && $alreadyInstalled) {
-		include('sapphire/dev/install/config-form.html');
+		include('fotoclub/install/config-form.html');
 		
 	} else {
 		$inst = new Installer();
@@ -130,7 +130,7 @@ if((isset($_REQUEST['go']) || $installFromCli) && !$req->hasErrors() && !$dbReq-
 
 // Show the config form
 } else {
-	include('sapphire/dev/install/config-form.html');	
+	include('fotoclub/install/config-form.html');	
 }
 
 /**
@@ -704,7 +704,7 @@ class Installer extends InstallRequirements {
 		if(file_exists('fotoclub/_config.php')) {
 			unlink('fotoclub/_config.php');
 		}
-		$theme = isset($_POST['template']) ? $_POST['template'] : 'fotoclub';
+		$theme = 'fotoclub';
 		// Write the config file
 		global $usingEnv;
 		if($usingEnv) {

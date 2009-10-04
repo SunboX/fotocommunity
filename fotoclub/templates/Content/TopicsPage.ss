@@ -9,7 +9,7 @@ $Content
   <% control Topics %>
   <tr class="topic_$State">
     <td>$Title.XML</td>
-    <td><a href="#$ID">0 Fotos</a></td>
+    <td><a href="clubtopics/show/$ID">0 Fotos</a></td>
 	<% if CurrentMember %> 
 	<td><a href="clubtopics/upload/$ID">[Fotos zu diesem Thema hochladen]</a></td>
 	<% end_if %>

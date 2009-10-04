@@ -29,6 +29,7 @@ class TopicsPage extends Page
 		{
 			$gallery = DataObject::get_by_id('ClubTopic', $_POST['ID']);
 		}
+		
 		return $gallery;
 	}
 	
@@ -145,7 +146,8 @@ class TopicsPage_Controller extends Page_Controller
 					'required' => true,
 					'debug' => isset($_REQUEST['debug']) ? 'true' : 'false'
 				)
-		));
+			)
+		);
 		
 		$actions = new FieldSet(
 			new FormAction('doImageUpload', 'Hochladen')
@@ -156,6 +158,14 @@ class TopicsPage_Controller extends Page_Controller
 	
 	public function doImageUpload($data, $form)
 	{
+		foreach($data->postVar('uploaded_files') as $img_id)
+		{
+			$img = DataObject::get_by_id('ClubTopic_Image', $img_id);
+			$img->OwnerID = $data['postVars']['OwnerID'];
+			$img->ClubTopicID = $data['postVars']['ID'];
+			$img->write();
+		}
+			
 		$this->urlParams['ID'] = $data['ID'];
 		Director::redirect('clubtopics/show/' . $this->Member()->ID);
 	}
@@ -170,20 +180,16 @@ class TopicsPage_Controller extends Page_Controller
 		if(isset($_FILES['swfupload_file']))
 		{
 			$img = new ClubTopic_Image();
-		
-			$upload = new Upload();
-			$upload->loadIntoFile($_FILES['swfupload_file'], $img, FCDirector::fix_path_name(ClubTopic::getBaseDirectoryName() . '/' . $this->ClubTopic()->Title));
 			
-			$img->OwnerID = $this->Member()->ID;
-			$img->ClubTopicID = $this->ClubTopic()->ID;
-			$img->write();
+			$upload = new Upload();
+			$upload->loadIntoFile($_FILES['swfupload_file'], $img, FCDirector::fix_path_name(ClubTopic::getBaseDirectoryName() . '/temp'));
 			
 		   	echo $img->ID;
 		}
 		else
 		{
         	echo ' '; // return something or SWFUpload won't fire uploadSuccess
-		}  
+		}
 	}
 	
 	public function ClubTopic()
