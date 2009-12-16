@@ -84,8 +84,8 @@ class ImageGallery extends DataObject
 		$newSet = new DataObjectSet();
 		foreach($images as $i => $image)
 		{
-			$bigImage = $imgClass->getFormattedImage('ResizeRatio', $this->ImageWidth, $this->ImageHeight); //Bildkonvertierung für vergrößertes Bild ....
-			$smallImage = $imgClass->getFormattedImage('ResizeRatio', 190, 125); // und für verkleinertes Bild.
+			$bigImage = $image->getFormattedImage('ResizeRatio', $this->ImageWidth, $this->ImageHeight); //Bildkonvertierung für vergrößertes Bild ....
+			$smallImage = $image->getFormattedImage('ResizeRatio', 190, 125); // und für verkleinertes Bild.
 			
 			//Bildstring zusammenbauen
 			$thumb = '';
@@ -95,9 +95,9 @@ class ImageGallery extends DataObject
 			}
 			
 			//TemplateControl setzen
-			$imgClass->Thumbnail = $thumb;
-			$imgClass->IsModuloThree = $i > 0 && ($i+1)%3 == 0;
-			$newSet->push($imgClass);
+			$image->Thumbnail = $thumb;
+			$image->IsModuloThree = $i > 0 && ($i+1)%3 == 0;
+			$newSet->push($image);
 		}		
 		return $newSet;
 	}
