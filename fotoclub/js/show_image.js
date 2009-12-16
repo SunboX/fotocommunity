@@ -7,8 +7,8 @@
 	$(document).ready(function()
 	{	
 		$('#the_image').tooltip({
-			position: ['bottom', 'center'],
-			offset: [0, 0],
+			relative: true,
+			position: 'bottom center',
 			opacity: 0.8
 		});
 	});
