@@ -91,8 +91,8 @@ class ClubTopic extends DataObject
 		$newSet = new DataObjectSet();
 		foreach($images as $i => $image)
 		{
-			$bigImage = $imgClass->getFormattedImage('ResizeRatio', $this->ImageWidth, $this->ImageHeight); //Bildkonvertierung für vergrößertes Bild ....
-			$smallImage = $imgClass->getFormattedImage('ResizeRatio', 190, 125); // und für verkleinertes Bild.
+			$bigImage = $image->getFormattedImage('ResizeRatio', $this->ImageWidth, $this->ImageHeight); //Bildkonvertierung für vergrößertes Bild ....
+			$smallImage = $image->getFormattedImage('ResizeRatio', 190, 125); // und für verkleinertes Bild.
 			
 			//Bildstring zusammenbauen
 			$thumb = '';
@@ -102,9 +102,9 @@ class ClubTopic extends DataObject
 			}
 			
 			//TemplateControl setzen
-			$imgClass->Thumbnail = $thumb;
-			$imgClass->IsModuloThree = $i > 0 && ($i+1)%3 == 0;
-			$newSet->push($imgClass);
+			$image->Thumbnail = $thumb;
+			$image->IsModuloThree = $i > 0 && ($i+1)%3 == 0;
+			$newSet->push($image);
 		}		
 		return $newSet;
 	}
@@ -116,7 +116,7 @@ class ClubTopic extends DataObject
 	
 	private function fetchImages()
 	{
-		if($this->images_cache == null) $this->images_cache = DataObject::get('ClubTopic_Image', 'ClubTopicID = ' . $this->ID . ' AND OwnerID = ' . $this->MemberID, 'Sort ASC, ClubTopic_Image.ID ASC');
+		if($this->images_cache == null && $this->MemberID) $this->images_cache = DataObject::get('ClubTopic_Image', 'ClubTopicID = ' . $this->ID . ' AND OwnerID = ' . $this->MemberID, 'Sort ASC, ClubTopic_Image.ID ASC');
 		return $this->images_cache ? $this->images_cache : new DataObjectSet();
 	}
 	
