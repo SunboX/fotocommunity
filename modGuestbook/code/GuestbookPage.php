@@ -24,8 +24,12 @@
 	
 	class GuestbookPage_Controller extends Page_Controller {
     	function show_list() {
+    		$start = 0;
+    		if(isset($_GET['start']) && is_numeric($_GET['start']) && $_GET['start'] > 0){
+    			$start = $_GET['start'];
+    		}
 			$filter = ($this->activate_entry) ? 'Active = 1' : null;
-    		$list = DataObject::get('GuestbookEntry', $filter);
+    		$list = DataObject::get('GuestbookEntry', $filter, null,null, "{$start}, 2");
 			return $list;
 		}
 		
