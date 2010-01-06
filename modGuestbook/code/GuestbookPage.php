@@ -23,13 +23,20 @@
     }
 	
 	class GuestbookPage_Controller extends Page_Controller {
+		
+		function init(){			
+			parent::init();
+			Requirements::css('modGuestbook/css/guestbook.css');
+		}
+		
     	function show_list() {
     		$start = 0;
+			global $gbCONFIG;
     		if(isset($_GET['start']) && is_numeric($_GET['start']) && $_GET['start'] > 0){
     			$start = $_GET['start'];
     		}
 			$filter = ($this->activate_entry) ? 'Active = 1' : null;
-    		$list = DataObject::get('GuestbookEntry', $filter, null,null, "{$start}, 2");
+    		$list = DataObject::get('GuestbookEntry', $filter, null,null, "{$start}, {$gbCONFIG['PageSize']}");
 			return $list;
 		}
 		
@@ -56,7 +63,7 @@
 			$entry->Name = $data['Name'];
 			$entry->Message = $data['Message'];
 			$entry->write();
-			Director::redirectBack();	
+			Director::redirect(Controller::curr()->URLSegment . "/addSuccess");	
 		}
 		
 		function mySettings() {
@@ -74,6 +81,15 @@
 			Director::redirectBack();
 		}
 		
+		function BackLink(){
+			$link = Controller::curr()->URLSegment;
+			return "<a href=\"{$link}\">zum G&auml;stebuch</a>";
+		}
+		
+		function LinkNewEntry(){
+			$link = Controller::curr()->URLSegment . "/addEntry";
+			return "<a href=\"{$link}\">neuer Eintrag</a>";
+		}
     }
 	
 	
