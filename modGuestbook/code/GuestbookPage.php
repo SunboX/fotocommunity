@@ -90,6 +90,20 @@
 			$link = Controller::curr()->URLSegment . "/addEntry";
 			return "<a href=\"{$link}\">neuer Eintrag</a>";
 		}
+		
+		function deleteEntry(){
+			$id = Director::urlParam('ID');
+			$url = Director::baseURL();
+			if(!is_numeric($id)){
+				Director::redirect($url . Controller::curr()->URLSegment);
+			}
+			if(!Member::currentUser() && !Member::currentUser()->isAdmin()) {
+				Director::redirect($url . Controller::curr()->URLSegment);
+			}
+			DataObject::delete_by_id('GuestbookEntry', $id);
+			Director::redirect($url . Controller::curr()->URLSegment);
+		}
+		
     }
 	
 	
