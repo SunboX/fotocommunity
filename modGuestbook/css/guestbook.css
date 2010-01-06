@@ -1,0 +1,19 @@
+#guestbook{
+	background:#F2F2F2 none repeat scroll 0 0;
+	border-bottom:1px solid #DBDBDB;
+	border-top:1px solid #DBDBDB;
+	color:#333333;
+	font-size:14px;
+	line-height:1em;
+	margin:2.5em 0 0.5em;
+	padding:6px 5px;
+}
+
+#guestbook .entry * {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:10px;
+}
+#guestbook .entry{
+	padding:5px 0px 5px 0px;
+	border-bottom:1px solid #DBDBDB;
+}

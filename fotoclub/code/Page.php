@@ -36,6 +36,10 @@ class Page_Controller extends ContentController
 		HtmlEditorConfig::get('fotoclub')->setButtonsForLine(2, array());
 		
 		HtmlEditorconfig::set_active('fotoclub');
+		
+		Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
+		Requirements::javascript('fotoclub/js/common.js');
+		
 	}
 	
 	function NumNewMessages()
@@ -48,12 +52,12 @@ class Page_Controller extends ContentController
 	 */ 
 	function SearchForm()
 	{
-		$searchText = isset($_REQUEST['Search']) ? $_REQUEST['Search'] : 'Search';
+		$searchText = isset($_REQUEST['Search']) ? $_REQUEST['Search'] : 'Suche';
 		$fields = new FieldSet(
 	      	new TextField("Search", "", $searchText)
 	  	);
 		$actions = new FieldSet(
-	      	new FormAction('results', 'Search')
+	      	new FormAction('results', 'Suche')
 	  	);
 
 	  	return new SearchForm($this, "SearchForm", $fields, $actions);
