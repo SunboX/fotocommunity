@@ -6,7 +6,8 @@ class TopicsPage extends Page
 	{
 		if(!DataObject::get('TopicsPage'))
 		{
-			$page = new MembersPage();
+			//$page = new MembersPage();
+			$page = new TopicsPage();
 			$page->Title = 'Clubthemen';
 			$page->write();
 			$page->doPublish();
