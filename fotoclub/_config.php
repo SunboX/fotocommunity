@@ -67,6 +67,4 @@ MemberTableField::addMembershipFields(array(
 Director::addRules(60, array(
 	'PageComment//$Action/$ID' => 'FCPageComment_Controller'
 ));
-
-
 ?>
