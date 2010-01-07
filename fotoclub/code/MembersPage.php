@@ -33,8 +33,8 @@ class MembersPage_Controller extends Page_Controller
 	
 	public function Members()
 	{
-		if($this->mem_cache == null) $this->fetchClubMembers();
 		
+		if($this->mem_cache == null) $this->fetchClubMembers();
 		return $this->mem_cache;
 	}
 	
@@ -44,16 +44,23 @@ class MembersPage_Controller extends Page_Controller
 		
 		if(!isset($fotoclub_config['group'])) return;
 		
-		$group_ids = array();
-		foreach($fotoclub_config['group'] as $group_name)
-		{
-			$do = DataObject::get_one('Group', 'Title = \'' . $group_name . '\'');
-			if($do) $group_ids[] = 'GroupID = ' . $do->ID;
-		}
+		print_r($fotoclub_config);
 		
+		$group_ids = null;
+		if(is_array($fotoclub_config['group'])){
+			$group_ids = array();
+			foreach($fotoclub_config['group'] as $group_name)
+			{
+				$do = DataObject::get_one('Group', 'Title = \'' . $group_name . '\'');
+				if($do) $group_ids[] = 'GroupID = ' . $do->ID;
+			}
+		}else{
+			$group_ids = DataObject::get_one('Group', 'Title = \'' . $group_name . '\'');
+		}
+		$where = is_array($group_ids) ? implode(' OR ', $group_ids) : $group_ids;
 		$this->mem_cache = DataObject::get(
 			'Member',
-			implode(' OR ', $group_ids),
+			$where,
 			'FirstName, Surname, LastVisited, AvatarID',
 			'LEFT JOIN Group_Members ON Member.ID = Group_Members.MemberID'
 		);
