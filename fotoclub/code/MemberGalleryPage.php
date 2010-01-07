@@ -62,6 +62,17 @@ class MemberGalleryPage extends Page
 		}
 		return $image->ImageGalleryID == Director::urlParam('ID') ? $image : null;
 	}
+	
+	public function getUploadFolder(){
+		//get member ID, but if current user is admin, get the memberid from gallery object to load images to the right directory 
+		$MemberID = Member::currentUser()->isAdmin() ? $this->Gallery()->MemberID : Member::currentUserID();
+		//build directory
+		$Foldername = FCDirector::fix_path_name(ImageGallery::getBaseDirectoryName() . "/" . $MemberID . "/"  . $this->Gallery()->ID);
+		//create folder, if does't exists!
+		Folder::findOrMake(FCDirector::fix_path_name(ImageGallery::getBaseDirectoryName() . "/" . $MemberID . "/"  . $this->Gallery()->ID));
+		//return directory
+		return $Foldername;
+	}
 }
 
 class MemberGalleryPage_Controller extends Page_Controller
@@ -112,7 +123,6 @@ class MemberGalleryPage_Controller extends Page_Controller
 	
 	public function upload()
 	{
-		Folder::findOrMake(FCDirector::fix_path_name(ImageGallery::getBaseDirectoryName() . '/' . $this->Gallery()->Title));
 		return array('CurrentProfile' => $this->Member(), 'CurrentGallery' => $this->Gallery(), 'ImageUploadForm' => $this->ImageUploadForm());
 	}
 	
@@ -291,13 +301,13 @@ class MemberGalleryPage_Controller extends Page_Controller
 	 */	
 	public function handleSwfImageUpload()
 	{
+		$MemberID = Member::currentUser()->isAdmin() ? $this->Gallery()->MemberID : Member::currentUserID();
 		if(isset($_FILES['swfupload_file']))
 		{
 			$img = new ImageGallery_Image();
 		
 			$upload = new Upload();
-			$upload->loadIntoFile($_FILES['swfupload_file'], $img, FCDirector::fix_path_name(ImageGallery::getBaseDirectoryName() . '/' . $this->Gallery()->Title));
-			
+			$upload->loadIntoFile($_FILES['swfupload_file'], $img, $this->getUploadFolder());
 			$img->OwnerID = $this->Member()->ID;
 			$img->ImageGalleryID = $this->Gallery()->ID;
 			$img->write();

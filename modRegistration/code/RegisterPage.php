@@ -21,6 +21,20 @@ class RegisterPage extends Page {
 		return $fields;
 	}
 	
+	public function registration_group(){
+		global $reg_config;
+		$title = $reg_config['newREGtitle'];
+		$code = $reg_config['newREGcode'];
+		$group = Group::get_one('Group', "Title = '{$title}' and Code = '{$code}'");
+		if(!$group){
+			$group = new Group();
+			$group->Title = $reg_config['newREGtitle'];
+			$group->Code = strtoupper($reg_config['newREGcode']);
+			$group->write();
+		}
+		return $group;
+	}
+	
 }
 
 class RegisterPage_Controller extends Page_Controller {
@@ -48,12 +62,11 @@ class RegisterPage_Controller extends Page_Controller {
 		// Create a new member and save the form into it
 		$member = new Member();
 		$form->saveInto($member);
-
 		// Write to the databsae
 		$member->write();
-
 		// To do: add a status message on the form, using the standard form message system
-
+		//set new member to right group
+		$member->Groups()->add($this->registration_group());
 		// Return to the original form
 		Director::redirect($this->Link() . 'thanks');
 	}
