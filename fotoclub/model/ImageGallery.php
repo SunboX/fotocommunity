@@ -167,7 +167,7 @@ class ImageGallery_Image extends Image
 		// don't count bots
 		global $fotoclub_config;
 		$remoteHostName = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-		foreach($fotoclub_config['bots'] as $key => $botHostName)
+		foreach($fotoclub_config['statistic.bots'] as $key => $botHostName)
 		{
 			if(strpos($remoteHostName, $botHostName))
 			{

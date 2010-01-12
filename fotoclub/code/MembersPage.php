@@ -42,12 +42,12 @@ class MembersPage_Controller extends Page_Controller
 	{
 		global $fotoclub_config;
 		
-		if(!isset($fotoclub_config['group'])) return;
+		if(!isset($fotoclub_config['frontend.usergroups'])) return;
 		
 		$group_ids = null;
-		if(is_array($fotoclub_config['group'])){
+		if(is_array($fotoclub_config['frontend.usergroups'])){
 			$group_ids = array();
-			foreach($fotoclub_config['group'] as $group_name)
+			foreach($fotoclub_config['frontend.usergroups'] as $group_name)
 			{
 				$do = DataObject::get_one('Group', 'Title = \'' . $group_name . '\'');
 				if($do) $group_ids[] = 'GroupID = ' . $do->ID;
