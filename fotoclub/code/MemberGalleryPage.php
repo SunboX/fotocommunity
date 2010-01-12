@@ -332,7 +332,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 	
 	private function isGalleryAdmin()
 	{
-		return Permission::check('ADMIN') || (is_numeric($this->urlParams['ID']) && Member::currentMember() != null && $this->urlParams['ID'] == Member::currentMember()->ID);
+		return Permission::check('ADMIN') || (is_numeric($this->urlParams['ID']) && Member::currentMember() != null && $this->Member()->ID == Member::currentMember()->ID);
 	}
 	
  	public function Member()
