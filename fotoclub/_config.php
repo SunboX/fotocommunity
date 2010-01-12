@@ -7,7 +7,7 @@ $firephp->setEnabled(true);
 
 global $fotoclub_config;
 $fotoclub_config = array(
-	'group' => array('Clubmitglieder'),
+	'group' => array('Clubmitglieder', 'Administrators'),
 	'bots' => array(
 	
 		1 => '.crawl.yahoo.net',

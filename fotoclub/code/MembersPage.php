@@ -44,8 +44,6 @@ class MembersPage_Controller extends Page_Controller
 		
 		if(!isset($fotoclub_config['group'])) return;
 		
-		print_r($fotoclub_config);
-		
 		$group_ids = null;
 		if(is_array($fotoclub_config['group'])){
 			$group_ids = array();
