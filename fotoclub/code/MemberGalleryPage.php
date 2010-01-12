@@ -245,7 +245,7 @@ class MemberGalleryPage_Controller extends Page_Controller
 		$gallery->Date = date('Y-m-d H:i:s');
 		$gallery->write();
 		
-		Director::redirect('galleries/upload/' . $gallery->MemberID);
+		Director::redirect('galleries/upload/' . $gallery->ID);
 	}
 	
 	public function ImageUploadForm($data = null, $form = null)
